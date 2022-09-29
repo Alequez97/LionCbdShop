@@ -1,0 +1,37 @@
+﻿@page
+@model CbdLion.AdminPanel.Pages.Products.EditModel
+@{
+    ViewData["Title"] = "Edit existing product";
+}
+
+@if (!Model.ProductWasFound)
+{
+    <div class="alert alert-danger text-center" role="alert">
+        @Model.ResponseMessage
+    </div>
+}
+else
+{
+    <h2 class="text-center">Edit existing product</h2>
+    <form method="post" enctype="multipart/form-data" class="row g-3">
+        <div class="mb-2">
+            <label for="exampleFormControlInput1" class="form-label">Product name</label>
+            <input type="text" class="form-control" name="productName" value="@Model.Product.ProductName">
+        </div>
+        <div class="mb-2">
+            <label for="exampleFormControlInput1" class="form-label">Original price</label>
+            <input type="number" step=".01" class="form-control" name="originalPrice" value="@Model.Product.OriginalPrice">
+        </div>
+        <div class="mb-2">
+            <label for="exampleFormControlInput1" class="form-label">Price with discount</label>
+            <input type="number" step=".01" class="form-control" name="priceWithDiscount" value="@Model.Product.PriceWithDiscount">
+        </div>
+        <div class="mb-2">
+            <label for="formFile" class="form-label">Image</label>
+            <input class="form-control" type="file" name="productImage">
+        </div>
+        <div class="text-center">
+            <input type="submit" value="Update" class="btn btn-primary" />
+        </div>
+    </form>
+}

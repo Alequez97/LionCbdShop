@@ -1,0 +1,27 @@
+﻿@page
+@model CbdLion.AdminPanel.Pages.Products.AddModel
+@{
+    ViewData["Title"] = "Add new product";
+}
+<h2 class="text-center">Add new product</h2>
+<form method="post" enctype="multipart/form-data" class="row g-3">
+    <div class="mb-2">
+        <label for="productName" class="form-label">Product name</label>
+        <input type="text" class="form-control" name="productName">
+    </div>
+    <div class="mb-2">
+        <label for="originalPrice" class="form-label">Original price</label>
+        <input type="number" step=".01" class="form-control" name="originalPrice">
+    </div>
+    <div class="mb-2">
+        <label for="priceWithDiscount" class="form-label">Price with discount</label>
+        <input type="number" step=".01" class="form-control" name="priceWithDiscount">
+    </div>
+    <div class="mb-2">
+        <label for="image" class="form-label">Image</label>
+        <input class="form-control" type="file" name="productImage">
+    </div>
+    <div class="text-center">
+        <input type="submit" value="Add" class="btn btn-primary" />
+    </div>
+</form>
