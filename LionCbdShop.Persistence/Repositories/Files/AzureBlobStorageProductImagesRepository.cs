@@ -16,6 +16,7 @@ public class AzureBlobStorageProductImagesRepository : IProductImagesRepository
         
         var blobServiceClient = new BlobServiceClient(connectionString);
         _blobContainer = blobServiceClient.GetBlobContainerClient(blobContainerName);
+        _blobContainer.CreateIfNotExists();
     }
 
     public async Task<string> SaveAsync(IFormFile image, CancellationToken cancellationToken = default)

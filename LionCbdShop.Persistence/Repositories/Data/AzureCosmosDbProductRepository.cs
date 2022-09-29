@@ -16,6 +16,7 @@ public class AzureCosmosDbProductRepository : IProductRepository
         var tableClientConnectionString = configuration["AzureStorage:ProductDbConnectionString"];
 
         _azureTableClient = new TableClient(tableClientConnectionString, AzureTableName.Products);
+        _azureTableClient.CreateIfNotExists();
     }
 
     public async Task<Product> GetAsync(string id)
@@ -27,14 +28,11 @@ public class AzureCosmosDbProductRepository : IProductRepository
 
     public async Task<IEnumerable<Product>> GetAllAsync()
     {
-        var products = _azureTableClient.Query<Product>();
-
-        return products.AsEnumerable();
+        return _azureTableClient.Query<Product>().ToList();
     }
     
     public async Task CreateAsync(Product product)
     {
-        await _azureTableClient.CreateIfNotExistsAsync();
         await _azureTableClient.AddEntityAsync(product);
     }
 
