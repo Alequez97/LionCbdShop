@@ -3,7 +3,7 @@ using LionCbdShop.Domain.Requests;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace CbdLion.AdminPanel.Pages.Products;
+namespace LionCbdShop.Admin.Pages.Products;
 
 public class AddModel : PageModel
 {

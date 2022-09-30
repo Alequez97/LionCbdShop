@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ProductServiceActionResponse = LionCbdShop.Domain.Response;
 
-namespace CbdLion.AdminPanel.Pages.Products;
+namespace LionCbdShop.Admin.Pages.Products;
 
 public class IndexModel : PageModel
 {

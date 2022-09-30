@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace CbdLion.AdminPanel.Pages.Orders;
+namespace LionCbdShop.Admin.Pages.Orders;
 
 public class Index : PageModel
 {
