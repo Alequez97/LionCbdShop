@@ -11,7 +11,7 @@ interface CardProps {
 
 function Card({ product, onAdd, onRemove }: CardProps) {
   const [productQuantity, setProductQuantity] = useState(0);
-  const { productName, image, originalPrice, id } = product;
+  const { productName, image, originalPrice } = product;
 
   const handleIncrement = () => {
     setProductQuantity(productQuantity + 1);

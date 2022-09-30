@@ -1,8 +1,6 @@
 import './Loader.scss'
 
-type Props = {}
-
-export default function Loader({ }: Props) {
+export default function Loader() {
     return (
         <div id="main">
             <div className="dank-ass-loader">
