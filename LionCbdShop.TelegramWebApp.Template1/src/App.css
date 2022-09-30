@@ -1,0 +1,19 @@
+:root {
+  --background-color: var(--tg-theme-bg-color);
+  --primary-color: lightgreen;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--tg-theme-text-color);
+}
+
+.cards__container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.heading {
+  text-align: center;
+}
