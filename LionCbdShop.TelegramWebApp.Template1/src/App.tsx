@@ -4,10 +4,9 @@ import Card from './components/Card/Card'
 import Cart from "./components/Cart/Cart"
 import ICartItem from './models/CartItem';
 import IProduct from './models/Product';
-import axios from 'axios';
-import Response from './Response'
 import { useProducts } from './hooks/products';
 import Loader from './components/Loader/Loader';
+import Error from './components/Error/Error';
 
 const telegramWebApp = window.Telegram.WebApp;
 
@@ -56,6 +55,12 @@ function App() {
   if (loading) {
     return (
       <Loader />
+    )  
+  }
+
+  if (error) {
+    return (
+      <Error message={error} />
     )  
   }
 
