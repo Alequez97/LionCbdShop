@@ -9,10 +9,12 @@ namespace LionCbdShop.TelegramBot;
 
 public class TelegramBot : BackgroundService
 {
+    private readonly string _webAppUrl;
     private readonly TelegramBotClient _telegramBotClient;
 
-    public TelegramBot(TelegramBotClient telegramBotClient)
+    public TelegramBot(IConfiguration configuration, TelegramBotClient telegramBotClient)
     {
+        _webAppUrl = configuration["Telegram:WebAppUrl"];
         _telegramBotClient = telegramBotClient;
     }
 
@@ -66,7 +68,7 @@ public class TelegramBot : BackgroundService
                 {
                     WebApp = new WebAppInfo()
                     {
-                        Url = "https://admirable-flan-a54e3b.netlify.app/"
+                        Url = _webAppUrl
                     }
                 }
             }
