@@ -1,6 +1,6 @@
 import IProduct from "../models/Product";
 
-export function getData(): IProduct[] {
+export function getProducts(): IProduct[] {
   return [
     { id:1, productName: "Banana", originalPrice: 7.99, image: 'https://royal-mmxxi.com/wp-content/uploads/2021/03/600-pink-lemonade-web-300x300.jpg' },
     { id:2, productName: "Grape", originalPrice: 7.99, image: 'https://royal-mmxxi.com/wp-content/uploads/2021/03/600-grape-ice-web-600x600.jpg' },

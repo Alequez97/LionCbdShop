@@ -4,9 +4,9 @@ import Card from './components/Card/Card'
 import Cart from "./components/Cart/Cart"
 import ICartItem from './models/CartItem';
 import IProduct from './models/Product';
-import { useProducts } from './hooks/products';
 import Loader from './components/Loader/Loader';
 import Error from './components/Error/Error';
+import { useProductsMock } from './hooks/productsMock';
 
 const telegramWebApp = window.Telegram.WebApp;
 
@@ -16,7 +16,7 @@ function App() {
     telegramWebApp.ready();
   });
 
-  const { products, error, loading } = useProducts();
+  const { products, error, loading } = useProductsMock();
   const [cartItems, setCartItems] = useState<ICartItem[]>([]);
 
   const onAdd = (product: IProduct) => {
