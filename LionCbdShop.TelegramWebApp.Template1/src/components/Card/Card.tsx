@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Card.css";
+import "./Card.scss";
 import Button from "../Button/Button";
 import IProduct from "../../models/Product";
 

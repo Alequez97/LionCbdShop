@@ -1,5 +1,5 @@
 import React, { MouseEventHandler } from "react";
-import "./Cart.css";
+import "./Cart.scss";
 import Button from "../Button/Button";
 import ICartItem from "../../models/CartItem";
 
