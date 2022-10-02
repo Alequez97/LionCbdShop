@@ -14,9 +14,9 @@ public class ProductDtoAction : IMappingAction<Product, ProductDto>
         _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
     }
 
-    public void Process(Product product, ProductDto getProductResponse, ResolutionContext context)
+    public void Process(Product product, ProductDto productDto, ResolutionContext context)
     {
         var imageUrlBase = _configuration["AzureStorage:ProductImagesUrlBase"];
-        getProductResponse.Image = $"{imageUrlBase}/{product.ImageName}";
+        productDto.Image = $"{imageUrlBase}/{product.ImageName}";
     }
 }
