@@ -1,0 +1,54 @@
+.btn {
+  padding: 0.6rem 0.8rem;
+  font-size: 1.2rem;
+  text-align: center;
+  border: 0;
+  outline: none;
+  border-radius: 10px;
+  width: 120px;
+  margin-left: 10px;
+  box-shadow: 1px -3px 52px -5px rgba(0, 0, 0, 0.7);
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &.add {
+    background-color: var(--add-button-color);
+
+    &:hover {
+      background-color: var(--add-button-color-hover);
+    }
+
+    &:active {
+      background-color: var(-add-button-color-active);
+    }
+  }
+
+  &.remove {
+    background-color: var(--remove-button-color);
+
+    &:hover {
+      background-color: var(--remove-button-color-hover);
+    }
+
+    &:active {
+      background-color: var(--remove-button-color-active);
+    }
+  }
+
+  &.checkout {
+    background-color: var(--checkout-button-color);
+    width: 150px;
+    color: #fff;
+    font-size: 14px;
+
+    &:hover {
+      background-color: var(--checkout-button-color-hover);
+    }
+
+    &:active {
+      background-color: var(--checkout-button-color-active);
+    }
+  }
+}

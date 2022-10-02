@@ -1,5 +1,5 @@
 import React, { MouseEventHandler } from 'react'
-import './Button.css'
+import './Button.scss'
 
 interface ButtonProps {
     type: string,
