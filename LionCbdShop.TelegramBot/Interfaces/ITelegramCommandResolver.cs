@@ -1,9 +1,8 @@
 ﻿using Telegram.Bot.Types;
 
-namespace LionCbdShop.TelegramBot.Interfaces
+namespace LionCbdShop.TelegramBot.Interfaces;
+
+public interface ITelegramCommandResolver
 {
-    public interface ITelegramCommandResolver
-    {
-        ITelegramCommand Resolve(Update update);
-    }
+    ITelegramCommand Resolve(Update update);
 }

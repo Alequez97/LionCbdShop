@@ -5,31 +5,43 @@ using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
 
-namespace LionCbdShop.TelegramBot.Commands
+namespace LionCbdShop.TelegramBot.Commands;
+
+public class StartCommand : ITelegramCommand
 {
-    public class StartCommand : ITelegramCommand
+    private readonly ITelegramBotClient _telegramBotClient;
+    private readonly IConfiguration _configuration;
+
+    public StartCommand(ITelegramBotClient telegramBotClient, IConfiguration configuration)
     {
-        private readonly ITelegramBotClient _telegramBotClient;
+        _telegramBotClient = telegramBotClient;
+        _configuration = configuration;
+    }
 
-        public StartCommand(ITelegramBotClient telegramBotClient)
-        {
-            _telegramBotClient = telegramBotClient;
-        }
+    public async Task SendResponseAsync(Update update)
+    {
+        var chatId = update.Message.Chat.Id;
 
-        public async Task SendResponseAsync(Update update)
-        {
-            var chatId = update.Message.Chat.Id;
+        var inlineKeyboard = new ReplyKeyboardMarkup(
+            new KeyboardButton("Open shop")
+            {
+                WebApp = new WebAppInfo()
+                {
+                    Url = _configuration["Telegram:WebAppUrl"]
+                }
+            }
+        );
 
-            await _telegramBotClient.SendTextMessageAsync(
-                chatId,
-                "Welcome in Royal MMXXI shop",
-                ParseMode.MarkdownV2
-            );
-        }
+        await _telegramBotClient.SendTextMessageAsync(
+            chatId,
+            "Welcome in Royal MMXXI shop",
+            ParseMode.MarkdownV2,
+            replyMarkup: inlineKeyboard
+        );
+    }
 
-        public bool IsResponsibleForUpdate(Update update)
-        {
-            return update.Message != null && update.Message.Text.Contains(CommandNames.Start);
-        }
+    public bool IsResponsibleForUpdate(Update update)
+    {
+        return update.Message?.Text?.Contains(CommandNames.Start) ?? false;
     }
 }

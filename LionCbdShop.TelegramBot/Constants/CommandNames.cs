@@ -1,7 +1,6 @@
-﻿namespace LionCbdShop.TelegramBot.Constants
+﻿namespace LionCbdShop.TelegramBot.Constants;
+
+public static class CommandNames
 {
-    public static class CommandNames
-    {
-        public const string Start = "/start";
-    }
+    public const string Start = "/start";
 }

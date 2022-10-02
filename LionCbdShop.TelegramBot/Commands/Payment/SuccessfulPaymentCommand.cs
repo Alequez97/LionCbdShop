@@ -3,13 +3,13 @@ using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 
-namespace LionCbdShop.TelegramBot.Commands;
+namespace LionCbdShop.TelegramBot.Commands.Payment;
 
-public class UnknownCommand : ITelegramCommand
+public class SuccessfulPaymentCommand : ITelegramCommand
 {
     private readonly ITelegramBotClient _telegramBotClient;
 
-    public UnknownCommand(ITelegramBotClient telegramBotClient)
+    public SuccessfulPaymentCommand(ITelegramBotClient telegramBotClient)
     {
         _telegramBotClient = telegramBotClient;
     }
@@ -20,13 +20,13 @@ public class UnknownCommand : ITelegramCommand
 
         await _telegramBotClient.SendTextMessageAsync(
             chatId,
-            $"{update.Message.Text} is not a valid command",
+            "Thank you for purchase",
             ParseMode.MarkdownV2
         );
     }
 
     public bool IsResponsibleForUpdate(Update update)
     {
-        return false;
+        return update.Message?.Type == MessageType.SuccessfulPayment;
     }
 }

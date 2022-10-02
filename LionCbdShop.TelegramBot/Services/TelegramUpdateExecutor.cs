@@ -1,25 +1,21 @@
 ﻿using LionCbdShop.TelegramBot.Interfaces;
 using Telegram.Bot.Types;
 
-namespace LionCbdShop.TelegramBot.Services
+namespace LionCbdShop.TelegramBot.Services;
+
+public class TelegramUpdateExecutor
 {
-    public class TelegramUpdateExecutor
+    private readonly ITelegramCommandResolver _commandResolver;
+
+    public TelegramUpdateExecutor(ITelegramCommandResolver commandResolver)
     {
-        private readonly ITelegramCommandResolver _commandResolver;
+        _commandResolver = commandResolver;
+    }
 
-        public TelegramUpdateExecutor(ITelegramCommandResolver commandResolver)
-        {
-            _commandResolver = commandResolver;
-        }
+    public async Task ExecuteAsync(Update update)
+    {
+        var command = _commandResolver.Resolve(update);
 
-        public async Task ExecuteAsync(Update update)
-        {
-            if (update?.Message?.Chat == null && update?.CallbackQuery == null)
-                return;
-
-            var command = _commandResolver.Resolve(update);
-
-            await command.SendResponseAsync(update);
-        }
+        await command.SendResponseAsync(update);
     }
 }
