@@ -1,21 +1,28 @@
+using LionCbdShop.TelegramBot.Extensions;
+using LionCbdShop.TelegramBot.Services;
 using Telegram.Bot;
 using Telegram.Bot.Exceptions;
 using Telegram.Bot.Polling;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
-using Telegram.Bot.Types.ReplyMarkups;
 
 namespace LionCbdShop.TelegramBot;
 
 public class TelegramBot : BackgroundService
 {
     private readonly string _webAppUrl;
-    private readonly TelegramBotClient _telegramBotClient;
+    private readonly ITelegramBotClient _telegramBotClient;
+    private readonly TelegramUpdateExecutor _telegramUpdateExecutor;
 
-    public TelegramBot(IConfiguration configuration, TelegramBotClient telegramBotClient)
+    public TelegramBot(
+        IConfiguration configuration,
+        ITelegramBotClient telegramBotClient,
+        TelegramUpdateExecutor updateExecutor
+    )
     {
         _webAppUrl = configuration["Telegram:WebAppUrl"];
         _telegramBotClient = telegramBotClient;
+        _telegramUpdateExecutor = updateExecutor;
     }
 
     public override Task StartAsync(CancellationToken cancellationToken)
@@ -30,6 +37,8 @@ public class TelegramBot : BackgroundService
         {
             AllowedUpdates = Array.Empty<UpdateType>() // receive all update types
         };
+
+        await _telegramBotClient.SetWebAppInChatMenuButton("Shop", _webAppUrl);
 
         _telegramBotClient.StartReceiving(
             updateHandler: HandleUpdateAsync,
@@ -48,37 +57,7 @@ public class TelegramBot : BackgroundService
     private async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update,
         CancellationToken cancellationToken)
     {
-        // Only process Message updates: https://core.telegram.org/bots/api#message
-        if (update.Message is not { } outMessage)
-            return;
-
-        // Only process text messages
-        if (outMessage.Text is not { } messageText)
-            return;
-
-        var chatId = outMessage.Chat.Id;
-
-        Console.WriteLine($"Received a '{messageText}' message in chat {chatId}.");
-        
-        var inlineKeyboard = new ReplyKeyboardMarkup(new[]
-        {
-            new[]
-            {
-                new KeyboardButton("Buy electornic cigarette")
-                {
-                    WebApp = new WebAppInfo()
-                    {
-                        Url = _webAppUrl
-                    }
-                }
-            }
-        });
-
-        await botClient.SendTextMessageAsync(
-            chatId, 
-            "Welcome in Royal MMXXI shop", 
-            ParseMode.MarkdownV2, 
-            replyMarkup: inlineKeyboard);
+        await _telegramUpdateExecutor.ExecuteAsync(update);
     }
 
     private Task HandlePollingErrorAsync(ITelegramBotClient botClient, Exception exception,
