@@ -9,9 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LionCbdShop.Api", "LionCbdS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LionCbdShop.Persistence", "LionCbdShop.Persistence\LionCbdShop.Persistence.csproj", "{4C8C81CE-30C0-423C-AB51-ABF250695FA8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LionCbdShop.Domain", "LionCbdShop.Domain\LionCbdShop.Domain.csproj", "{0CC316F4-E179-4762-A5B4-0CA57B372934}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LionCbdShop.Domain", "LionCbdShop.Domain\LionCbdShop.Domain.csproj", "{0CC316F4-E179-4762-A5B4-0CA57B372934}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LionCbdShop.TelegramBot", "LionCbdShop.TelegramBot\LionCbdShop.TelegramBot.csproj", "{10D5EC8D-6F44-4278-8EC4-01CC5DEF4C7D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LionCbdShop.TelegramBot", "LionCbdShop.TelegramBot\LionCbdShop.TelegramBot.csproj", "{10D5EC8D-6F44-4278-8EC4-01CC5DEF4C7D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
