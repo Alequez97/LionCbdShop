@@ -12,14 +12,14 @@ const cartItemsSlice = createSlice({
     cartItems: [],
   } as CartItemsState,
   reducers: {
-    addProduct: (state, action: PayloadAction<IProduct>) => {
+    addProduct: (state, action: PayloadAction<string>) => {
       const existingCartItem = state.cartItems.find(
-        (cartItem) => cartItem.product.id === action.payload.id
+        (cartItem) => cartItem.productId === action.payload
       );
 
       if (existingCartItem) {
         let newState = state.cartItems.map((cartItem) => {
-          if (cartItem.product.id === action.payload.id) {
+          if (cartItem.productId === action.payload) {
             return {
               ...existingCartItem,
               quantity: existingCartItem.quantity + 1,
@@ -35,20 +35,20 @@ const cartItemsSlice = createSlice({
 
       let newState = [
         ...state.cartItems,
-        { product: action.payload, quantity: 1 },
+        { productId: action.payload, quantity: 1 },
       ];
       return {
         cartItems: newState,
       };
     },
-    removeProduct: (state, action: PayloadAction<IProduct>) => {
+    removeProduct: (state, action: PayloadAction<string>) => {
       const existingCartItem = state.cartItems.find(
-        (cartItem) => cartItem.product.id === action.payload.id
+        (cartItem) => cartItem.productId === action.payload
       );
 
       if (existingCartItem?.quantity === 1) {
         let newState = state.cartItems.filter(
-          (cartItem) => cartItem.product.id !== action.payload.id
+          (cartItem) => cartItem.productId !== action.payload
         );
 
         return {
@@ -57,7 +57,7 @@ const cartItemsSlice = createSlice({
       }
 
       let newState = state.cartItems.map((cartItem) => {
-        if (cartItem.product.id === action.payload.id) {
+        if (cartItem.productId === action.payload) {
           return { ...cartItem, quantity: cartItem.quantity - 1 };
         }
         return cartItem;

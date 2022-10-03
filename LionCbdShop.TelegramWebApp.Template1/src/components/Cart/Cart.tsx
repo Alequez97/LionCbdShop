@@ -9,14 +9,8 @@ interface CartProps {
 }
 
 function Cart({ cartItems, onCheckout }: CartProps) {
-  const totalPrice = cartItems.reduce((a, c) => a + c.product.originalPrice * c.quantity, 0);
-
   return (
     <div className="cart__container">
-      {cartItems.length === 0 && "No items in cart"}
-      {cartItems.length > 0 && <span className="">Total Price: ${totalPrice.toFixed(2)}</span>}
-      <br />
-
       <Button
         title={"Checkout"}
         type={"checkout"}

@@ -1,5 +1,5 @@
 interface IProduct {
-    id: number
+    id: string
     productName: string
     originalPrice: number
     priceWithDiscount?: number

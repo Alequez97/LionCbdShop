@@ -31,12 +31,12 @@ function App() {
 
   const { products, error, loading } = useProductsMock();
 
-  const onAdd = (product: IProduct) => {
-    dispatch(addProduct(product))
+  const onAdd = (productId: string) => {
+    dispatch(addProduct(productId))
   };
 
-  const onRemove = (product: IProduct) => {
-    dispatch(removeProduct(product))
+  const onRemove = (productId: string) => {
+    dispatch(removeProduct(productId))
   };
 
   const onCheckout = () => {
