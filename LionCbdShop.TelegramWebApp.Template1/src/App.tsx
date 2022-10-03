@@ -7,6 +7,7 @@ import IProduct from './models/Product';
 import Loader from './components/Loader/Loader';
 import Error from './components/Error/Error';
 import { useProductsMock } from './hooks/productsMock';
+import { getCartItemsAsJsonString } from './helpers'
 
 const telegramWebApp = window.Telegram.WebApp;
 
@@ -14,10 +15,15 @@ function App() {
 
   useEffect(() => {
     telegramWebApp.ready();
-  });
+
+    telegramWebApp.MainButton.onClick(() => {
+      const json = getCartItemsAsJsonString(cartItems);
+      telegramWebApp.sendData(json);
+    });
+  }, []);
 
   const { products, error, loading } = useProductsMock();
-  const [cartItems, setCartItems] = useState<ICartItem[]>([]);
+  const [ cartItems, setCartItems ] = useState<ICartItem[]>([]);
 
   const onAdd = (product: IProduct) => {
     const existingCartItem = cartItems.find((cartItem) => cartItem.product.id === product.id);
@@ -48,6 +54,8 @@ function App() {
   };
 
   const onCheckout = () => {
+    console.log(getCartItemsAsJsonString(cartItems));
+
     telegramWebApp.MainButton.text = "Pay :)";
     telegramWebApp.MainButton.show();
   };
