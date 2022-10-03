@@ -8,53 +8,40 @@ import Loader from './components/Loader/Loader';
 import Error from './components/Error/Error';
 import { useProductsMock } from './hooks/productsMock';
 import { getCartItemsAsJsonString } from './helpers'
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import { addProduct, AppDispatch, removeProduct, RootState } from './store/store';
 
 const telegramWebApp = window.Telegram.WebApp;
 
+const useCartItemsDispatch = () => useDispatch<AppDispatch>();
+const useCartItemsSelector: TypedUseSelectorHook<RootState> = useSelector;
+
 function App() {
+  const dispatch = useCartItemsDispatch();
+  const cartItems = useCartItemsSelector((state) => state.cartItems.cartItems)
 
   useEffect(() => {
     telegramWebApp.ready();
-
-    telegramWebApp.MainButton.onClick(() => {
-      const json = getCartItemsAsJsonString(cartItems);
-      telegramWebApp.sendData(json);
-    });
   }, []);
+  
+  telegramWebApp.MainButton.onClick(() => {
+    const json = getCartItemsAsJsonString(cartItems);
+    telegramWebApp.sendData(json);
+  });
 
   const { products, error, loading } = useProductsMock();
-  const [ cartItems, setCartItems ] = useState<ICartItem[]>([]);
 
   const onAdd = (product: IProduct) => {
-    const existingCartItem = cartItems.find((cartItem) => cartItem.product.id === product.id);
-
-    if (existingCartItem) {
-      setCartItems(
-        cartItems.map((cartItem) =>
-          cartItem.product.id === product.id ? { ...existingCartItem, quantity: existingCartItem.quantity + 1 } : cartItem
-        )
-      );
-    } else {
-      setCartItems(prevState => [...prevState, { product: product, quantity: 1 }]);
-    }
+    dispatch(addProduct(product))
   };
 
   const onRemove = (product: IProduct) => {
-    const existingCartItem = cartItems.find((cartItem) => cartItem.product.id === product.id);
-
-    if (existingCartItem?.quantity === 1) {
-      setCartItems(cartItems.filter((cartItem) => cartItem.product.id !== product.id));
-    } else {
-      setCartItems(
-        cartItems.map((cartItem) =>
-          cartItem.product.id === product.id ? { ...cartItem, quantity: cartItem.quantity - 1 } : cartItem
-        )
-      );
-    }
+    dispatch(removeProduct(product))
   };
 
   const onCheckout = () => {
-    console.log(getCartItemsAsJsonString(cartItems));
+    // const json = getCartItemsAsJsonString(cartItems);
+    // telegramWebApp.sendData(json);
 
     telegramWebApp.MainButton.text = "Pay :)";
     telegramWebApp.MainButton.show();
@@ -75,6 +62,10 @@ function App() {
   return (
     <>
       <h2 className="heading">Royal MMXXI</h2>
+
+      <p>Cart items:</p>
+      <br/>
+      {JSON.stringify(cartItems)}
 
       <Cart cartItems={cartItems} onCheckout={onCheckout} />
 
