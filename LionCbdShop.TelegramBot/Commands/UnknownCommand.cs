@@ -20,7 +20,7 @@ public class UnknownCommand : ITelegramCommand
 
         await _telegramBotClient.SendTextMessageAsync(
             chatId,
-            $"{update.Message.Text} is not a valid command",
+            $"Unknown command was sent",
             ParseMode.MarkdownV2
         );
     }

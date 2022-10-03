@@ -12,6 +12,7 @@ public static class IServiceCollectionExtenstions
         //Common commands
         services.AddTransient<UnknownCommand>();
         services.AddTransient<ITelegramCommand, StartCommand>();
+        services.AddTransient<ITelegramCommand, WebAppCommand>();
 
         //Payment commands
         services.AddTransient<ITelegramCommand, InvoiceCommand>();
