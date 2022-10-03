@@ -2,7 +2,7 @@
 using LionCbdShop.Domain.Constants;
 using LionCbdShop.Domain.Dto;
 using LionCbdShop.Domain.Interfaces;
-using LionCbdShop.Domain.Requests;
+using LionCbdShop.Domain.Requests.Products;
 using LionCbdShop.Persistence.Entities;
 using LionCbdShop.Persistence.Interfaces;
 

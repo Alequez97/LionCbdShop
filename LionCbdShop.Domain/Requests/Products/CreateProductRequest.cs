@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace LionCbdShop.Domain.Requests;
+namespace LionCbdShop.Domain.Requests.Products;
 
 public class CreateProductRequest
 {

@@ -1,5 +1,5 @@
 ﻿using LionCbdShop.Domain.Dto;
-using LionCbdShop.Domain.Requests;
+using LionCbdShop.Domain.Requests.Products;
 
 namespace LionCbdShop.Domain.Interfaces;
 

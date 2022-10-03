@@ -1,5 +1,5 @@
 using LionCbdShop.Domain.Interfaces;
-using LionCbdShop.Domain.Requests;
+using LionCbdShop.Domain.Requests.Products;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 

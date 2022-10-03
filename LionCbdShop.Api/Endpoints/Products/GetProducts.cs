@@ -1,5 +1,7 @@
 ﻿using Ardalis.ApiEndpoints;
 using LionCbdShop.Api.Constants;
+using LionCbdShop.Domain;
+using LionCbdShop.Domain.Dto;
 using LionCbdShop.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -8,7 +10,7 @@ namespace LionCbdShop.Api.Endpoints.Products;
 
 public class GetProducts : EndpointBaseAsync
     .WithoutRequest
-    .WithActionResult<List<Product>>
+    .WithActionResult<Response<IEnumerable<ProductDto>>>
 {
     private readonly IProductService _productService;
 
@@ -19,17 +21,11 @@ public class GetProducts : EndpointBaseAsync
 
     [HttpGet("/api/products")]
     [SwaggerOperation(Tags = new[] { SwaggerGroup.Products })]
-    public override async Task<ActionResult<List<Product>>> HandleAsync(CancellationToken cancellationToken = default)
+    public override async Task<ActionResult<Response<IEnumerable<ProductDto>>>> HandleAsync(CancellationToken cancellationToken = default)
     {
         var products = await _productService.GetAllAsync();
 
         return Ok(products);
     }
-}
-
-public class Product
-{
-
-    public string Name { get; set; }
 }
 

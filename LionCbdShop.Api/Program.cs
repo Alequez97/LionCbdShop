@@ -18,6 +18,8 @@ builder.Services.AddSingleton<IProductService, ProductService>();
 builder.Services.AddSingleton<IProductRepository, AzureCosmosDbProductRepository>();
 builder.Services.AddSingleton<IProductImagesRepository, AzureBlobStorageProductImagesRepository>();
 
+builder.Services.AddSingleton<IOrderService, OrderService>();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -46,7 +48,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseCors("CorsPolicy");
 

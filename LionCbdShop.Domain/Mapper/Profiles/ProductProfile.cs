@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using LionCbdShop.Domain.Dto;
 using LionCbdShop.Domain.Mapper.Actions;
-using LionCbdShop.Domain.Requests;
+using LionCbdShop.Domain.Requests.Products;
 using LionCbdShop.Persistence.Entities;
 
 namespace LionCbdShop.Domain.Mapper.Profiles;
