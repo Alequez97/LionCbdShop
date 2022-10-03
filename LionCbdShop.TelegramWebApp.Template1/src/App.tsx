@@ -1,24 +1,19 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import './App.css'
 import Card from './components/Card/Card'
 import Cart from "./components/Cart/Cart"
-import ICartItem from './models/CartItem';
-import IProduct from './models/Product';
 import Loader from './components/Loader/Loader';
 import Error from './components/Error/Error';
 import { useProductsMock } from './hooks/productsMock';
 import { getCartItemsAsJsonString } from './helpers'
-import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import { addProduct, AppDispatch, removeProduct, RootState } from './store/store';
+import { addProduct, removeProduct } from './store/cartItems';
+import { useAppDispatch, useAppSelector } from './store/store';
 
 const telegramWebApp = window.Telegram.WebApp;
 
-const useCartItemsDispatch = () => useDispatch<AppDispatch>();
-const useCartItemsSelector: TypedUseSelectorHook<RootState> = useSelector;
-
 function App() {
-  const dispatch = useCartItemsDispatch();
-  const cartItems = useCartItemsSelector((state) => state.cartItems.cartItems)
+  const dispatch = useAppDispatch();
+  const cartItems = useAppSelector((state) => state.cartItems.cartItems)
 
   useEffect(() => {
     telegramWebApp.ready();
