@@ -1,86 +1,66 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import Card from './components/Card/Card'
-import Cart from "./components/Cart/Cart"
-import ICartItem from './models/CartItem';
-import IProduct from './models/Product';
 import Loader from './components/Loader/Loader';
 import Error from './components/Error/Error';
 import { useProductsMock } from './hooks/productsMock';
 import { getCartItemsAsJsonString } from './helpers'
+import { addProduct, removeProduct } from './store/cartItems';
+import { useAppDispatch } from './store/store';
+import { useCartItems } from './hooks/cartItems';
+import Footer from './components/Footer/Footer';
 
 const telegramWebApp = window.Telegram.WebApp;
 
 function App() {
-
   useEffect(() => {
     telegramWebApp.ready();
-
-    telegramWebApp.MainButton.onClick(() => {
-      const json = getCartItemsAsJsonString(cartItems);
-      telegramWebApp.sendData(json);
-    });
+    telegramWebApp.expand();
   }, []);
 
+  const dispatch = useAppDispatch();
+  const { cartItems } = useCartItems();
   const { products, error, loading } = useProductsMock();
-  const [ cartItems, setCartItems ] = useState<ICartItem[]>([]);
 
-  const onAdd = (product: IProduct) => {
-    const existingCartItem = cartItems.find((cartItem) => cartItem.product.id === product.id);
+  function sendDataToTelegramWebApp() {
+    console.log('send data');
+    const json = getCartItemsAsJsonString(cartItems);
+    telegramWebApp.sendData(json);
+  }
 
-    if (existingCartItem) {
-      setCartItems(
-        cartItems.map((cartItem) =>
-          cartItem.product.id === product.id ? { ...existingCartItem, quantity: existingCartItem.quantity + 1 } : cartItem
-        )
-      );
-    } else {
-      setCartItems(prevState => [...prevState, { product: product, quantity: 1 }]);
-    }
+  const onAdd = (productId: string) => {
+    dispatch(addProduct(productId))
   };
 
-  const onRemove = (product: IProduct) => {
-    const existingCartItem = cartItems.find((cartItem) => cartItem.product.id === product.id);
-
-    if (existingCartItem?.quantity === 1) {
-      setCartItems(cartItems.filter((cartItem) => cartItem.product.id !== product.id));
-    } else {
-      setCartItems(
-        cartItems.map((cartItem) =>
-          cartItem.product.id === product.id ? { ...cartItem, quantity: cartItem.quantity - 1 } : cartItem
-        )
-      );
-    }
-  };
-
-  const onCheckout = () => {
-    console.log(getCartItemsAsJsonString(cartItems));
-
-    telegramWebApp.MainButton.text = "Pay :)";
-    telegramWebApp.MainButton.show();
+  const onRemove = (productId: string) => {
+    dispatch(removeProduct(productId))
   };
 
   if (loading) {
     return (
       <Loader />
-    )  
+    )
   }
 
   if (error) {
     return (
       <Error message={error} />
-    )  
+    )
   }
 
   return (
     <>
       <h2 className="heading">Royal MMXXI</h2>
 
-      <Cart cartItems={cartItems} onCheckout={onCheckout} />
-
       <div className="cards__container">
         {products.map(product => <Card product={product} key={product.id} onAdd={onAdd} onRemove={onRemove} />)}
       </div>
+
+      {<Footer 
+        mainButtonText={'Checkout'}
+        mainButtonOnClick={sendDataToTelegramWebApp} 
+        visible={cartItems.length !== 0} 
+      />}
     </>
   );
 }
