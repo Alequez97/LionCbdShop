@@ -66,11 +66,14 @@ namespace LionCbdShop.Persistence.Migrations
 
                     b.Property<string>("Username")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerProviderId");
+
+                    b.HasIndex("Username")
+                        .IsUnique();
 
                     b.ToTable("Customers");
                 });
@@ -95,7 +98,7 @@ namespace LionCbdShop.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("82766112-96c0-47c4-9a34-a781cecf6d43"),
+                            Id = new Guid("e379e014-121e-4a94-8e25-05d1e3d60011"),
                             Name = "Telegram"
                         });
                 });
@@ -111,11 +114,14 @@ namespace LionCbdShop.Persistence.Migrations
 
                     b.Property<string>("OrderNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
+
+                    b.HasIndex("OrderNumber")
+                        .IsUnique();
 
                     b.ToTable("Orders");
                 });
@@ -132,7 +138,7 @@ namespace LionCbdShop.Persistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<double>("OriginalPrice")
                         .HasColumnType("float");
@@ -141,6 +147,9 @@ namespace LionCbdShop.Persistence.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Products");
                 });

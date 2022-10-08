@@ -24,6 +24,21 @@ public class LionCbdShopDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder
+            .Entity<Customer>()
+            .HasIndex(customer => customer.Username)
+            .IsUnique();
+
+        modelBuilder
+            .Entity<Product>()
+            .HasIndex(product => product.Name)
+            .IsUnique();
+
+        modelBuilder
+            .Entity<Order>()
+            .HasIndex(product => product.OrderNumber)
+            .IsUnique();
+
+        modelBuilder
             .Entity<CustomerProvider>()
             .HasIndex(provider => provider.Name)
             .IsUnique();
