@@ -27,7 +27,7 @@ public class CustomerService : ICustomerService
             if (existingProfile != null)
             {
                 response.IsSuccess = true;
-                response.Message = CustomerMessages.Create.CustomerExists;
+                response.Message = CustomerResponseMessage.Exists(request.Username);
 
                 return response;
             }
@@ -39,12 +39,12 @@ public class CustomerService : ICustomerService
             await _customerRepository.CreateAsync(customer);
 
             response.IsSuccess = true;
-            response.Message = CustomerMessages.Create.Success;
+            response.Message = CommonResponseMessage.Create.Success(ResponseMessageEntity.Customer);
         }
         catch (Exception ex)
         {
             response.IsSuccess = false;
-            response.Message = CustomerMessages.Create.Error("logId");
+            response.Message = CommonResponseMessage.Create.Error(ResponseMessageEntity.Customer);
         }
 
         return response;

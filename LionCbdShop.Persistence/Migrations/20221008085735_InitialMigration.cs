@@ -26,10 +26,10 @@ namespace LionCbdShop.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     OriginalPrice = table.Column<double>(type: "float", nullable: false),
-                    PriceWithDiscount = table.Column<double>(type: "float", nullable: false),
-                    ImageName = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    PriceWithDiscount = table.Column<double>(type: "float", nullable: true),
+                    ImageName = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -42,10 +42,10 @@ namespace LionCbdShop.Persistence.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CustomerProviderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IdInCustomerProviderSystem = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CustomerProviderId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    IdInCustomerProviderSystem = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -54,8 +54,7 @@ namespace LionCbdShop.Persistence.Migrations
                         name: "FK_Customers_CustomerProviders_CustomerProviderId",
                         column: x => x.CustomerProviderId,
                         principalTable: "CustomerProviders",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -105,7 +104,7 @@ namespace LionCbdShop.Persistence.Migrations
             migrationBuilder.InsertData(
                 table: "CustomerProviders",
                 columns: new[] { "Id", "Name" },
-                values: new object[] { new Guid("1dd54a7e-7cfd-48c7-9d82-a95807df2e24"), "Telegram" });
+                values: new object[] { new Guid("82766112-96c0-47c4-9a34-a781cecf6d43"), "Telegram" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_CartItems_OrderId",

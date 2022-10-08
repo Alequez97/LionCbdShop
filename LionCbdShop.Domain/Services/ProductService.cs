@@ -36,7 +36,7 @@ public class ProductService : IProductService
         catch (Exception ex)
         {
             response.IsSuccess = false;
-            response.Message = ProductMessages.Get.Error;
+            response.Message = CommonResponseMessage.Get.Error(ResponseMessageEntity.Product);
         }
 
         return response;
@@ -58,7 +58,7 @@ public class ProductService : IProductService
         catch (Exception ex)
         {
             response.IsSuccess = false;
-            response.Message = ProductMessages.Get.Error;
+            response.Message = CommonResponseMessage.Get.Error(ResponseMessageEntity.Product);
         }
 
         return response;
@@ -78,12 +78,12 @@ public class ProductService : IProductService
             await _productRepository.CreateAsync(product);
 
             response.IsSuccess = true;
-            response.Message = ProductMessages.Create.Success;
+            response.Message = CommonResponseMessage.Create.Success(ResponseMessageEntity.Product);
         }
         catch
         {
             response.IsSuccess = false;
-            response.Message = ProductMessages.Create.Error;
+            response.Message = CommonResponseMessage.Create.Error(ResponseMessageEntity.Product);
         }
 
         return response;
@@ -100,7 +100,7 @@ public class ProductService : IProductService
             if (existingProduct == null)
             {
                 response.IsSuccess = false;
-                response.Message = ProductMessages.Common.NotFound(updateProductRequest.Id);
+                response.Message = CommonResponseMessage.Get.NotFound(ResponseMessageEntity.Product, updateProductRequest.Id);
                 return response;
             }
 
@@ -117,12 +117,12 @@ public class ProductService : IProductService
             await _productRepository.UpdateAsync(product);
 
             response.IsSuccess = true;
-            response.Message = ProductMessages.Update.Success;
+            response.Message = CommonResponseMessage.Update.Success(ResponseMessageEntity.Product);
         }
         catch
         {
             response.IsSuccess = false;
-            response.Message = ProductMessages.Update.Error;
+            response.Message = CommonResponseMessage.Update.Error(ResponseMessageEntity.Product);
         }
 
         return response;
@@ -139,7 +139,7 @@ public class ProductService : IProductService
             if (existingProduct == null)
             {
                 response.IsSuccess = false;
-                response.Message = ProductMessages.Common.NotFound(id);
+                response.Message = CommonResponseMessage.Get.NotFound(ResponseMessageEntity.Product, id);
                 return response;
             }
 
@@ -147,12 +147,12 @@ public class ProductService : IProductService
             await _productImagesRepository.DeleteAsync(existingProduct.ImageName);
 
             response.IsSuccess = true;
-            response.Message = ProductMessages.Delete.Success;
+            response.Message = CommonResponseMessage.Delete.Success(ResponseMessageEntity.Product);
         }
         catch
         {
             response.IsSuccess = false;
-            response.Message = ProductMessages.Delete.Error;
+            response.Message = CommonResponseMessage.Delete.Error(ResponseMessageEntity.Product);
         }
 
         return response;

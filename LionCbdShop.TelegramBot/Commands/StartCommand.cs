@@ -37,15 +37,20 @@ public class StartCommand : ITelegramCommand
         };
         var response = await _profileService.CreateAsync(createProfileRequest);
 
+        if (!response.IsSuccess)
+        {
+            //TODO: Log, that customer profile was not stored in database
+        }
+
         var inlineKeyboard = new ReplyKeyboardMarkup(
-            new KeyboardButton("Open shop")
-            {
-                WebApp = new WebAppInfo()
+                new KeyboardButton("Open shop")
                 {
-                    Url = _configuration["Telegram:WebAppUrl"],
+                    WebApp = new WebAppInfo()
+                    {
+                        Url = _configuration["Telegram:WebAppUrl"],
+                    }
                 }
-            }
-        );
+            );
 
         await _telegramBotClient.SendTextMessageAsync(
             chatId,

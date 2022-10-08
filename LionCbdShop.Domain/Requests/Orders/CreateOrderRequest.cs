@@ -2,6 +2,8 @@
 
 public class CreateOrderRequest
 {
+    public string CustomerUsername { get; set; }
+
     public List<CartItem> CartItems { get; set; }
 }
 

@@ -22,7 +22,7 @@ public class EditModel : PageModel
     
     public async Task OnGet(string id)
     {
-        var response = await _productService.GetAsync(id);
+        var response = await _productService.GetAsync(new Guid(id));
 
         if (response.IsSuccess)
         {

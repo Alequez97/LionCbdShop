@@ -38,7 +38,7 @@ public class IndexModel : PageModel
 
     public async Task<IActionResult> OnPostDelete(string id)
     {
-        var deleteProductResponse = await _productService.DeleteAsync(id);
+        var deleteProductResponse = await _productService.DeleteAsync(new Guid(id));
         
         return RedirectToPage("Index", deleteProductResponse);
     }

@@ -52,19 +52,16 @@ namespace LionCbdShop.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CustomerProviderId")
+                    b.Property<Guid?>("CustomerProviderId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("IdInCustomerProviderSystem")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Username")
@@ -98,7 +95,7 @@ namespace LionCbdShop.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("1dd54a7e-7cfd-48c7-9d82-a95807df2e24"),
+                            Id = new Guid("82766112-96c0-47c4-9a34-a781cecf6d43"),
                             Name = "Telegram"
                         });
                 });
@@ -130,15 +127,17 @@ namespace LionCbdShop.Persistence.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ImageName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("OriginalPrice")
                         .HasColumnType("float");
 
-                    b.Property<double>("PriceWithDiscount")
+                    b.Property<double?>("PriceWithDiscount")
                         .HasColumnType("float");
 
                     b.HasKey("Id");
@@ -165,9 +164,7 @@ namespace LionCbdShop.Persistence.Migrations
                 {
                     b.HasOne("LionCbdShop.Persistence.Entities.CustomerProvider", "CustomerProvider")
                         .WithMany()
-                        .HasForeignKey("CustomerProviderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CustomerProviderId");
 
                     b.Navigation("CustomerProvider");
                 });

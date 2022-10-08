@@ -28,6 +28,9 @@ namespace LionCbdShop.Domain.Extensions
             services.AddTransient<IProductRepository, SqlProductRepository>();
             services.AddTransient<IProductImagesRepository, AzureBlobStorageProductImagesRepository>();
 
+            services.AddTransient<IOrderService, OrderService>();
+            services.AddTransient<IOrderRepository, SqlOrderRepository>();
+
             return services;
         }
     }
