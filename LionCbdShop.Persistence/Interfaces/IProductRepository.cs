@@ -4,7 +4,7 @@ namespace LionCbdShop.Persistence.Interfaces;
 
 public interface IProductRepository
 {
-    Task<Product> GetAsync(string id);
+    Task<Product> GetAsync(Guid id);
 
     Task<IEnumerable<Product>> GetAllAsync();
 
@@ -12,5 +12,5 @@ public interface IProductRepository
 
     Task UpdateAsync(Product product);
     
-    Task DeleteAsync(string id);
+    Task DeleteAsync(Guid id);
 }

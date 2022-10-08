@@ -1,20 +1,11 @@
-using LionCbdShop.Domain.Interfaces;
-using LionCbdShop.Domain.Mapper.Profiles;
-using LionCbdShop.Domain.Services;
-using LionCbdShop.Persistence.Interfaces;
-using LionCbdShop.Persistence.Repositories.Data;
-using LionCbdShop.Persistence.Repositories.Files;
+using LionCbdShop.Domain.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 
-builder.Services.AddAutoMapper(typeof(ProductProfile));
-
-builder.Services.AddSingleton<IProductService, ProductService>();
-builder.Services.AddSingleton<IProductRepository, AzureCosmosDbProductRepository>();
-builder.Services.AddSingleton<IProductImagesRepository, AzureBlobStorageProductImagesRepository>();
+builder.Services.AddDomainLevelServices();
 
 var app = builder.Build();
 

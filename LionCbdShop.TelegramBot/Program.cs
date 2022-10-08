@@ -1,8 +1,7 @@
+using LionCbdShop.Domain.Extensions;
 using LionCbdShop.TelegramBot;
 using LionCbdShop.TelegramBot.Extensions;
 using Telegram.Bot;
-
-
 
 IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices(services =>
@@ -21,6 +20,8 @@ IHost host = Host.CreateDefaultBuilder(args)
         });
 
         services.AddTelegramCommandServices();
+
+        services.AddDomainLevelServices();
         
         services.AddHostedService<TelegramBot>();
     })

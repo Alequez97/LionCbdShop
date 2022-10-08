@@ -10,18 +10,18 @@ public static class IServiceCollectionExtenstions
     public static IServiceCollection AddTelegramCommandServices(this IServiceCollection services)
     {
         //Common commands
-        services.AddTransient<UnknownCommand>();
-        services.AddTransient<ITelegramCommand, StartCommand>();
-        services.AddTransient<ITelegramCommand, WebAppCommand>();
+        services.AddSingleton<UnknownCommand>();
+        services.AddSingleton<ITelegramCommand, StartCommand>();
+        services.AddSingleton<ITelegramCommand, WebAppCommand>();
 
         //Payment commands
-        services.AddTransient<ITelegramCommand, InvoiceCommand>();
-        services.AddTransient<ITelegramCommand, PreCheckoutQueryCommand>();
-        services.AddTransient<ITelegramCommand, SuccessfulPaymentCommand>();
+        services.AddSingleton<ITelegramCommand, InvoiceCommand>();
+        services.AddSingleton<ITelegramCommand, PreCheckoutQueryCommand>();
+        services.AddSingleton<ITelegramCommand, SuccessfulPaymentCommand>();
 
         //Command services
-        services.AddTransient<ITelegramCommandResolver, TelegramCommandResolver>();
-        services.AddTransient<TelegramUpdateExecutor>();
+        services.AddSingleton<ITelegramCommandResolver, TelegramCommandResolver>();
+        services.AddSingleton<TelegramUpdateExecutor>();
 
         return services;
     }

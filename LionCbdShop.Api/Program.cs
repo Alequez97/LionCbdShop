@@ -1,24 +1,11 @@
-using LionCbdShop.Domain.Interfaces;
-using LionCbdShop.Domain.Mapper.Profiles;
-using LionCbdShop.Domain.Services;
-using LionCbdShop.Persistence.Interfaces;
-using LionCbdShop.Persistence.Repositories.Data;
-using LionCbdShop.Persistence.Repositories.Files;
+using LionCbdShop.Domain.Extensions;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
 
-builder.Services.AddAutoMapper(typeof(ProductProfile));
-
-builder.Services.AddSingleton<IProductService, ProductService>();
-builder.Services.AddSingleton<IProductRepository, AzureCosmosDbProductRepository>();
-builder.Services.AddSingleton<IProductImagesRepository, AzureBlobStorageProductImagesRepository>();
-
-builder.Services.AddSingleton<IOrderService, OrderService>();
+builder.Services.AddDomainLevelServices();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

@@ -11,18 +11,19 @@ namespace LionCbdShop.TelegramBot;
 public class TelegramBot : BackgroundService
 {
     private readonly string _webAppUrl;
-    private readonly ITelegramBotClient _telegramBotClient;
-    private readonly TelegramUpdateExecutor _telegramUpdateExecutor;
+
+    private ITelegramBotClient _telegramBotClient;
+    private TelegramUpdateExecutor _telegramUpdateExecutor;
 
     public TelegramBot(
         IConfiguration configuration,
         ITelegramBotClient telegramBotClient,
-        TelegramUpdateExecutor updateExecutor
+        TelegramUpdateExecutor telegramUpdateExecutor
     )
     {
         _webAppUrl = configuration["Telegram:WebAppUrl"];
         _telegramBotClient = telegramBotClient;
-        _telegramUpdateExecutor = updateExecutor;
+        _telegramUpdateExecutor = telegramUpdateExecutor;
     }
 
     public override Task StartAsync(CancellationToken cancellationToken)

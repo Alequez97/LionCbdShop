@@ -5,7 +5,7 @@ namespace LionCbdShop.Domain.Interfaces;
 
 public interface IProductService
 {
-    Task<Response<ProductDto>> GetAsync(string id);
+    Task<Response<ProductDto>> GetAsync(Guid id);
 
     Task<Response<IEnumerable<ProductDto>>> GetAllAsync();
 
@@ -13,5 +13,5 @@ public interface IProductService
 
     Task<Response> UpdateAsync(UpdateProductRequest request);
 
-    Task<Response> DeleteAsync(string id);
+    Task<Response> DeleteAsync(Guid id);
 }

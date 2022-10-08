@@ -21,7 +21,7 @@ public class ProductService : IProductService
         _mapper = mapper;
     }
 
-    public async Task<Response<ProductDto>> GetAsync(string id)
+    public async Task<Response<ProductDto>> GetAsync(Guid id)
     {
         var response = new Response<ProductDto>();
 
@@ -128,7 +128,7 @@ public class ProductService : IProductService
         return response;
     }
 
-    public async Task<Response> DeleteAsync(string id)
+    public async Task<Response> DeleteAsync(Guid id)
     {
         var response = new Response();
 

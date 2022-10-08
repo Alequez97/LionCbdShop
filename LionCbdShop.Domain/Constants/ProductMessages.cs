@@ -4,7 +4,7 @@ public static class ProductMessages
 {
     public static class Common
     {
-        public static string NotFound(string id)
+        public static string NotFound(Guid id)
         {
             return $"Product with id {id} not found";
         }
