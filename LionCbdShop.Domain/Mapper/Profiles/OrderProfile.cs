@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using LionCbdShop.Domain.Dto;
 using LionCbdShop.Domain.Requests.Orders;
 using LionCbdShop.Persistence.Entities;
 using CartItem = LionCbdShop.Persistence.Entities.CartItem;
@@ -11,8 +12,12 @@ namespace LionCbdShop.Domain.Mapper.Profiles
         public OrderProfile()
         {
             CreateMap<CreateOrderRequest, Order>();
+
             CreateMap<CreateOrderRequestCartItem, CartItem>()
                 .ForMember(cartItem => cartItem.Product, config => config.Ignore());
+
+            CreateMap<Order, OrderDto>();
+            CreateMap<CartItem, CartItemDto>();
         }
     }
 }

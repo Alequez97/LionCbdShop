@@ -23,6 +23,8 @@ public static class IServiceCollectionExtenstions
         services.AddSingleton<ITelegramCommandResolver, TelegramCommandResolver>();
         services.AddSingleton<TelegramUpdateExecutor>();
 
+        services.AddSingleton<EmojiProvider>();
+
         return services;
     }
 }

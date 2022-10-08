@@ -1,8 +1,11 @@
 ﻿using LionCbdShop.Domain.Interfaces;
 using LionCbdShop.Domain.Requests.Orders;
-using LionCbdShop.Domain.Services;
+using LionCbdShop.TelegramBot.Constants;
 using LionCbdShop.TelegramBot.Interfaces;
+using LionCbdShop.TelegramBot.Models;
+using LionCbdShop.TelegramBot.Services;
 using Newtonsoft.Json;
+using System.Text;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
@@ -13,11 +16,16 @@ namespace LionCbdShop.TelegramBot.Commands
     {
         private readonly ITelegramBotClient _telegramBotClient;
         private readonly IOrderService _orderService;
+        private readonly EmojiProvider _emojiProvider;
 
-        public WebAppCommand(ITelegramBotClient telegramBotClient, IOrderService orderService)
+        public WebAppCommand(
+            ITelegramBotClient telegramBotClient, 
+            IOrderService orderService, 
+            EmojiProvider emojiProvider)
         {
             _telegramBotClient = telegramBotClient;
             _orderService = orderService;
+            _emojiProvider = emojiProvider;
         }
 
         public async Task SendResponseAsync(Update update)
@@ -27,9 +35,15 @@ namespace LionCbdShop.TelegramBot.Commands
             try
             {
                 var webAppData = update.Message.WebAppData.Data;
+                var webAppCommandData = JsonConvert.DeserializeObject<WebAppCommandData>(webAppData);
 
-                var createOrderRequest = JsonConvert.DeserializeObject<CreateOrderRequest>(webAppData);
-                createOrderRequest.CustomerUsername = update.Message.Chat.Username;
+                var createOrderRequest = new CreateOrderRequest()
+                {
+                    CustomerUsername = update.Message.Chat.Username,
+                    CartItems = webAppCommandData.CartItems.Select(webAppDataCartItem => {
+                            return new CartItem() { ProductId = webAppDataCartItem.ProductId, Quantity = webAppDataCartItem.Quantity };
+                        }).ToList()
+                };
 
                 var response = await _orderService.CreateAsync(createOrderRequest);
 
@@ -37,7 +51,7 @@ namespace LionCbdShop.TelegramBot.Commands
                 {
                     await _telegramBotClient.SendTextMessageAsync(
                         chatId,
-                        $"Your order is received and is ready to be completed",
+                        GetMessageFromOrderData(webAppCommandData),
                         ParseMode.MarkdownV2
                     );
 
@@ -57,6 +71,22 @@ namespace LionCbdShop.TelegramBot.Commands
         public bool IsResponsibleForUpdate(Update update)
         {
             return update.Message?.Type == MessageType.WebAppData;
+        }
+
+        private string GetMessageFromOrderData(WebAppCommandData webAppCommandData)
+        {
+            var stringBuilder = new StringBuilder();
+
+            stringBuilder.AppendLine("Please review your order");
+
+            foreach (var cartItem in webAppCommandData.CartItems)
+            {
+                stringBuilder.AppendLine($"{cartItem.ProductName} {_emojiProvider.GetEmoji(cartItem.ProductName)} x{cartItem.Quantity}");
+            }
+
+            stringBuilder.AppendLine($"Total price: {webAppCommandData.TotalPrice}");
+
+            return stringBuilder.Replace(".", ",").ToString();
         }
     }
 }

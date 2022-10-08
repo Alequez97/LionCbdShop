@@ -16,7 +16,10 @@ public class StartCommand : ITelegramCommand
     private readonly ICustomerService _profileService;
     private readonly IConfiguration _configuration;
 
-    public StartCommand(ITelegramBotClient telegramBotClient, ICustomerService profileService, IConfiguration configuration)
+    public StartCommand(
+        ITelegramBotClient telegramBotClient, 
+        ICustomerService profileService, 
+        IConfiguration configuration)
     {
         _telegramBotClient = telegramBotClient;
         _profileService = profileService;
@@ -54,7 +57,7 @@ public class StartCommand : ITelegramCommand
 
         await _telegramBotClient.SendTextMessageAsync(
             chatId,
-            "Welcome in Royal MMXXI shop",
+            $"Welcome in Royal MMXXI shop",
             ParseMode.MarkdownV2,
             replyMarkup: inlineKeyboard
         );
