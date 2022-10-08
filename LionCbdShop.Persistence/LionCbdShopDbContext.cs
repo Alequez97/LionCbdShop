@@ -8,8 +8,6 @@ public class LionCbdShopDbContext : DbContext
 {
     public DbSet<Customer> Customers { get; set; }
 
-    public DbSet<CustomerProvider> CustomerProviders { get; set; }
-
     public DbSet<Product> Products { get; set; }
 
     public DbSet<Order> Orders { get; set; }
@@ -37,14 +35,5 @@ public class LionCbdShopDbContext : DbContext
             .Entity<Order>()
             .HasIndex(product => product.OrderNumber)
             .IsUnique();
-
-        modelBuilder
-            .Entity<CustomerProvider>()
-            .HasIndex(provider => provider.Name)
-            .IsUnique();
-
-        modelBuilder
-            .Entity<CustomerProvider>()
-            .HasData(new CustomerProvider() { Id = Guid.NewGuid(), Name = CustomerProviderName.Telegram });
     }
 }

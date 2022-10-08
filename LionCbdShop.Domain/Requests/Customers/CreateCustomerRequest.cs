@@ -1,4 +1,5 @@
 ﻿using LionCbdShop.Persistence.Constants;
+using LionCbdShop.Persistence.Entities;
 
 namespace LionCbdShop.Domain.Requests.Customers;
 
@@ -25,9 +26,4 @@ public class CreateCustomerRequest
             };
         }
     }
-}
-
-public enum CustomerProvider
-{
-    Telegram = 0
 }

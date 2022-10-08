@@ -8,6 +8,8 @@ namespace LionCbdShop.Persistence.Interfaces
 
         public Task<Order> GetAsync(Guid id);
 
+        public Task<Order> GetByOrderNumberAsync(string orderNumber);
+
         public Task CreateAsync(Order order);
     }
 }

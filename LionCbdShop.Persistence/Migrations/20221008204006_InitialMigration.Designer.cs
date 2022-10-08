@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LionCbdShop.Persistence.Migrations
 {
     [DbContext(typeof(LionCbdShopDbContext))]
-    [Migration("20221008112931_InitialMigration")]
+    [Migration("20221008204006_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,8 +54,8 @@ namespace LionCbdShop.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("CustomerProviderId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int?>("CustomerProvider")
+                        .HasColumnType("int");
 
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
@@ -72,37 +72,10 @@ namespace LionCbdShop.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerProviderId");
-
                     b.HasIndex("Username")
                         .IsUnique();
 
                     b.ToTable("Customers");
-                });
-
-            modelBuilder.Entity("LionCbdShop.Persistence.Entities.CustomerProvider", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("CustomerProviders");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("e379e014-121e-4a94-8e25-05d1e3d60011"),
-                            Name = "Telegram"
-                        });
                 });
 
             modelBuilder.Entity("LionCbdShop.Persistence.Entities.Order", b =>
@@ -117,6 +90,9 @@ namespace LionCbdShop.Persistence.Migrations
                     b.Property<string>("OrderNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -169,15 +145,6 @@ namespace LionCbdShop.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("LionCbdShop.Persistence.Entities.Customer", b =>
-                {
-                    b.HasOne("LionCbdShop.Persistence.Entities.CustomerProvider", "CustomerProvider")
-                        .WithMany()
-                        .HasForeignKey("CustomerProviderId");
-
-                    b.Navigation("CustomerProvider");
                 });
 
             modelBuilder.Entity("LionCbdShop.Persistence.Entities.Order", b =>

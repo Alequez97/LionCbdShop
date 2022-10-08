@@ -1,7 +1,6 @@
-﻿namespace LionCbdShop.Persistence.Entities
+﻿namespace LionCbdShop.Persistence.Entities;
+
+public enum CustomerProvider
 {
-    public class CustomerProvider : EntityBase
-    {
-        public string Name { get; set; }
-    }
+    Telegram = 0
 }

@@ -24,10 +24,5 @@ namespace LionCbdShop.Persistence.Repositories.Data
             _dbContext.Customers.Add(customer);
             await _dbContext.SaveChangesAsync();
         }
-
-        public async Task<CustomerProvider> GetCustomerProviderAsync(string name)
-        {
-            return await _dbContext.CustomerProviders.FirstOrDefaultAsync(cp => cp.Name == name);
-        }
     }
 }

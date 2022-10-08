@@ -10,15 +10,19 @@ namespace LionCbdShop.Persistence.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "CustomerProviders",
+                name: "Customers",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    Username = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CustomerProvider = table.Column<int>(type: "int", nullable: true),
+                    IdInCustomerProviderSystem = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CustomerProviders", x => x.Id);
+                    table.PrimaryKey("PK_Customers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -37,33 +41,13 @@ namespace LionCbdShop.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Customers",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Username = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CustomerProviderId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    IdInCustomerProviderSystem = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Customers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Customers_CustomerProviders_CustomerProviderId",
-                        column: x => x.CustomerProviderId,
-                        principalTable: "CustomerProviders",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Orders",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     OrderNumber = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -101,11 +85,6 @@ namespace LionCbdShop.Persistence.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.InsertData(
-                table: "CustomerProviders",
-                columns: new[] { "Id", "Name" },
-                values: new object[] { new Guid("e379e014-121e-4a94-8e25-05d1e3d60011"), "Telegram" });
-
             migrationBuilder.CreateIndex(
                 name: "IX_CartItems_OrderId",
                 table: "CartItems",
@@ -115,17 +94,6 @@ namespace LionCbdShop.Persistence.Migrations
                 name: "IX_CartItems_ProductId",
                 table: "CartItems",
                 column: "ProductId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CustomerProviders_Name",
-                table: "CustomerProviders",
-                column: "Name",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Customers_CustomerProviderId",
-                table: "Customers",
-                column: "CustomerProviderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Customers_Username",
@@ -164,9 +132,6 @@ namespace LionCbdShop.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "Customers");
-
-            migrationBuilder.DropTable(
-                name: "CustomerProviders");
         }
     }
 }

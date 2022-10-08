@@ -1,12 +1,12 @@
 ﻿using LionCbdShop.Domain.Interfaces;
 using LionCbdShop.Domain.Requests.Customers;
+using LionCbdShop.Persistence.Entities;
 using LionCbdShop.TelegramBot.Constants;
 using LionCbdShop.TelegramBot.Interfaces;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
-using CustomerProvider = LionCbdShop.Domain.Requests.Customers.CustomerProvider;
 
 namespace LionCbdShop.TelegramBot.Commands;
 
@@ -30,7 +30,7 @@ public class StartCommand : ITelegramCommand
     {
         var chatId = update.Message.Chat.Id;
 
-        var createProfileRequest = new CreateCustomerRequest()
+        var createCustomerRequest = new CreateCustomerRequest()
         {
             Username = update.Message.From.Username,
             FirstName = update.Message.From.FirstName,
@@ -38,7 +38,7 @@ public class StartCommand : ITelegramCommand
             CustomerProvider = CustomerProvider.Telegram,
             IdInCustomerProviderSystem = update.Message.From.Id.ToString(),
         };
-        var response = await _profileService.CreateAsync(createProfileRequest);
+        var response = await _profileService.CreateAsync(createCustomerRequest);
 
         if (!response.IsSuccess)
         {

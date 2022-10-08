@@ -1,6 +1,6 @@
 ﻿using LionCbdShop.Domain.Interfaces;
 using LionCbdShop.Domain.Requests.Orders;
-using LionCbdShop.TelegramBot.Constants;
+using LionCbdShop.Persistence.Entities;
 using LionCbdShop.TelegramBot.Interfaces;
 using LionCbdShop.TelegramBot.Models;
 using LionCbdShop.TelegramBot.Services;
@@ -9,6 +9,8 @@ using System.Text;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
+using Telegram.Bot.Types.Payments;
+using CartItem = LionCbdShop.Domain.Requests.Orders.CartItem;
 
 namespace LionCbdShop.TelegramBot.Commands
 {
@@ -45,15 +47,24 @@ namespace LionCbdShop.TelegramBot.Commands
                         }).ToList()
                 };
 
-                var response = await _orderService.CreateAsync(createOrderRequest);
+                var createOrderResponse = await _orderService.CreateAsync(createOrderRequest);
 
-                if (response.IsSuccess)
+                if (createOrderResponse.IsSuccess)
                 {
-                    await _telegramBotClient.SendTextMessageAsync(
+                    await _telegramBotClient.SendInvoiceAsync(
                         chatId,
-                        GetMessageFromOrderData(webAppCommandData),
-                        ParseMode.MarkdownV2
+                        $"Order number {createOrderResponse.ResponseObject.OrderNumber}",
+                        "Best quality with Royal MMXXI",
+                        "what is payload?",
+                        "284685063:TEST:MDE3ZGQ2YzEwMjk5",
+                        "EUR",
+                        GetPaymentLabeledPricesFromOrderData(webAppCommandData),
+                        needShippingAddress: true,
+                        needPhoneNumber: true,
+                        needName: true
                     );
+
+                    await _orderService.UpdateOrderStatusAsync(createOrderResponse.ResponseObject.OrderNumber, OrderStatus.InvoiceSent);
 
                     return;
                 }
@@ -62,7 +73,7 @@ namespace LionCbdShop.TelegramBot.Commands
             {
                 await _telegramBotClient.SendTextMessageAsync(
                     chatId,
-                    $"Error while processing your request",
+                    $"Error while processing your request. Try again later or contact support",
                     ParseMode.MarkdownV2
                 );
             }
@@ -73,11 +84,28 @@ namespace LionCbdShop.TelegramBot.Commands
             return update.Message?.Type == MessageType.WebAppData;
         }
 
+        private IEnumerable<LabeledPrice> GetPaymentLabeledPricesFromOrderData(WebAppCommandData webAppCommandData, int deliveryPriceInCents = default)
+        {
+            foreach (var cartItem in webAppCommandData.CartItems)
+            {
+                yield return new LabeledPrice($"{cartItem.ProductName} {_emojiProvider.GetEmoji(cartItem.ProductName)} x{cartItem.Quantity}", (int)(webAppCommandData.TotalPrice * 100));
+            }
+
+            if (deliveryPriceInCents > 0)
+            {
+                yield return new LabeledPrice("Delivery", deliveryPriceInCents);
+            }
+            else
+            {
+                yield return new LabeledPrice("Free delivery", 0);
+            }
+        }
+
         private string GetMessageFromOrderData(WebAppCommandData webAppCommandData)
         {
             var stringBuilder = new StringBuilder();
 
-            stringBuilder.AppendLine("Please review your order");
+            //stringBuilder.AppendLine("Please review your order");
 
             foreach (var cartItem in webAppCommandData.CartItems)
             {

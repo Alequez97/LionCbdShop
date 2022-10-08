@@ -33,8 +33,6 @@ public class CustomerService : ICustomerService
             }
 
             var customer = _mapper.Map<Customer>(request);
-            var customerProvider = await _customerRepository.GetCustomerProviderAsync(request.CustomerProviderAsString);
-            customer.CustomerProvider = customerProvider;
 
             await _customerRepository.CreateAsync(customer);
 

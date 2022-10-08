@@ -11,4 +11,6 @@ public class Order : EntityBase
     public Customer Customer { get; set; }
 
     public IList<CartItem> CartItems { get; set; }
+
+    public OrderStatus Status { get; set; }
 }

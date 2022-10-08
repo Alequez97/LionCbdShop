@@ -23,6 +23,11 @@ public class SqlOrderRepository : IOrderRepository
         return await _dbContext.Orders.FirstOrDefaultAsync(order => order.Id == id);
     }
 
+    public async Task<Order> GetByOrderNumberAsync(string orderNumber)
+    {
+        return await _dbContext.Orders.FirstOrDefaultAsync(order => order.OrderNumber == orderNumber);
+    }
+
     public async Task CreateAsync(Order order)
     {
         await _dbContext.Orders.AddAsync(order);
