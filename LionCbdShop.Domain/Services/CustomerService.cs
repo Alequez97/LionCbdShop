@@ -1,23 +1,19 @@
 ﻿using LionCbdShop.Domain.Constants;
 using LionCbdShop.Domain.Interfaces;
 using LionCbdShop.Domain.Requests.Customers;
-using LionCbdShop.Persistence;
 using LionCbdShop.Persistence.Entities;
 using LionCbdShop.Persistence.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace LionCbdShop.Domain.Services;
 
 public class CustomerService : ICustomerService
 {
     private readonly ICustomerRepository _customerRepository;
-    private readonly LionCbdShopDbContext _dbContext;
     private readonly AutoMapper.IMapper _mapper;
 
-    public CustomerService(ICustomerRepository profileRepository, LionCbdShopDbContext dbContext, AutoMapper.IMapper mapper)
+    public CustomerService(ICustomerRepository profileRepository, AutoMapper.IMapper mapper)
     {
         _customerRepository = profileRepository;
-        _dbContext = dbContext;
         _mapper = mapper;
     }
 
@@ -37,7 +33,7 @@ public class CustomerService : ICustomerService
             }
 
             var customer = _mapper.Map<Customer>(request);
-            var customerProvider = await _dbContext.CustomerProviders.FirstOrDefaultAsync(cp => cp.Name == request.CustomerProviderAsString);
+            var customerProvider = await _customerRepository.GetCustomerProviderAsync(request.CustomerProviderAsString);
             customer.CustomerProvider = customerProvider;
 
             await _customerRepository.CreateAsync(customer);
