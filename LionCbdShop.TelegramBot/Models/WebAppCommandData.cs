@@ -31,4 +31,6 @@ public class WebAppCommandCartItems
     public double OriginalPrice { get; set; }
 
     public int Quantity { get; set; }
+
+    public double TotalPrice => OriginalPrice * Quantity;
 }

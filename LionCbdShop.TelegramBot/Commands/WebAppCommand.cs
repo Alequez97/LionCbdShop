@@ -93,7 +93,7 @@ namespace LionCbdShop.TelegramBot.Commands
         {
             foreach (var cartItem in webAppCommandData.CartItems)
             {
-                yield return new LabeledPrice($"{cartItem.ProductName} {_emojiProvider.GetEmoji(cartItem.ProductName)} x{cartItem.Quantity}", (int)(webAppCommandData.TotalPrice * 100));
+                yield return new LabeledPrice($"{cartItem.ProductName} {_emojiProvider.GetEmoji(cartItem.ProductName)} x{cartItem.Quantity}", (int)(cartItem.TotalPrice * 100));
             }
 
             if (deliveryPriceInCents > 0)
