@@ -55,7 +55,7 @@ namespace LionCbdShop.TelegramBot.Commands
                         chatId,
                         $"Order number {createOrderResponse.ResponseObject.OrderNumber}",
                         "Best quality with Royal MMXXI",
-                        "what is payload?",
+                        createOrderResponse.ResponseObject.OrderNumber,
                         "284685063:TEST:MDE3ZGQ2YzEwMjk5",
                         "EUR",
                         GetPaymentLabeledPricesFromOrderData(webAppCommandData),
