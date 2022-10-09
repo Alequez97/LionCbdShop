@@ -5,6 +5,7 @@ using LionCbdShop.Domain.Interfaces;
 using LionCbdShop.Domain.Requests.Orders;
 using LionCbdShop.Persistence.Entities;
 using LionCbdShop.Persistence.Interfaces;
+using System.Data;
 
 namespace LionCbdShop.Domain.Services;
 
@@ -54,6 +55,7 @@ public class OrderService : IOrderService
             var customer = await _customerRepository.GetByUsernameAsync(request.CustomerUsername);
             order.Customer = customer;
             order.OrderNumber = GenerateOrderNumber();
+            order.CreationDate = DateTime.Now;
             order.Status = OrderStatus.New;
 
             await _orderRepository.CreateAsync(order);
@@ -92,6 +94,11 @@ public class OrderService : IOrderService
             }
 
             order.Status = request.Status;
+            if (request.Status == OrderStatus.Paid)
+            {
+                order.PaymentDate = DateTime.Now;
+            }
+
             await _orderRepository.UpdateAsync(order);
 
             response.IsSuccess = true;
