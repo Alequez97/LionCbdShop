@@ -12,5 +12,9 @@ public class Order : EntityBase
 
     public IList<CartItem> CartItems { get; set; }
 
+    public DateTime CreationDate { get; set; }
+
+    public DateTime? PaymentDate { get; set; }
+
     public OrderStatus Status { get; set; }
 }

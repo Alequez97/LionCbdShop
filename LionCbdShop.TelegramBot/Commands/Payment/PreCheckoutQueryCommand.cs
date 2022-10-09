@@ -20,7 +20,6 @@ public class PreCheckoutQueryCommand : ITelegramCommand
 
     public async Task SendResponseAsync(Update update)
     {
-        
         var preCheckoutQuery = update.PreCheckoutQuery;
 
         // Here data can be validated and desicion can be made if order can processed
