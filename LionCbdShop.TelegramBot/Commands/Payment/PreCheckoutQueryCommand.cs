@@ -24,6 +24,6 @@ public class PreCheckoutQueryCommand : ITelegramCommand
 
         // Here data can be validated and desicion can be made if order can processed
 
-        await _telegramBotClient.AnswerPreCheckoutQueryAsync(preCheckoutQuery.Id);
+        //await _telegramBotClient.AnswerPreCheckoutQueryAsync(preCheckoutQuery.Id);
     }
 }

@@ -64,7 +64,12 @@ namespace LionCbdShop.TelegramBot.Commands
                         needName: true
                     );
 
-                    await _orderService.UpdateOrderStatusAsync(createOrderResponse.ResponseObject.OrderNumber, OrderStatus.InvoiceSent);
+                    var updateOrderRequest = new UpdateOrderStatusRequest()
+                    {
+                        OrderNumber = createOrderResponse.ResponseObject.OrderNumber,
+                        Status = OrderStatus.InvoiceSent
+                    };
+                    await _orderService.UpdateOrderStatusAsync(updateOrderRequest);
 
                     return;
                 }
@@ -75,7 +80,7 @@ namespace LionCbdShop.TelegramBot.Commands
                     chatId,
                     $"Error while processing your request. Try again later or contact support",
                     ParseMode.MarkdownV2
-                );
+                ); 
             }
         }
 

@@ -76,20 +76,26 @@ public class OrderService : IOrderService
         return $"{DateTime.Now.ToString("yyyyMMddHHmmss")}-{_random.Next(1000, 9999)}";
     }
 
-    public async Task<Response> UpdateOrderStatusAsync(string orderNumber, OrderStatus status)
+    public async Task<Response> UpdateOrderStatusAsync(UpdateOrderStatusRequest request)
     {
         var response = new Response();
 
         try
         {
-            var order = await _orderRepository.GetByOrderNumberAsync(orderNumber);
+            var order = await _orderRepository.GetByOrderNumberAsync(request.OrderNumber);
 
             if (order == null)
             {
                 response.IsSuccess = false;
-                response.Message = OrderResponseMessage.NotFound(orderNumber);
+                response.Message = OrderResponseMessage.NotFound(request.OrderNumber);
                 return response;
             }
+
+            order.Status = request.Status;
+            await _orderRepository.UpdateAsync(order);
+
+            response.IsSuccess = true;
+            response.Message = OrderResponseMessage.StatusWasUpdated(request.OrderNumber);
         }
         catch
         {
