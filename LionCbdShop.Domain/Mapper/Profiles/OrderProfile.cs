@@ -17,7 +17,10 @@ namespace LionCbdShop.Domain.Mapper.Profiles
                 .ForMember(cartItem => cartItem.Product, config => config.Ignore());
 
             CreateMap<Order, OrderDto>()
-                .ForMember(orderDto => orderDto.Status, config => config.MapFrom(order => order.Status.ToString()));
+                .ForMember(orderDto => orderDto.Status, config => config.MapFrom(order => order.Status.ToString()))
+                .ForMember(orderDto => 
+                    orderDto.CustomerUsername, 
+                    config => config.MapFrom(order => order.Customer.Username));
 
             CreateMap<CartItem, CartItemDto>();
         }

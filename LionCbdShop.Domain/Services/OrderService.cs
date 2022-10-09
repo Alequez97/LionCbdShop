@@ -5,7 +5,6 @@ using LionCbdShop.Domain.Interfaces;
 using LionCbdShop.Domain.Requests.Orders;
 using LionCbdShop.Persistence.Entities;
 using LionCbdShop.Persistence.Interfaces;
-using System.Data;
 
 namespace LionCbdShop.Domain.Services;
 
@@ -35,6 +34,27 @@ public class OrderService : IOrderService
 
             response.IsSuccess = true;
             response.ResponseObject = ordersDto;
+        }
+        catch
+        {
+            response.IsSuccess = false;
+            response.Message = CommonResponseMessage.Get.Error(ResponseMessageEntity.Order);
+        }
+
+        return response;
+    }
+
+    public async Task<Response<OrderDto>> GetAsync(Guid orderId)
+    {
+        var response = new Response<OrderDto>();
+
+        try
+        {
+            var order = await _orderRepository.GetAsync(orderId);
+            var orderDto = _mapper.Map<OrderDto>(order);
+
+            response.IsSuccess = true;
+            response.ResponseObject = orderDto;
         }
         catch
         {

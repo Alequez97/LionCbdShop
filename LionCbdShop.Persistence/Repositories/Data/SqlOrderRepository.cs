@@ -20,7 +20,14 @@ public class SqlOrderRepository : IOrderRepository
 
     public async Task<Order> GetAsync(Guid id)
     {
-        return await _dbContext.Orders.FirstOrDefaultAsync(order => order.Id == id);
+        var order = await _dbContext
+            .Orders
+            .Include(order => order.Customer)
+            .Include(order => order.CartItems)
+            .ThenInclude(cartItem => cartItem.Product)
+            .FirstOrDefaultAsync(order => order.Id == id);
+
+        return order;
     }
 
     public async Task<Order> GetByOrderNumberAsync(string orderNumber)

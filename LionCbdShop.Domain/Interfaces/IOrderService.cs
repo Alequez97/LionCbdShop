@@ -5,9 +5,11 @@ namespace LionCbdShop.Domain.Interfaces;
 
 public interface IOrderService
 {
-    Task<Response<IEnumerable<OrderDto>>> GetAllAsync();
+    public Task<Response<IEnumerable<OrderDto>>> GetAllAsync();
 
-    Task<Response<OrderDto>> CreateAsync(CreateOrderRequest request);
+    public Task<Response<OrderDto>> GetAsync(Guid orderId);
+
+    public Task<Response<OrderDto>> CreateAsync(CreateOrderRequest request);
 
     public Task<Response> UpdateOrderStatusAsync(UpdateOrderStatusRequest request);
 }
