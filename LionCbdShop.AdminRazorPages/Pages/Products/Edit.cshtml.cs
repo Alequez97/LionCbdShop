@@ -4,7 +4,7 @@ using LionCbdShop.Domain.Requests.Products;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace LionCbdShop.Admin.Pages.Products;
+namespace LionCbdShop.AdminRazorPages.Pages.Products;
 
 public class EditModel : PageModel
 {

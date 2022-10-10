@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LionCbdShop.Admin", "LionCbdShop.Admin\LionCbdShop.Admin.csproj", "{7151043D-C73A-4D4C-920D-BBFBC8773A80}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LionCbdShop.AdminRazorPages", "LionCbdShop.AdminRazorPages\LionCbdShop.AdminRazorPages.csproj", "{7151043D-C73A-4D4C-920D-BBFBC8773A80}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LionCbdShop.Api", "LionCbdShop.Api\LionCbdShop.Api.csproj", "{F6A089B2-8C95-44DB-B610-89CB1D9D7E9A}"
 EndProject

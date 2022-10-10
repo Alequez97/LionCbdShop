@@ -5,7 +5,7 @@ using LionCbdShop.Persistence.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace LionCbdShop.Admin.Pages.Orders
+namespace LionCbdShop.AdminRazorPages.Pages.Orders
 {
     public class DetailsModel : PageModel
     {

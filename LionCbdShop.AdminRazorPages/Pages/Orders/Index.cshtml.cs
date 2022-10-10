@@ -2,7 +2,7 @@
 using LionCbdShop.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace LionCbdShop.Admin.Pages.Orders;
+namespace LionCbdShop.AdminRazorPages.Pages.Orders;
 
 public class IndexModel : PageModel
 {
