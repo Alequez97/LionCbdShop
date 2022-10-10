@@ -1,14 +1,15 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import './App.css'
 import Card from './components/Card/Card'
 import Loader from './components/Loader/Loader';
 import Error from './components/Error/Error';
-import { useProductsMock } from './hooks/productsMock';
 import { getCartItemsAsJsonString } from './helpers'
 import { addProduct, removeProduct } from './store/cartItems';
 import { useAppDispatch } from './store/store';
 import { useCartItems } from './hooks/cartItems';
 import Footer from './components/Footer/Footer';
+import IProduct from './models/Product';
+import { useProducts } from './hooks/products';
 
 const telegramWebApp = window.Telegram.WebApp;
 
@@ -20,20 +21,19 @@ function App() {
 
   const dispatch = useAppDispatch();
   const { cartItems } = useCartItems();
-  const { products, error, loading } = useProductsMock();
+  const { products, error, loading } = useProducts();
 
   function sendDataToTelegramWebApp() {
-    console.log('send data');
     const json = getCartItemsAsJsonString(cartItems);
     telegramWebApp.sendData(json);
   }
 
-  const onAdd = (productId: string) => {
-    dispatch(addProduct(productId))
+  const onAdd = (product: IProduct) => {
+    dispatch(addProduct(product))
   };
 
-  const onRemove = (productId: string) => {
-    dispatch(removeProduct(productId))
+  const onRemove = (product: IProduct) => {
+    dispatch(removeProduct(product))
   };
 
   if (loading) {
@@ -51,6 +51,8 @@ function App() {
   return (
     <>
       <h2 className="heading">Royal MMXXI</h2>
+
+      {products.length === 0 && <span>No available products at this moment</span>}
 
       <div className="cards__container">
         {products.map(product => <Card product={product} key={product.id} onAdd={onAdd} onRemove={onRemove} />)}

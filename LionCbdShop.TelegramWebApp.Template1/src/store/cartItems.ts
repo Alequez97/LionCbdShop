@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import ICartItem from "../models/CartItem";
+import IProduct from "../models/Product";
 
 interface CartItemsState {
   cartItems: ICartItem[];
@@ -11,14 +12,14 @@ export const cartItemsSlice = createSlice({
     cartItems: [],
   } as CartItemsState,
   reducers: {
-    addProduct: (state, action: PayloadAction<string>) => {
+    addProduct: (state, action: PayloadAction<IProduct>) => {
       const existingCartItem = state.cartItems.find(
-        (cartItem) => cartItem.productId === action.payload
+        (cartItem) => cartItem.product.id === action.payload.id
       );
 
       if (existingCartItem) {
         let newState = state.cartItems.map((cartItem) => {
-          if (cartItem.productId === action.payload) {
+          if (cartItem.product.id === action.payload.id) {
             return {
               ...existingCartItem,
               quantity: existingCartItem.quantity + 1,
@@ -34,20 +35,21 @@ export const cartItemsSlice = createSlice({
 
       let newState = [
         ...state.cartItems,
-        { productId: action.payload, quantity: 1 },
+        { product: action.payload, quantity: 1 },
       ];
+
       return {
         cartItems: newState,
       };
     },
-    removeProduct: (state, action: PayloadAction<string>) => {
+    removeProduct: (state, action: PayloadAction<IProduct>) => {
       const existingCartItem = state.cartItems.find(
-        (cartItem) => cartItem.productId === action.payload
+        (cartItem) => cartItem.product.id === action.payload.id
       );
 
       if (existingCartItem?.quantity === 1) {
         let newState = state.cartItems.filter(
-          (cartItem) => cartItem.productId !== action.payload
+          (cartItem) => cartItem.product.id !== action.payload.id
         );
 
         return {
@@ -56,7 +58,7 @@ export const cartItemsSlice = createSlice({
       }
 
       let newState = state.cartItems.map((cartItem) => {
-        if (cartItem.productId === action.payload) {
+        if (cartItem.product.id === action.payload.id) {
           return { ...cartItem, quantity: cartItem.quantity - 1 };
         }
         return cartItem;

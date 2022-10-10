@@ -5,8 +5,8 @@ import IProduct from "../../models/Product";
 
 interface CardProps {
     product: IProduct
-    onAdd: (productId: string) => void;
-    onRemove: (productId: string) => void;
+    onAdd: (product: IProduct) => void;
+    onRemove: (product: IProduct) => void;
 }
 
 function Card({ product, onAdd, onRemove }: CardProps) {
@@ -15,11 +15,11 @@ function Card({ product, onAdd, onRemove }: CardProps) {
 
   const handleIncrement = () => {
     setProductQuantity(productQuantity + 1);
-    onAdd(product.id);
+    onAdd(product);
   };
   const handleDecrement = () => {
     setProductQuantity(productQuantity - 1);
-    onRemove(product.id);
+    onRemove(product);
   };
 
   return (

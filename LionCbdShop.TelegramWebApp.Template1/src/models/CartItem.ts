@@ -1,7 +1,7 @@
 import IProduct from "./Product";
 
 interface ICartItem {
-    productId: string
+    product: IProduct
     quantity: number
 }
 
