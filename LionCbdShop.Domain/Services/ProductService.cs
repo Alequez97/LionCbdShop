@@ -106,14 +106,13 @@ public class ProductService : IProductService
 
             var product = _mapper.Map<Product>(updateProductRequest);
 
-            var newImageName = string.Empty;
             if (updateProductRequest.ProductImage != null)
             {
                 await _productImagesRepository.DeleteAsync(existingProduct.ImageName);
-                newImageName = await _productImagesRepository.SaveAsync(updateProductRequest.ProductImage, CancellationToken.None);
+                var newImageName = await _productImagesRepository.SaveAsync(updateProductRequest.ProductImage, CancellationToken.None);
+                product.ImageName = newImageName;
             }
-
-            product.ImageName = newImageName;
+            
             await _productRepository.UpdateAsync(product);
 
             response.IsSuccess = true;
