@@ -1,7 +1,7 @@
 import React from 'react'
-import Loader from '../components/Loader';
-import Error from '../components/Error';
-import { useOrders } from '../hooks/orders';
+import Loader from '../../components/Loader';
+import Error from '../../components/Error';
+import { useOrders } from '../../hooks/orders';
 import { Link } from 'react-router-dom';
 
 const Orders = () => {

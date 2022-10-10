@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useParams } from 'react-router-dom'
-import Order from '../models/Order'
-import Response from '../Response'
-import CartItem from '../models/CartItem'
+import Order from '../../models/Order'
+import Response from '../../Response'
+import CartItem from '../../models/CartItem'
 
 export default function OrderDetails() {
     let params = useParams();

@@ -1,8 +1,7 @@
-import React from 'react'
-import Loader from '../components/Loader';
-import Error from '../components/Error';
-import { useProducts } from '../hooks/products';
-import ProductCard from '../components/ProductCard';
+import Loader from '../../components/Loader';
+import Error from '../../components/Error';
+import { useProducts } from '../../hooks/products';
+import ProductCard from '../../components/ProductCard';
 import { Link } from 'react-router-dom';
 
 export default function Products() {
