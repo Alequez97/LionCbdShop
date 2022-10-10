@@ -1,4 +1,4 @@
-interface IProduct {
+interface Product {
     id: number
     productName: string
     originalPrice: number
@@ -6,4 +6,4 @@ interface IProduct {
     image: string
 }
 
-export default IProduct
+export default Product

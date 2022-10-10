@@ -1,18 +1,18 @@
 import axios, { AxiosError } from "axios";
 import { useEffect, useState } from "react";
-import IProduct from "../models/Product";
+import Order from "../models/Order";
 import Response from '../Response'
 
-export function useProducts() {
-  const [products, setProducts] = useState<IProduct[]>([]);
+export function useOrders() {
+  const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  async function fetchProducts() {
+  async function fetchOrders() {
     try {
       setLoading(true);
-      const response = await axios.get<Response<IProduct[]>>('https://localhost:44372/api/products');
-      setProducts(response.data.responseObject);
+      const response = await axios.get<Response<Order[]>>('https://localhost:44398/api/orders');
+      setOrders(response.data.responseObject);
       setLoading(false);
     } catch (e: unknown) {
       const error = e as AxiosError;
@@ -22,8 +22,8 @@ export function useProducts() {
   }
 
   useEffect(() => {
-    fetchProducts();
+    fetchOrders();
   }, []);
 
-  return { products, error, loading };
+  return { orders, error, loading };
 }

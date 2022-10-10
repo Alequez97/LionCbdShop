@@ -1,7 +1,7 @@
-import IProduct from "../models/Product"
+import Product from "../models/Product"
 
 interface ProductCardProps {
-    product: IProduct
+    product: Product
     editOnClick: () => void
     deleteOnClick: () => void
 }
