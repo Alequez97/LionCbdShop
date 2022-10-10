@@ -1,10 +1,21 @@
-import React from 'react';
-import './App.css';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import Layout from "./pages/Layout";
+import Orders from "./pages/Orders";
+import Products from "./pages/Products";
 
 function App() {
   return (
-    <div className="App">
-      <p>Blank react project</p>
+    <div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="products" element={<Products />} />
+            <Route path="orders" element={<Orders />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
