@@ -4,7 +4,7 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-      <p>Lion Cbd Admin</p>
+      <p>Blank react project</p>
     </div>
   );
 }
