@@ -5,47 +5,54 @@
 }
 
 <div class="wrapper">
-    @if (Model.ResponseMessage != null)
+    @if (Model.ProductServicePostActionResponse != null)
     {
-        <div class="alert alert-@Model.ResponseMessageCssClass text-center" role="alert">
-            @Model.ResponseMessage
+        var cssClass = Model.ProductServicePostActionResponse.IsSuccess ? "success" : "danger";
+
+        <div class="alert alert-@cssClass text-center" role="alert">
+            @Model.ProductServicePostActionResponse.Message
         </div>
     }
-    @if (Model.Products != null)
+    
+    @if (Model.GetProductsResponse.IsSuccess == false)
     {
-        if(!Model.Products.Any())
-        {
-            <div class="p-3 mb-2 bg-light text-dark text-center">
-                <h3>No products to display</h3>
-            </div>
-        }
-        <div class="text-center mb-4">
-            <a asp-page="Add">
-                <button type="button" class="btn btn-primary">Add new product</button>
-            </a>
+        <div class="alert alert-danger text-center" role="alert">
+            @Model.GetProductsResponse.Message
         </div>
-        <form method="post">
-            <div class="cards-wrapper">
-                <div class="row">
-                    @foreach (var product in Model.Products)
-                    {
-                        <div class="col-md-3">
-                            <div class="card mb-4" style="width: 18rem; margin: 0 auto;">
-                                <img src="@product.Image" class="card-img-top" alt="@product.ProductName">
-                                <div class="card-body">
-                                    <h5 class="card-title">@product.ProductName</h5>
-                                    <p class="card-text">Original price: @product.OriginalPrice</p>
-                                    <p class="card-text">Price with discount: @product.PriceWithDiscount</p>
-                                    <div class="d-flex justify-content-between">
-                                        <a asp-page="/Products/Edit" asp-route-id="@product.Id" class="btn btn-warning mr-1">Edit</a>
-                                        <button type="submit" asp-page-handler="Delete" asp-route-id="@product.Id" class="btn btn-danger ml-1" onclick="return confirm('Are you sure you want to delete?')">Delete</button>
-                                    </div>
+    }
+    
+    @if(!Model.GetProductsResponse.ResponseObject.Any())
+    {
+    <div class="p-3 mb-2 bg-light text-dark text-center">
+        <h3>No products to display</h3>
+    </div>
+    }
+    <div class="text-center mb-4">
+        <a asp-page="Add">
+            <button type="button" class="btn btn-primary">Add new product</button>
+        </a>
+    </div>
+    <form method="post">
+        <div class="cards-wrapper">
+            <div class="row">
+                @foreach (var product in Model.GetProductsResponse.ResponseObject)
+                {
+                    <div class="col-md-3">
+                        <div class="card mb-4" style="width: 18rem; margin: 0 auto;">
+                            <img src="@product.Image" class="card-img-top" alt="@product.ProductName">
+                            <div class="card-body">
+                                <h5 class="card-title">@product.ProductName</h5>
+                                <p class="card-text">Original price: @product.OriginalPrice</p>
+                                <p class="card-text">Price with discount: @product.PriceWithDiscount</p>
+                                <div class="d-flex justify-content-between">
+                                    <a asp-page="/Products/Edit" asp-route-id="@product.Id" class="btn btn-warning mr-1">Edit</a>
+                                    <button type="submit" asp-page-handler="Delete" asp-route-id="@product.Id" class="btn btn-danger ml-1" onclick="return confirm('Are you sure you want to delete?')">Delete</button>
                                 </div>
                             </div>
                         </div>
-                    }
-                </div>
+                    </div>
+                }
             </div>
-        </form>
-    }
+        </div>
+    </form>
 </div>

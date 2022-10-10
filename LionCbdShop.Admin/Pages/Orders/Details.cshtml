@@ -43,7 +43,9 @@
 
 @if (Model.Order.HasBeenPaid)
 {
-    <div class="text-center pt-3">
-        <input type="submit" value="Deliver order" class="btn btn-success">
-    </div>
+    <form method="post">
+        <div class="text-center pt-3">
+            <button type="submit" asp-page-handler="Details" asp-route-id="@Model.Order.Id" class="btn btn-success ml-1" onclick="return confirm('Are you sure you want mark this order as delivered?')">Deliver order</button>
+        </div>
+    </form>
 }

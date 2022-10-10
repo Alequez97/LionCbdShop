@@ -1,5 +1,8 @@
 using LionCbdShop.Domain.Dto;
 using LionCbdShop.Domain.Interfaces;
+using LionCbdShop.Domain.Requests.Orders;
+using LionCbdShop.Persistence.Entities;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace LionCbdShop.Admin.Pages.Orders
@@ -23,6 +26,19 @@ namespace LionCbdShop.Admin.Pages.Orders
             {
                 Order = response.ResponseObject;
             }
+        }
+
+        public async Task<ActionResult> OnPost(string orderNumber)
+        {
+            var updateOrderStatusRequest = new UpdateOrderStatusRequest()
+            {
+                OrderNumber = orderNumber,
+                Status = OrderStatus.Paid
+            };
+
+            var response = await _orderService.UpdateOrderStatusAsync(updateOrderStatusRequest);
+
+            return RedirectToPage("Details", response);
         }
     }
 }
