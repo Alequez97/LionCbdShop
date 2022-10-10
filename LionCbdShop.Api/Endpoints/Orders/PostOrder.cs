@@ -6,7 +6,7 @@ using LionCbdShop.Domain.Requests.Orders;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace LionCbdShop.Api.Endpoints.Products;
+namespace LionCbdShop.Api.Endpoints.Orders;
 
 public class PostOrder : EndpointBaseAsync
     .WithRequest<CreateOrderRequest>

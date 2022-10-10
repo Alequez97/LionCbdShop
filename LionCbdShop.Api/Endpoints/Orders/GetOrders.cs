@@ -6,7 +6,7 @@ using LionCbdShop.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace LionCbdShop.Api.Endpoints.Products;
+namespace LionCbdShop.Api.Endpoints.Orders;
 
 public class GetOrders : EndpointBaseAsync
     .WithoutRequest
