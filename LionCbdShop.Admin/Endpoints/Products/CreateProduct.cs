@@ -15,7 +15,7 @@ public class CreateProduct : EndpointBaseAsync
 
     [HttpPost("/api/products")]
     [SwaggerOperation(Tags = new[] { SwaggerGroup.Products })]
-    public override async Task<ActionResult<Response>> HandleAsync(CreateProductRequest request, CancellationToken cancellationToken = default)
+    public override async Task<ActionResult<Response>> HandleAsync([FromForm]CreateProductRequest request, CancellationToken cancellationToken = default)
     {
         var response = await _productService.CreateAsync(request);
 

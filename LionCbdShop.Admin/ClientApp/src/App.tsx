@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import AddProduct from "./pages/AddProduct";
 import Home from "./pages/Home";
 import Layout from "./pages/Layout";
 import Orders from "./pages/Orders";
@@ -12,6 +13,7 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="products" element={<Products />} />
+            <Route path="products/add" element={<AddProduct />} />
             <Route path="orders" element={<Orders />} />
           </Route>
         </Routes>
