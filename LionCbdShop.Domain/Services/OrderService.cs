@@ -35,7 +35,7 @@ public class OrderService : IOrderService
             response.IsSuccess = true;
             response.ResponseObject = ordersDto;
         }
-        catch
+        catch (Exception exception)
         {
             response.IsSuccess = false;
             response.Message = CommonResponseMessage.Get.Error(ResponseMessageEntity.Order);
@@ -56,7 +56,7 @@ public class OrderService : IOrderService
             response.IsSuccess = true;
             response.ResponseObject = orderDto;
         }
-        catch
+        catch (Exception exception)
         {
             response.IsSuccess = false;
             response.Message = CommonResponseMessage.Get.Error(ResponseMessageEntity.Order);
@@ -84,7 +84,7 @@ public class OrderService : IOrderService
             response.Message = CommonResponseMessage.Create.Success(ResponseMessageEntity.Order);
             response.ResponseObject = _mapper.Map<OrderDto>(order);
          }
-        catch
+        catch (Exception exception)
         {
             response.IsSuccess = false;
             response.Message = CommonResponseMessage.Create.Error(ResponseMessageEntity.Order);
@@ -124,7 +124,7 @@ public class OrderService : IOrderService
             response.IsSuccess = true;
             response.Message = OrderResponseMessage.StatusWasUpdated(request.OrderNumber);
         }
-        catch
+        catch (Exception exception)
         {
             response.IsSuccess = false;
             response.Message = CommonResponseMessage.Update.Error(ResponseMessageEntity.Order);

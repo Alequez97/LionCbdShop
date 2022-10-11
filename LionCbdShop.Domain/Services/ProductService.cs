@@ -80,7 +80,7 @@ public class ProductService : IProductService
             response.IsSuccess = true;
             response.Message = CommonResponseMessage.Create.Success(ResponseMessageEntity.Product);
         }
-        catch
+        catch (Exception exception)
         {
             response.IsSuccess = false;
             response.Message = CommonResponseMessage.Create.Error(ResponseMessageEntity.Product);
@@ -118,7 +118,7 @@ public class ProductService : IProductService
             response.IsSuccess = true;
             response.Message = CommonResponseMessage.Update.Success(ResponseMessageEntity.Product);
         }
-        catch
+        catch (Exception exception)
         {
             response.IsSuccess = false;
             response.Message = CommonResponseMessage.Update.Error(ResponseMessageEntity.Product);
@@ -148,7 +148,7 @@ public class ProductService : IProductService
             response.IsSuccess = true;
             response.Message = CommonResponseMessage.Delete.Success(ResponseMessageEntity.Product);
         }
-        catch
+        catch (Exception exception)
         {
             response.IsSuccess = false;
             response.Message = CommonResponseMessage.Delete.Error(ResponseMessageEntity.Product);

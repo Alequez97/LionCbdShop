@@ -39,7 +39,7 @@ public class CustomerService : ICustomerService
             response.IsSuccess = true;
             response.Message = CommonResponseMessage.Create.Success(ResponseMessageEntity.Customer);
         }
-        catch (Exception ex)
+        catch (Exception exception)
         {
             response.IsSuccess = false;
             response.Message = CommonResponseMessage.Create.Error(ResponseMessageEntity.Customer);
