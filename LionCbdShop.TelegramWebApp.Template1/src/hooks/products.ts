@@ -11,7 +11,7 @@ export function useProducts() {
   async function fetchProducts() {
     try {
       setLoading(true);
-      const response = await axios.get<Response<IProduct[]>>('https://localhost:44372/api/products');
+      const response = await axios.get<Response<IProduct[]>>('https://localhost:44398/api/products');
       setProducts(response.data.responseObject);
       setLoading(false);
     } catch (e: unknown) {

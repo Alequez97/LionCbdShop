@@ -11,9 +11,9 @@ public class DeleteProduct : EndpointBaseAsync
         _productService = productService;
     }
 
-    [HttpDelete("/api/products")]
+    [HttpDelete("/api/products/{id}")]
     [SwaggerOperation(Tags = new[] { SwaggerGroup.Products })]
-    public override async Task<ActionResult<Response>> HandleAsync(string id, CancellationToken cancellationToken = default)
+    public override async Task<ActionResult<Response>> HandleAsync([FromRoute]string id, CancellationToken cancellationToken = default)
     {
         var response = await _productService.DeleteAsync(new Guid(id));
 

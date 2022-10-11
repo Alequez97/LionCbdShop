@@ -11,7 +11,7 @@ export function useProducts() {
   async function fetchProducts() {
     try {
       setLoading(true);
-      const response = await axios.get<Response<Product[]>>('https://localhost:44398/api/products');
+      const response = await axios.get<Response<Product[]>>('/products');
       setProducts(response.data.responseObject);
       setLoading(false);
     } catch (e: unknown) {
@@ -25,5 +25,5 @@ export function useProducts() {
     fetchProducts();
   }, []);
 
-  return { products, error, loading };
+  return { products, setProducts, error, loading };
 }

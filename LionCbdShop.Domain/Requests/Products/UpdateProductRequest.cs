@@ -12,5 +12,5 @@ public class UpdateProductRequest
 
     public double PriceWithDiscount { get; set; }
 
-    public IFormFile ProductImage { get; set; }
+    public IFormFile? ProductImage { get; set; }
 }

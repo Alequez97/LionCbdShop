@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 const Orders = () => {
   const { orders, error, loading } = useOrders();
 
-  function orderLink(orderId: string) {
+  function orderDetailsPath(orderId: string) {
     return `/orders/${orderId}/`;
   }
 
@@ -40,7 +40,7 @@ const Orders = () => {
               <th scope="row">{order.orderNumber}</th>
               <td>{order.creationDate.toString()}</td>
               <td>{order.status}</td>
-              <td><Link to={orderLink(order.id)}>Details</Link></td>
+              <td><Link to={orderDetailsPath(order.id)}>Details</Link></td>
             </tr>
           )}
         </tbody>
@@ -49,7 +49,7 @@ const Orders = () => {
   }
 
   return (
-    <div className="p-3 mb-2 bg-light text-dark text-center">
+    <div className="alert alert-secondary text-center" role="alert">
       <h3>No orders yet</h3>
     </div>
   )

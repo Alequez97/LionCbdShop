@@ -1,12 +1,16 @@
-import Product from "../models/Product"
+import { Link } from "react-router-dom"
+import IProduct from "../models/Product"
 
 interface ProductCardProps {
-    product: Product
-    editOnClick: () => void
+    product: IProduct
     deleteOnClick: () => void
 }
 
-export default function ProductCard({ product, editOnClick, deleteOnClick }: ProductCardProps) {
+export default function ProductCard({ product, deleteOnClick }: ProductCardProps) {
+    function editProductPath(id: string) {
+        return `edit/${id}`
+    }
+
     return (
         <div className="col-sm-3 text-center pb-3 border">
             <img src={product.image} className="card-img-top" alt={product.productName} />
@@ -15,7 +19,7 @@ export default function ProductCard({ product, editOnClick, deleteOnClick }: Pro
                 <p className="card-text">Original price: {product.originalPrice}</p>
                 <p className="card-text">Price with discount: {product.priceWithDiscount}</p>
                 <div className="d-flex justify-content-between">
-                    <a className="btn btn-warning mr-1" onClick={editOnClick}>Edit</a>
+                    <Link to={editProductPath(product.id)} className={'btn btn-warning ml-1'}>Edit</Link>
                     <a className="btn btn-danger ml-1" onClick={deleteOnClick}>Delete</a>
                 </div>
             </div>

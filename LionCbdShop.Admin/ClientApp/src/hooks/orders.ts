@@ -11,7 +11,7 @@ export function useOrders() {
   async function fetchOrders() {
     try {
       setLoading(true);
-      const response = await axios.get<Response<Order[]>>('https://localhost:44398/api/orders');
+      const response = await axios.get<Response<Order[]>>('/orders');
       setOrders(response.data.responseObject);
       setLoading(false);
     } catch (e: unknown) {

@@ -11,7 +11,7 @@ export default function OrderDetails() {
 
     async function fetchOrder() {
         try {
-            const response = await axios.get<Response<Order>>(`https://localhost:44398/api/orders/${params.id}`);
+            const response = await axios.get<Response<Order>>(`/orders/${params.id}`);
             setOrder(response.data.responseObject)
         }
         catch
