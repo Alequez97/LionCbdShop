@@ -27,7 +27,6 @@ export default function EditProduct() {
 
   return (
     <>
-      <h2 className="text-center">Edit product</h2>
       <ProductForm product={product} />
     </>
   )

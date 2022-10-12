@@ -15,7 +15,7 @@ public class UpdateProduct : EndpointBaseAsync
 
     [HttpPut("/api/products")]
     [SwaggerOperation(Tags = new[] { SwaggerGroup.Products })]
-    public override async Task<ActionResult<Response>> HandleAsync(UpdateProductRequest request, CancellationToken cancellationToken = default)
+    public override async Task<ActionResult<Response>> HandleAsync([FromForm]UpdateProductRequest request, CancellationToken cancellationToken = default)
     {
         var response = await _productService.UpdateAsync(request);
 

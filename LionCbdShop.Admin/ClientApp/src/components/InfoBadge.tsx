@@ -25,7 +25,7 @@ export default function InfoBadge(props: InfoBadgeProps) {
                         {props.closeButtonOnClick && <button className={btnClasses.join(" ")} onClick={props.closeButtonOnClick}>Close</button>}
                     </div>
                 </div>
-            </div>.
+            </div>
         </div>
     )
 }

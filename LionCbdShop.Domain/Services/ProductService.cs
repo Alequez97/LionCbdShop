@@ -104,16 +104,16 @@ public class ProductService : IProductService
                 return response;
             }
 
-            var product = _mapper.Map<Product>(updateProductRequest);
+            existingProduct = _mapper.Map(updateProductRequest, existingProduct);
 
             if (updateProductRequest.ProductImage != null)
             {
                 await _productImagesRepository.DeleteAsync(existingProduct.ImageName);
                 var newImageName = await _productImagesRepository.SaveAsync(updateProductRequest.ProductImage, CancellationToken.None);
-                product.ImageName = newImageName;
+                existingProduct.ImageName = newImageName;
             }
             
-            await _productRepository.UpdateAsync(product);
+            await _productRepository.UpdateAsync(existingProduct);
 
             response.IsSuccess = true;
             response.Message = CommonResponseMessage.Update.Success(ResponseMessageEntity.Product);
