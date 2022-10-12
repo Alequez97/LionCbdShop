@@ -5,6 +5,7 @@ using LionCbdShop.Domain.Interfaces;
 using LionCbdShop.Domain.Requests.Orders;
 using LionCbdShop.Persistence.Entities;
 using LionCbdShop.Persistence.Interfaces;
+using Microsoft.Extensions.Logging;
 
 namespace LionCbdShop.Domain.Services;
 
@@ -14,13 +15,15 @@ public class OrderService : IOrderService
     private readonly ICustomerRepository _customerRepository;
     private readonly Random _random;
     private readonly IMapper _mapper;
+    private readonly ILogger<OrderService> _logger;
 
-    public OrderService(IOrderRepository orderRepository, ICustomerRepository customerRepository, IMapper mapper)
+    public OrderService(IOrderRepository orderRepository, ICustomerRepository customerRepository, IMapper mapper, ILogger<OrderService> logger)
     {
         _orderRepository = orderRepository;
         _customerRepository = customerRepository;
         _random = new Random();
         _mapper = mapper;
+        _logger = logger;
     }
 
     public async Task<Response<IEnumerable<OrderDto>>> GetAllAsync()
@@ -37,6 +40,7 @@ public class OrderService : IOrderService
         }
         catch (Exception exception)
         {
+            _logger.LogError(exception, "Exception: Unable to get all orders");
             response.IsSuccess = false;
             response.Message = CommonResponseMessage.Get.Error(ResponseMessageEntity.Order);
         }
@@ -58,6 +62,7 @@ public class OrderService : IOrderService
         }
         catch (Exception exception)
         {
+            _logger.LogError(exception, "Exception: Unable to get order with id - {OrderId}", orderId);
             response.IsSuccess = false;
             response.Message = CommonResponseMessage.Get.Error(ResponseMessageEntity.Order);
         }
@@ -86,6 +91,7 @@ public class OrderService : IOrderService
          }
         catch (Exception exception)
         {
+            _logger.LogError(exception, "Exception: Unable to create order");
             response.IsSuccess = false;
             response.Message = CommonResponseMessage.Create.Error(ResponseMessageEntity.Order);
         }
@@ -126,6 +132,7 @@ public class OrderService : IOrderService
         }
         catch (Exception exception)
         {
+            _logger.LogError(exception, "Exception: Unable to update status of order with number{OrderNumber}", request.OrderNumber);
             response.IsSuccess = false;
             response.Message = CommonResponseMessage.Update.Error(ResponseMessageEntity.Order);
         }

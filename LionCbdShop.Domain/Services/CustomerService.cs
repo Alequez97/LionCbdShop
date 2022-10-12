@@ -1,20 +1,24 @@
-﻿using LionCbdShop.Domain.Constants;
+﻿using AutoMapper;
+using LionCbdShop.Domain.Constants;
 using LionCbdShop.Domain.Interfaces;
 using LionCbdShop.Domain.Requests.Customers;
 using LionCbdShop.Persistence.Entities;
 using LionCbdShop.Persistence.Interfaces;
+using Microsoft.Extensions.Logging;
 
 namespace LionCbdShop.Domain.Services;
 
 public class CustomerService : ICustomerService
 {
     private readonly ICustomerRepository _customerRepository;
-    private readonly AutoMapper.IMapper _mapper;
+    private readonly IMapper _mapper;
+    private readonly ILogger<CustomerService> _logger;
 
-    public CustomerService(ICustomerRepository profileRepository, AutoMapper.IMapper mapper)
+    public CustomerService(ICustomerRepository profileRepository, AutoMapper.IMapper mapper, ILogger<CustomerService> logger)
     {
         _customerRepository = profileRepository;
         _mapper = mapper;
+        _logger = logger;
     }
 
     public async Task<Response> CreateAsync(CreateCustomerRequest request)
@@ -41,6 +45,7 @@ public class CustomerService : ICustomerService
         }
         catch (Exception exception)
         {
+            _logger.LogError(exception, "Exception during customer creation");
             response.IsSuccess = false;
             response.Message = CommonResponseMessage.Create.Error(ResponseMessageEntity.Customer);
         }

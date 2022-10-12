@@ -5,6 +5,7 @@ using LionCbdShop.Domain.Interfaces;
 using LionCbdShop.Domain.Requests.Products;
 using LionCbdShop.Persistence.Entities;
 using LionCbdShop.Persistence.Interfaces;
+using Microsoft.Extensions.Logging;
 
 namespace LionCbdShop.Domain.Services;
 
@@ -13,12 +14,37 @@ public class ProductService : IProductService
     private readonly IProductRepository _productRepository;
     private readonly IProductImagesRepository _productImagesRepository;
     private readonly IMapper _mapper;
+    private readonly ILogger<ProductService> _logger;
 
-    public ProductService(IProductRepository productRepository, IProductImagesRepository productImagesRepository, IMapper mapper)
+    public ProductService(IProductRepository productRepository, IProductImagesRepository productImagesRepository, IMapper mapper, ILogger<ProductService> logger)
     {
         _productRepository = productRepository;
         _productImagesRepository = productImagesRepository;
         _mapper = mapper;
+        _logger = logger;
+    }
+    
+    public async Task<Response<IEnumerable<ProductDto>>> GetAllAsync()
+    {
+        var response = new Response<IEnumerable<ProductDto>>();
+
+        try
+        {
+            var products = await _productRepository.GetAllAsync();
+
+            var getProductsResponse = _mapper.Map<List<ProductDto>>(products);
+
+            response.IsSuccess = true;
+            response.ResponseObject = getProductsResponse;
+        }
+        catch (Exception exception)
+        {
+            _logger.LogError(exception, "Exception: Unable to get all products");
+            response.IsSuccess = false;
+            response.Message = CommonResponseMessage.Get.Error(ResponseMessageEntity.Product);
+        }
+
+        return response;
     }
 
     public async Task<Response<ProductDto>> GetAsync(Guid id)
@@ -33,30 +59,9 @@ public class ProductService : IProductService
             response.IsSuccess = true;
             response.ResponseObject = productDto;
         }
-        catch (Exception ex)
+        catch (Exception exception)
         {
-            response.IsSuccess = false;
-            response.Message = CommonResponseMessage.Get.Error(ResponseMessageEntity.Product);
-        }
-
-        return response;
-    }
-
-    public async Task<Response<IEnumerable<ProductDto>>> GetAllAsync()
-    {
-        var response = new Response<IEnumerable<ProductDto>>();
-
-        try
-        {
-            var products = await _productRepository.GetAllAsync();
-
-            var getProductsResponse = _mapper.Map<List<ProductDto>>(products);
-
-            response.IsSuccess = true;
-            response.ResponseObject = getProductsResponse;
-        }
-        catch (Exception ex)
-        {
+            _logger.LogError(exception, "Exception: Unable to get product with id - {Id}", id);
             response.IsSuccess = false;
             response.Message = CommonResponseMessage.Get.Error(ResponseMessageEntity.Product);
         }
@@ -82,6 +87,7 @@ public class ProductService : IProductService
         }
         catch (Exception exception)
         {
+            _logger.LogError(exception, "Exception: Unable to create product");
             response.IsSuccess = false;
             response.Message = CommonResponseMessage.Create.Error(ResponseMessageEntity.Product);
         }
@@ -120,6 +126,7 @@ public class ProductService : IProductService
         }
         catch (Exception exception)
         {
+            _logger.LogError(exception, "Exception: Unable to update product with id - {Id}", updateProductRequest.Id);
             response.IsSuccess = false;
             response.Message = CommonResponseMessage.Update.Error(ResponseMessageEntity.Product);
         }
@@ -150,6 +157,7 @@ public class ProductService : IProductService
         }
         catch (Exception exception)
         {
+            _logger.LogError(exception, "Exception: Unable to delete product with id - {Id}", id);
             response.IsSuccess = false;
             response.Message = CommonResponseMessage.Delete.Error(ResponseMessageEntity.Product);
         }
