@@ -31,17 +31,17 @@ function App() {
     }
   }, [cartItems])
 
-  const onSendData = useCallback(() => {
+  const sendDataToTelegram = useCallback(() => {
     const json = getCartItemsAsJsonString(cartItems);
     telegramWebApp.sendData(json);
   }, [cartItems])
 
   useEffect(() => {
-    telegramWebApp.onEvent('mainButtonClicked', onSendData)
+    telegramWebApp.onEvent('mainButtonClicked', sendDataToTelegram)
     return () => {
-      telegramWebApp.offEvent('mainButtonClicked', onSendData)
+      telegramWebApp.offEvent('mainButtonClicked', sendDataToTelegram)
     }
-  }, [onSendData])
+  }, [sendDataToTelegram])
 
   const onAdd = (product: IProduct) => {
     dispatch(addProduct(product))
