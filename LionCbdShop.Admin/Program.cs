@@ -1,4 +1,6 @@
 using LionCbdShop.Domain.Extensions;
+using LionCbdShop.Persistence;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -51,6 +53,11 @@ app.MapControllerRoute(
     pattern: "{controller}/{action=Index}/{id?}");
 
 app.MapFallbackToFile("index.html");
-;
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<LionCbdShopDbContext>();
+    db.Database.Migrate();
+}
 
 app.Run();

@@ -1,4 +1,6 @@
 using LionCbdShop.Domain.Extensions;
+using LionCbdShop.Persistence;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -42,5 +44,11 @@ app.UseCors("CorsPolicy");
 app.UseAuthorization();
 
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<LionCbdShopDbContext>();
+    db.Database.Migrate();
+}
 
 app.Run();
