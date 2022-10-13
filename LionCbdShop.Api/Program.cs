@@ -9,6 +9,8 @@ builder.Services.AddControllers();
 
 builder.Services.AddDomainLevelServices();
 
+builder.Services.AddDbContext<LionCbdShopDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Sql")));
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>

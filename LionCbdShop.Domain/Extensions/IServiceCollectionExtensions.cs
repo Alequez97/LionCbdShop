@@ -19,8 +19,6 @@ namespace LionCbdShop.Domain.Extensions
 
             services.AddAutoMapper(typeof(ProductProfile));
             
-            services.AddDbContext<LionCbdShopDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("Sql")));
-
             services.AddTransient<ICustomerService, CustomerService>();
             services.AddTransient<ICustomerRepository, SqlCustomerRepository>();
 
