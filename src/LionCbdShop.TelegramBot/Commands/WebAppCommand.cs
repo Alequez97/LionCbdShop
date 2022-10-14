@@ -16,15 +16,18 @@ namespace LionCbdShop.TelegramBot.Commands
 {
     public class WebAppCommand : ITelegramCommand
     {
+        private readonly IConfiguration _configuration;
         private readonly ITelegramBotClient _telegramBotClient;
         private readonly IOrderService _orderService;
         private readonly EmojiProvider _emojiProvider;
 
         public WebAppCommand(
+            IConfiguration configuration,
             ITelegramBotClient telegramBotClient, 
             IOrderService orderService, 
             EmojiProvider emojiProvider)
         {
+            _configuration = configuration;
             _telegramBotClient = telegramBotClient;
             _orderService = orderService;
             _emojiProvider = emojiProvider;
@@ -56,7 +59,7 @@ namespace LionCbdShop.TelegramBot.Commands
                         $"Order number {createOrderResponse.ResponseObject.OrderNumber}",
                         "Best quality with Royal MMXXI",
                         createOrderResponse.ResponseObject.OrderNumber,
-                        "284685063:TEST:MDE3ZGQ2YzEwMjk5",
+                        _configuration["PaymentGateway:Stripe"],
                         "EUR",
                         GetPaymentLabeledPricesFromOrderData(webAppCommandData),
                         needShippingAddress: true,
