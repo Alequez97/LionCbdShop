@@ -1,4 +1,4 @@
-name: Deploy web app to Azure Static Web Apps
+name: Telegram web app/Template 1 CI/CD
 
 on:
   push:
