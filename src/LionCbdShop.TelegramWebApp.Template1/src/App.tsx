@@ -68,7 +68,7 @@ function App() {
 
   return (
     <>
-      <h2 className="heading">Royal MMXXI + SANJA</h2>
+      <h2 className="heading">Royal MMXXI/SANJA</h2>
 
       {products.length === 0 && <span>No available products at this moment</span>}
 
