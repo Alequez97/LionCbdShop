@@ -1,4 +1,4 @@
-name: Telegram web app/Template 1 CI/CD 
+name: Deploy web app to Azure Static Web Apps
 
 on:
   push:
@@ -7,36 +7,26 @@ on:
     paths:
       - src/LionCbdShop.TelegramWebApp.Template1/**
 
-# Environment variables available to all jobs and steps in this workflow
 env:
-  APP_LOCATION: "src/LionCbdShop.TelegramWebApp.Template1/" # location of your client code
-  APP_ARTIFACT_LOCATION: "src/LionCbdShop.TelegramWebApp.Template1/build" # location of client code build output
+  APP_LOCATION: "src/LionCbdShop.TelegramWebApp.Template1/"
+  APP_ARTIFACT_LOCATION: "src/LionCbdShop.TelegramWebApp.Template1/build"
 
-defaults:
- run:
-  working-directory: ./src/LionCbdShop.TelegramWebApp.Template1/
+permissions:
+  contents: read
 
 jobs:
-  build-and-deploy:
+  build_and_deploy_job:
     runs-on: ubuntu-latest
-    name: Build and Deploy Job
-    strategy:
-      matrix:
-        node-version: [16.x]
+    name: Build and Deploy
     steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+      - uses: actions/checkout@v3
         with:
-          node-version: ${{ matrix.node-version }}
-      - name: Install Packages
-        run: npm install
-      - name: Build app
-        run: npm run build
-      - name: Azure Static Web Apps Deploy
+          submodules: true
+      - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.TELEGRAM_WEB_APP_TEMPLATE_1_DEPLOYMENT_SECRET }}
           action: "upload"
-          app_location: "${{ env.APP_ARTIFACT_LOCATION }}" # App source code path
+          app_location: ${{ env.APP_LOCATION }}
+          app_artifact_location: ${{ env.APP_ARTIFACT_LOCATION }}
