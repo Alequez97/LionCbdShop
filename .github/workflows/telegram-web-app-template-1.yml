@@ -1,0 +1,36 @@
+name: Telegram web app/Template 1 CI/CD 
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - src/LionCbdShop.TelegramWebApp.Template1/**
+
+# Environment variables available to all jobs and steps in this workflow
+env:
+  NODE_VERSION: '16.x'
+  APP_LOCATION: "/" # location of your client code
+  APP_ARTIFACT_LOCATION: "build" # location of client code build output
+  TELEGRAM_WEB_APP_TEMPLATE_1_DEPLOYMENT_SECRET: ${{ secrets.TELEGRAM_WEB_APP_TEMPLATE_1_DEPLOYMENT_SECRET }} # secret containing deployment token for your static web app
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    name: Build and Deploy Job
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: Build And Deploy
+        id: builddeploy
+        uses: Azure/static-web-apps-deploy@v0.0.1-preview
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.TELEGRAM_WEB_APP_TEMPLATE_1_DEPLOYMENT_SECRET }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
+          action: "upload"
+          ###### Repository/Build Configurations - These values can be configured to match you app requirements. ######
+          # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
+          app_location: "/" # App source code path
+          output_location: "build" # Built app content directory - optional
+          ###### End of Repository/Build Configurations ######
