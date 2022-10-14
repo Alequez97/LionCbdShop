@@ -14,7 +14,7 @@ env:
 
 defaults:
  run:
-  working-directory: "${{ env.APP_LOCATION }}"
+  working-directory: ./src/LionCbdShop.TelegramWebApp.Template1/
 
 jobs:
   build-and-deploy:
