@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Telegram.Bot;
 
 IHost host = Host.CreateDefaultBuilder(args)
+    .UseSystemd()
     .ConfigureServices(services =>
     {
         var configuration = services.BuildServiceProvider().GetRequiredService<IConfiguration>();
