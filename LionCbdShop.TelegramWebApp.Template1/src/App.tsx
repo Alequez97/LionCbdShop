@@ -7,10 +7,9 @@ import { getCartItemsAsJsonString } from './helpers'
 import { addProduct, removeProduct } from './store/cartItems';
 import { useAppDispatch } from './store/store';
 import { useCartItems } from './hooks/cartItems';
-import Footer from './components/Footer/Footer';
 import IProduct from './models/Product';
-import { useProductsMock } from './hooks/productsMock';
 import { useTelegramWebApp } from './hooks/telegram';
+import { useProducts } from './hooks/products';
 
 function App() {
   const { telegramWebApp } = useTelegramWebApp()
@@ -21,7 +20,7 @@ function App() {
 
   const dispatch = useAppDispatch();
   const { cartItems } = useCartItems();
-  const { products, error, loading } = useProductsMock();
+  const { products, error, loading } = useProducts();
 
   useEffect(() => {
     if (cartItems.length === 0) {
