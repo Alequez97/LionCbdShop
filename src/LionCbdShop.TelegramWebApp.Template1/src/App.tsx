@@ -16,6 +16,7 @@ function App() {
 
   useEffect(() => {
     telegramWebApp.expand();
+    // eslint-disable-next-line
   }, []);
 
   const dispatch = useAppDispatch();
@@ -28,11 +29,13 @@ function App() {
     } else {
       telegramWebApp.MainButton.show()
     }
+    // eslint-disable-next-line
   }, [cartItems])
 
   const sendDataToTelegram = useCallback(() => {
     const json = getCartItemsAsJsonString(cartItems);
     telegramWebApp.sendData(json);
+    // eslint-disable-next-line
   }, [cartItems])
 
   useEffect(() => {
@@ -40,6 +43,7 @@ function App() {
     return () => {
       telegramWebApp.offEvent('mainButtonClicked', sendDataToTelegram)
     }
+    // eslint-disable-next-line
   }, [sendDataToTelegram])
 
   const onAdd = (product: IProduct) => {
