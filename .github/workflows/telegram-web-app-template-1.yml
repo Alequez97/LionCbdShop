@@ -9,9 +9,8 @@ on:
 
 # Environment variables available to all jobs and steps in this workflow
 env:
-  NODE_VERSION: '16.x'
-  APP_LOCATION: "/" # location of your client code
-  APP_ARTIFACT_LOCATION: "build" # location of client code build output
+  APP_LOCATION: "src/LionCbdShop.TelegramWebApp.Template1/" # location of your client code
+  APP_ARTIFACT_LOCATION: "src/LionCbdShop.TelegramWebApp.Template1/build" # location of client code build output
   TELEGRAM_WEB_APP_TEMPLATE_1_DEPLOYMENT_SECRET: ${{ secrets.TELEGRAM_WEB_APP_TEMPLATE_1_DEPLOYMENT_SECRET }} # secret containing deployment token for your static web app
 
 jobs:
@@ -31,6 +30,5 @@ jobs:
           action: "upload"
           ###### Repository/Build Configurations - These values can be configured to match you app requirements. ######
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
-          app_location: "/" # App source code path
-          output_location: "build" # Built app content directory - optional
-          ###### End of Repository/Build Configurations ######
+          app_location: "${{ env.APP_LOCATION }}" # App source code path
+          output_location: "${{ env.APP_ARTIFACT_LOCATION }}" # Built app content directory - optional
