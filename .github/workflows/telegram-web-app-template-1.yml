@@ -9,7 +9,7 @@ on:
 
 env:
   APP_LOCATION: "src/LionCbdShop.TelegramWebApp.Template1/"
-  APP_ARTIFACT_LOCATION: "src/LionCbdShop.TelegramWebApp.Template1/build"
+  APP_ARTIFACT_LOCATION: "build"
 
 permissions:
   contents: read
