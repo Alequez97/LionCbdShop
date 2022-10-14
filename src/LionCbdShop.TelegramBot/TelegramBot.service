@@ -1,10 +1,12 @@
 ﻿[Unit]
-Description=Lion Cbd Shop Telegram Bot
+Description=Lion CBD Shop Telegram Bot
 
 [Service]
+# will set the Current Working Directory (CWD). Worker service will have issues without this setting
+WorkingDirectory=/srv/LionCbdShop.TelegramBot
 # systemd will run this executable to start the service
 # if /usr/bin/dotnet doesn't work, use `which dotnet` to find correct dotnet executable path
-ExecStart=/usr/bin/dotnet /srv/LionCbdShop.TelegramBot/LionCbdShop.TelegramBot
+ExecStart=/usr/bin/dotnet /srv/LionCbdShop.TelegramBot/LionCbdShop.TelegramBot.dll
 # to query logs using journalctl, set a logical name here
 SyslogIdentifier=LionCbdShop.TelegramBot
 
@@ -14,9 +16,14 @@ SyslogIdentifier=LionCbdShop.TelegramBot
 #       Use 'chmod +x /srv/LionCbdShop.TelegramBot/LionCbdShop.TelegramBot' to allow execution of the executable file
 User=root
 
+# ensure the service restarts after crashing
+Restart=always
+# amount of time to wait before restarting the service                  
+RestartSec=5
+
 # This environment variable is necessary when dotnet isn't loaded for the specified user.
 # To figure out this value, run 'env | grep DOTNET_ROOT' when dotnet has been loaded into your shell.
-Environment=DOTNET_ROOT=/usr/lib64/dotnet
+Environment=DOTNET_ROOT=/usr/lib64/dotnet  
 
 [Install]
 WantedBy=multi-user.target
