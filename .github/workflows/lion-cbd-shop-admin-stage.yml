@@ -12,7 +12,7 @@ env:
   DOTNET_CORE_VERSION: 6.0.x
   WORKING_DIRECTORY: src\LionCbdShop.Admin
 jobs:
-  build:
+  Build:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
@@ -24,6 +24,10 @@ jobs:
       run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
     - name: Build
       run: dotnet build "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
+  Deploy:
+    needs: Build
+    runs-on: windows-latest
+    steps:
     - name: Publish
       run: dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
     - name: Deploy to Azure WebApp
