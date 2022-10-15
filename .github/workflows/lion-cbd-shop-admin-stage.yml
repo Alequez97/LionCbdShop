@@ -1,19 +1,20 @@
-name: Build and deploy .NET Core application to Web App lion-cbd-shop-api-stage
+name: Admin build and deploy
 on:
   push:
     branches:
       - master
     paths:
-      - src/LionCbdShop.Api/**
+      - src/LionCbdShop.Admin/**
 env:
-  AZURE_WEBAPP_NAME: lion-cbd-shop-api-stage
-  AZURE_WEBAPP_PACKAGE_PATH: src/LionCbdShop.Api/publish
+  AZURE_WEBAPP_NAME: lion-cbd-shop-admin-stage
+  AZURE_WEBAPP_PACKAGE_PATH: src/LionCbdShop.Admin/publish
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 6.0.x
-  WORKING_DIRECTORY: src/LionCbdShop.Api
+  WORKING_DIRECTORY: src/LionCbdShop.Admin
+  TESTS_DIRECTORY: tests/LionCbdShop.Domain.IntegrationTests
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Setup .NET Core
@@ -24,8 +25,6 @@ jobs:
         run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
       - name: Build
         run: dotnet build "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
-      - name: Test
-        run: dotnet test "${{ env.WORKING_DIRECTORY }}" --no-build
       - name: Publish
         run: dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
       - name: Deploy to Azure WebApp
