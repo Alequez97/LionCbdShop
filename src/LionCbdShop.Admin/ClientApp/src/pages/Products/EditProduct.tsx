@@ -21,7 +21,7 @@ export default function EditProduct() {
   }
 
   useEffect(() => {
-    fetchProduct();
+    fetchProduct(); // eslint-disable-next-line
   }, []);
 
 

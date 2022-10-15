@@ -20,7 +20,7 @@ export default function ProductCard({ product, deleteOnClick }: ProductCardProps
                 <p className="card-text">Price with discount: {product.priceWithDiscount}</p>
                 <div className="d-flex justify-content-between">
                     <Link to={editProductPath(product.id)} className={'btn btn-warning ml-1'}>Edit</Link>
-                    <a className="btn btn-danger ml-1" onClick={deleteOnClick}>Delete</a>
+                    <button className="btn btn-danger ml-1" onClick={deleteOnClick}>Delete</button>
                 </div>
             </div>
         </div>

@@ -9,12 +9,6 @@ interface ProductFormProps {
     product?: Product
 }
 
-interface InputData {
-    productName: string
-    originalPrice: string
-    priceWithDiscount: string
-}
-
 export default function ProductForm({ product }: ProductFormProps) {
     const productNameRef = useRef<HTMLInputElement | null>(null);
     const originalPriceRef = useRef<HTMLInputElement | null>(null);

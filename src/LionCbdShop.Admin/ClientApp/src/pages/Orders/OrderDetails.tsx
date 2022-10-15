@@ -21,7 +21,7 @@ export default function OrderDetails() {
     }
 
     useEffect(() => {
-        fetchOrder();
+        fetchOrder(); // eslint-disable-next-line
     }, []);
 
     return (
