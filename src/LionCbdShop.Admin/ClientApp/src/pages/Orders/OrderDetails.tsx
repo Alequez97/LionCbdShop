@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 import Order from '../../models/Order'
 import Response from '../../Response'
 import CartItem from '../../models/CartItem'
+import moment from 'moment'
 
 export default function OrderDetails() {
     let params = useParams();
@@ -39,7 +40,7 @@ export default function OrderDetails() {
                         </tr>
                         <tr>
                             <th>Creation date</th>
-                            <td>{order?.creationDate.toString()}</td>
+                            <td>{(moment(order?.creationDate)).format('DD-MMM-YYYY HH:MM')}</td>
                         </tr>
                         <tr>
                             <th>Status</th>

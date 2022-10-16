@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import axios from 'axios'
 
-axios.defaults.baseURL = process.env.REACT_APP_BACKEND_API_BASE_URL;
+axios.defaults.baseURL = "https://localhost:44398/api";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

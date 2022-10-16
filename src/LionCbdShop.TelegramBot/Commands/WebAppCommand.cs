@@ -83,7 +83,7 @@ namespace LionCbdShop.TelegramBot.Commands
             {
                 await _telegramBotClient.SendTextMessageAsync(
                     chatId,
-                    $"Error while processing your request. Try again later or contact support",
+                    "Error while processing your request! Try again later or contact support",
                     ParseMode.MarkdownV2
                 );
             }

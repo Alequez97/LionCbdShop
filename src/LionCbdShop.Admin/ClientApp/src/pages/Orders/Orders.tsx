@@ -1,4 +1,4 @@
-import React from 'react'
+import moment from 'moment';
 import Loader from '../../components/Loader';
 import Error from '../../components/Error';
 import { useOrders } from '../../hooks/orders';
@@ -37,8 +37,8 @@ const Orders = () => {
         <tbody className="table-group-divider">
           {orders.map(order =>
             <tr key={order.id}>
-              <th scope="row">{order.orderNumber}</th>
-              <td>{order.creationDate.toString()}</td>
+              <th scope="row">{order.orderNumber.split('-')[1]}</th>
+              <td>{(moment(order.creationDate)).format('DD-MMM-YYYY HH:MM')}</td>
               <td>{order.status}</td>
               <td><Link to={orderDetailsPath(order.id)}>Details</Link></td>
             </tr>
