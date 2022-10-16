@@ -9,7 +9,7 @@ import { useAppDispatch } from './store/store';
 import { useCartItems } from './hooks/cartItems';
 import IProduct from './models/Product';
 import { useTelegramWebApp } from './hooks/telegram';
-import { useProductsMock } from './hooks/productsMock';
+import { useProducts } from './hooks/products';
 
 function App() {
   const { telegramWebApp } = useTelegramWebApp()
@@ -21,7 +21,7 @@ function App() {
 
   const dispatch = useAppDispatch();
   const { cartItems } = useCartItems();
-  const { products, error, loading } = useProductsMock();
+  const { products, error, loading } = useProducts();
 
   useEffect(() => {
     if (cartItems.length === 0) {
