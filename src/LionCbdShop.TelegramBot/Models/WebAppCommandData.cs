@@ -26,6 +26,8 @@ public class WebAppCommandCartItems
     public string ProductName { get; set; }
 
     public double OriginalPrice { get; set; }
+    
+    public double PriceWithDiscount { get; set; }
 
     public int Quantity { get; set; }
 

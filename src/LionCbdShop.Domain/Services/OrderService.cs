@@ -17,7 +17,8 @@ public class OrderService : IOrderService
     private readonly IMapper _mapper;
     private readonly ILogger<OrderService> _logger;
 
-    public OrderService(IOrderRepository orderRepository, ICustomerRepository customerRepository, IMapper mapper, ILogger<OrderService> logger)
+    public OrderService(IOrderRepository orderRepository, ICustomerRepository customerRepository, IMapper mapper,
+        ILogger<OrderService> logger)
     {
         _orderRepository = orderRepository;
         _customerRepository = customerRepository;
@@ -88,7 +89,7 @@ public class OrderService : IOrderService
             response.IsSuccess = true;
             response.Message = CommonResponseMessage.Create.Success(ResponseMessageEntity.Order);
             response.ResponseObject = _mapper.Map<OrderDto>(order);
-         }
+        }
         catch (Exception exception)
         {
             _logger.LogError(exception, "Exception: Unable to create order");
@@ -132,7 +133,8 @@ public class OrderService : IOrderService
         }
         catch (Exception exception)
         {
-            _logger.LogError(exception, "Exception: Unable to update status of order with number{OrderNumber}", request.OrderNumber);
+            _logger.LogError(exception, "Exception: Unable to update status of order with number{OrderNumber}",
+                request.OrderNumber);
             response.IsSuccess = false;
             response.Message = CommonResponseMessage.Update.Error(ResponseMessageEntity.Order);
         }

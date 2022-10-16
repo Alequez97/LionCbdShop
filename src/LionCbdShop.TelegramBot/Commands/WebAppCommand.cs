@@ -48,7 +48,7 @@ namespace LionCbdShop.TelegramBot.Commands
                     CartItems = webAppCommandData.CartItems.Select(webAppDataCartItem =>
                     {
                         return new CartItem()
-                            { ProductId = webAppDataCartItem.ProductId, Quantity = webAppDataCartItem.Quantity };
+                            { ProductName = webAppDataCartItem.ProductName, Quantity = webAppDataCartItem.Quantity };
                     }).ToList()
                 };
 

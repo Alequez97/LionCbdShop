@@ -32,7 +32,7 @@ public class StartCommand : ITelegramCommand
 
         var createCustomerRequest = new CreateCustomerRequest()
         {
-            Username = update.Message.From.Username,
+            Username = update.Message.From.Username ?? update.Message.From.FirstName,
             FirstName = update.Message.From.FirstName,
             LastName = update.Message.From.LastName,
             CustomerProvider = CustomerProvider.Telegram,
@@ -42,7 +42,14 @@ public class StartCommand : ITelegramCommand
 
         if (!response.IsSuccess)
         {
+            await _telegramBotClient.SendTextMessageAsync(
+                chatId,
+                $"Unable to register at this moment. Sorry!!!",
+                ParseMode.MarkdownV2
+            );
             //TODO: Log, that customer profile was not stored in database
+
+            return;
         }
 
         var inlineKeyboard = new ReplyKeyboardMarkup(
