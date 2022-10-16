@@ -1,4 +1,4 @@
-name: Telegram web app/Template 1 CI/CD
+name: Telegram web app/Template 1 build and deploy
 
 on:
   push:
