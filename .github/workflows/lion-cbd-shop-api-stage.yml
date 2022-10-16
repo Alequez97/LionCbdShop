@@ -5,6 +5,8 @@ on:
       - master
     paths:
       - src/LionCbdShop.Api/**
+      - src/LionCbdShop.Domain/**
+      - src/LionCbdShop.Persistence/**
 env:
   AZURE_WEBAPP_NAME: lion-cbd-shop-api-stage
   AZURE_WEBAPP_PACKAGE_PATH: src\LionCbdShop.Api\publish
