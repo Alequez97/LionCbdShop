@@ -38,7 +38,7 @@ const Orders = () => {
           {orders.map(order =>
             <tr key={order.id}>
               <th scope="row">{order.orderNumber.split('-')[1]}</th>
-              <td>{(moment(order.creationDate)).format('DD-MMM-YYYY HH:MM')}</td>
+              <td>{(moment(order.creationDate)).format('DD-MMM-YYYY hh:mm')}</td>
               <td>{order.status}</td>
               <td><Link to={orderDetailsPath(order.id)}>Details</Link></td>
             </tr>

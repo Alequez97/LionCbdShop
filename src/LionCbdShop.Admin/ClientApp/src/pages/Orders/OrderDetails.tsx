@@ -40,7 +40,7 @@ export default function OrderDetails() {
                         </tr>
                         <tr>
                             <th>Creation date</th>
-                            <td>{(moment(order?.creationDate)).format('DD-MMM-YYYY HH:MM')}</td>
+                            <td>{(moment(order?.creationDate)).format('DD-MMM-YYYY hh:mm')}</td>
                         </tr>
                         <tr>
                             <th>Status</th>
@@ -48,7 +48,7 @@ export default function OrderDetails() {
                         </tr>
                         <tr>
                             <th>Payment date</th>
-                            <td>{order?.paymentDate == null ? "-" : order?.paymentDate.toString()}</td>
+                            <td>{order?.paymentDate ? (moment(order?.paymentDate)).format('DD-MMM-YYYY hh:mm') : '-'}</td>
                         </tr>
                     </tbody>
                 </table>
