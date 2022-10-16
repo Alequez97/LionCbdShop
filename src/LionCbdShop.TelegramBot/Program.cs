@@ -10,7 +10,7 @@ IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices(services =>
     {
         var configuration = services.BuildServiceProvider().GetRequiredService<IConfiguration>();
-        
+
         services.Configure<HostOptions>(hostOptions =>
         {
             hostOptions.BackgroundServiceExceptionBehavior = BackgroundServiceExceptionBehavior.Ignore;
@@ -26,8 +26,9 @@ IHost host = Host.CreateDefaultBuilder(args)
         services.AddTelegramCommandServices();
 
         services.AddDomainLevelServices();
-        
-        services.AddDbContext<LionCbdShopDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("Sql")), ServiceLifetime.Singleton);
+
+        services.AddDbContext<LionCbdShopDbContext>(
+            options => options.UseSqlServer(configuration.GetConnectionString("Sql")), ServiceLifetime.Singleton);
 
         services.AddHostedService<TelegramBot>();
     })

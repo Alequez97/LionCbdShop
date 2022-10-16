@@ -12,10 +12,7 @@ public class WebAppCommandData
         {
             var result = 0d;
 
-            CartItems.ForEach(cartItem =>
-            {
-                result += cartItem.OriginalPrice * cartItem.Quantity;
-            });
+            CartItems.ForEach(cartItem => { result += cartItem.OriginalPrice * cartItem.Quantity; });
 
             return result;
         }

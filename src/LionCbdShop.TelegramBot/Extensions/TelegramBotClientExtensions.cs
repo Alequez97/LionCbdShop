@@ -5,7 +5,8 @@ namespace LionCbdShop.TelegramBot.Extensions;
 
 public static class TelegramBotClientExtensions
 {
-    public static async Task SetWebAppInChatMenuButton(this ITelegramBotClient telegramBotClient, string buttonText, string webAppUrl)
+    public static async Task SetWebAppInChatMenuButton(this ITelegramBotClient telegramBotClient, string buttonText,
+        string webAppUrl)
     {
         var menuButtonWebApp = new MenuButtonWebApp()
         {

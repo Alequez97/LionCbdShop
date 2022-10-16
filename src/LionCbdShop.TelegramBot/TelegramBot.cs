@@ -1,10 +1,7 @@
 using LionCbdShop.TelegramBot.Extensions;
 using LionCbdShop.TelegramBot.Services;
-using Telegram.Bot;
 using Telegram.Bot.Exceptions;
 using Telegram.Bot.Polling;
-using Telegram.Bot.Types;
-using Telegram.Bot.Types.Enums;
 
 namespace LionCbdShop.TelegramBot;
 
@@ -39,7 +36,7 @@ public class TelegramBot : BackgroundService
             AllowedUpdates = Array.Empty<UpdateType>() // receive all update types
         };
 
-        await _telegramBotClient.SetWebAppInChatMenuButton("Shop", _webAppUrl);
+        // await _telegramBotClient.SetWebAppInChatMenuButton("Shop", _webAppUrl);
 
         _telegramBotClient.StartReceiving(
             updateHandler: HandleUpdateAsync,

@@ -17,8 +17,8 @@ public class StartCommand : ITelegramCommand
     private readonly IConfiguration _configuration;
 
     public StartCommand(
-        ITelegramBotClient telegramBotClient, 
-        ICustomerService profileService, 
+        ITelegramBotClient telegramBotClient,
+        ICustomerService profileService,
         IConfiguration configuration)
     {
         _telegramBotClient = telegramBotClient;
@@ -46,14 +46,14 @@ public class StartCommand : ITelegramCommand
         }
 
         var inlineKeyboard = new ReplyKeyboardMarkup(
-                new KeyboardButton("Open shop")
+            new KeyboardButton("Click here to open shop")
+            {
+                WebApp = new WebAppInfo()
                 {
-                    WebApp = new WebAppInfo()
-                    {
-                        Url = _configuration["Telegram:WebAppUrl"],
-                    }
+                    Url = _configuration["Telegram:WebAppUrl"],
                 }
-            );
+            }
+        );
 
         await _telegramBotClient.SendTextMessageAsync(
             chatId,

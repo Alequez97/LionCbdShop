@@ -1,4 +1,5 @@
 ﻿using LionCbdShop.TelegramBot.Commands;
+using LionCbdShop.TelegramBot.Commands.Groups;
 using LionCbdShop.TelegramBot.Commands.Payment;
 using LionCbdShop.TelegramBot.Interfaces;
 using LionCbdShop.TelegramBot.Services;
@@ -13,6 +14,11 @@ public static class IServiceCollectionExtenstions
         services.AddSingleton<UnknownCommand>();
         services.AddSingleton<ITelegramCommand, StartCommand>();
         services.AddSingleton<ITelegramCommand, WebAppCommand>();
+
+        //Telegram groups commands
+        services.AddSingleton<ITelegramCommand, MyChatMemberCommand>();
+        services.AddSingleton<ITelegramCommand, ChatMemberAddedCommand>();
+        services.AddSingleton<ITelegramCommand, ChatMemberLeftCommand>();
 
         //Payment commands
         services.AddSingleton<ITelegramCommand, InvoiceCommand>();

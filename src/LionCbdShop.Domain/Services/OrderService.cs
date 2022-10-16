@@ -80,7 +80,7 @@ public class OrderService : IOrderService
             var customer = await _customerRepository.GetByUsernameAsync(request.CustomerUsername);
             order.Customer = customer;
             order.OrderNumber = GenerateOrderNumber();
-            order.CreationDate = DateTime.Now;
+            order.CreationDate = DateTime.UtcNow;
             order.Status = OrderStatus.New;
 
             await _orderRepository.CreateAsync(order);
@@ -101,7 +101,7 @@ public class OrderService : IOrderService
 
     private string GenerateOrderNumber()
     {
-        return $"{DateTime.Now.ToString("yyyyMMddHHmmss")}-{_random.Next(1000, 9999)}";
+        return $"{DateTime.UtcNow.ToString("yyyyMMddHHmmss")}-{_random.Next(1000, 9999)}";
     }
 
     public async Task<Response> UpdateOrderStatusAsync(UpdateOrderStatusRequest request)
@@ -122,7 +122,7 @@ public class OrderService : IOrderService
             order.Status = request.Status;
             if (request.Status == OrderStatus.Paid)
             {
-                order.PaymentDate = DateTime.Now;
+                order.PaymentDate = DateTime.UtcNow;
             }
 
             await _orderRepository.UpdateAsync(order);

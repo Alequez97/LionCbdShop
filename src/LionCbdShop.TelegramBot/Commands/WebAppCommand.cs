@@ -23,8 +23,8 @@ namespace LionCbdShop.TelegramBot.Commands
 
         public WebAppCommand(
             IConfiguration configuration,
-            ITelegramBotClient telegramBotClient, 
-            IOrderService orderService, 
+            ITelegramBotClient telegramBotClient,
+            IOrderService orderService,
             EmojiProvider emojiProvider)
         {
             _configuration = configuration;
@@ -45,9 +45,11 @@ namespace LionCbdShop.TelegramBot.Commands
                 var createOrderRequest = new CreateOrderRequest()
                 {
                     CustomerUsername = update.Message.Chat.Username,
-                    CartItems = webAppCommandData.CartItems.Select(webAppDataCartItem => {
-                            return new CartItem() { ProductId = webAppDataCartItem.ProductId, Quantity = webAppDataCartItem.Quantity };
-                        }).ToList()
+                    CartItems = webAppCommandData.CartItems.Select(webAppDataCartItem =>
+                    {
+                        return new CartItem()
+                            { ProductId = webAppDataCartItem.ProductId, Quantity = webAppDataCartItem.Quantity };
+                    }).ToList()
                 };
 
                 var createOrderResponse = await _orderService.CreateAsync(createOrderRequest);
@@ -83,7 +85,7 @@ namespace LionCbdShop.TelegramBot.Commands
                     chatId,
                     $"Error while processing your request. Try again later or contact support",
                     ParseMode.MarkdownV2
-                ); 
+                );
             }
         }
 
@@ -92,11 +94,14 @@ namespace LionCbdShop.TelegramBot.Commands
             return update.Message?.Type == MessageType.WebAppData;
         }
 
-        private IEnumerable<LabeledPrice> GetPaymentLabeledPricesFromOrderData(WebAppCommandData webAppCommandData, int deliveryPriceInCents = default)
+        private IEnumerable<LabeledPrice> GetPaymentLabeledPricesFromOrderData(WebAppCommandData webAppCommandData,
+            int deliveryPriceInCents = default)
         {
             foreach (var cartItem in webAppCommandData.CartItems)
             {
-                yield return new LabeledPrice($"{cartItem.ProductName} {_emojiProvider.GetEmoji(cartItem.ProductName)} x{cartItem.Quantity}", (int)(cartItem.TotalPrice * 100));
+                yield return new LabeledPrice(
+                    $"{cartItem.ProductName} {_emojiProvider.GetEmoji(cartItem.ProductName)} x{cartItem.Quantity}",
+                    (int)(cartItem.TotalPrice * 100));
             }
 
             if (deliveryPriceInCents > 0)
@@ -117,7 +122,8 @@ namespace LionCbdShop.TelegramBot.Commands
 
             foreach (var cartItem in webAppCommandData.CartItems)
             {
-                stringBuilder.AppendLine($"{cartItem.ProductName} {_emojiProvider.GetEmoji(cartItem.ProductName)} x{cartItem.Quantity}");
+                stringBuilder.AppendLine(
+                    $"{cartItem.ProductName} {_emojiProvider.GetEmoji(cartItem.ProductName)} x{cartItem.Quantity}");
             }
 
             stringBuilder.AppendLine($"Total price: {webAppCommandData.TotalPrice}");
