@@ -2,8 +2,6 @@
 
 public class WebAppCommandData
 {
-    public string CustomerUsername { get; set; }
-
     public List<WebAppCommandCartItems> CartItems { get; set; }
 
     public double TotalPrice

@@ -44,11 +44,11 @@ namespace LionCbdShop.TelegramBot.Commands
 
                 var createOrderRequest = new CreateOrderRequest()
                 {
-                    CustomerUsername = update.Message.Chat.Username,
+                    CustomerUsername = update.Message.Chat.Username ?? update.Message.Chat.FirstName,
                     CartItems = webAppCommandData.CartItems.Select(webAppDataCartItem =>
                     {
                         return new CartItem()
-                            { ProductName = webAppDataCartItem.ProductName, Quantity = webAppDataCartItem.Quantity };
+                            { ProductId = webAppDataCartItem.ProductId, Quantity = webAppDataCartItem.Quantity };
                     }).ToList()
                 };
 
