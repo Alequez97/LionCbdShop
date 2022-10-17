@@ -6,6 +6,8 @@ namespace LionCbdShop.Persistence.Interfaces
     {
         public Task CreateAsync(Customer customer);
 
-        public Task<Customer> GetByUsernameAsync(string id);
+        public Task<Customer> GetByUsernameAsync(string username);
+
+        public Task<Customer> GetByIdInCustomerProviderSystemAsync(string id);
     }
 }

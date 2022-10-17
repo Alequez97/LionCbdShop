@@ -78,7 +78,7 @@ public class OrderService : IOrderService
         try
         {
             var order = _mapper.Map<Order>(request);
-            var customer = await _customerRepository.GetByUsernameAsync(request.CustomerUsername);
+            var customer = await _customerRepository.GetByIdInCustomerProviderSystemAsync(request.IdInCustomerProviderSystem);
             order.Customer = customer;
             order.OrderNumber = GenerateOrderNumber();
             order.CreationDate = DateTime.UtcNow;

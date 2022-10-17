@@ -17,5 +17,5 @@ public class TelegramUpdateExecutor
         var command = _commandResolver.Resolve(update);
 
         await command.SendResponseAsync(update);
-    }
+    }  
 }

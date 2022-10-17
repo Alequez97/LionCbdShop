@@ -1,5 +1,4 @@
-﻿using Azure.Core;
-using LionCbdShop.Persistence.Entities;
+﻿using LionCbdShop.Persistence.Entities;
 using LionCbdShop.Persistence.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,6 +16,11 @@ namespace LionCbdShop.Persistence.Repositories.Data
         public async Task<Customer> GetByUsernameAsync(string username)
         {
             return await _dbContext.Customers.FirstOrDefaultAsync(customer => customer.Username == username);
+        }
+
+        public async Task<Customer> GetByIdInCustomerProviderSystemAsync(string id)
+        {
+            return await _dbContext.Customers.FirstOrDefaultAsync(customer => customer.IdInCustomerProviderSystem == id);
         }
 
         public async Task CreateAsync(Customer customer)

@@ -2,8 +2,6 @@
 using LionCbdShop.Domain.Dto;
 using LionCbdShop.Domain.Requests.Orders;
 using LionCbdShop.Persistence.Entities;
-using CartItem = LionCbdShop.Persistence.Entities.CartItem;
-using CreateOrderRequestCartItem = LionCbdShop.Domain.Requests.Orders.CartItem;
 
 namespace LionCbdShop.Domain.Mapper.Profiles
 {

@@ -6,11 +6,7 @@ using LionCbdShop.TelegramBot.Models;
 using LionCbdShop.TelegramBot.Services;
 using Newtonsoft.Json;
 using System.Text;
-using Telegram.Bot;
-using Telegram.Bot.Types;
-using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.Payments;
-using CartItem = LionCbdShop.Domain.Requests.Orders.CartItem;
 
 namespace LionCbdShop.TelegramBot.Commands
 {
@@ -39,16 +35,20 @@ namespace LionCbdShop.TelegramBot.Commands
 
             try
             {
-                var webAppData = update.Message.WebAppData.Data;
-                var webAppCommandData = JsonConvert.DeserializeObject<WebAppCommandData>(webAppData);
+                var webAppSentData = JsonConvert.DeserializeObject<WebAppCommandData>(update.Message.WebAppData.Data);
 
                 var createOrderRequest = new CreateOrderRequest()
                 {
+                    IdInCustomerProviderSystem = chatId.ToString(),
                     CustomerUsername = update.Message.Chat.Username ?? update.Message.Chat.FirstName,
-                    CartItems = webAppCommandData.CartItems.Select(webAppDataCartItem =>
+                    CartItems = webAppSentData.CartItems.Select(webAppDataCartItem =>
                     {
-                        return new CartItem()
-                            { ProductId = webAppDataCartItem.ProductId, Quantity = webAppDataCartItem.Quantity };
+                        return new CreateOrderRequestCartItem()
+                        {
+                            ProductId = webAppDataCartItem.ProductId,
+                            ProductNameDuringOrderCreation = webAppDataCartItem.ProductName,
+                            Quantity = webAppDataCartItem.Quantity
+                        };
                     }).ToList()
                 };
 
@@ -63,7 +63,7 @@ namespace LionCbdShop.TelegramBot.Commands
                         createOrderResponse.ResponseObject.OrderNumber,
                         _configuration["PaymentGateway:Stripe"],
                         "EUR",
-                        GetPaymentLabeledPricesFromOrderData(webAppCommandData),
+                        GetPaymentLabeledPricesFromOrderData(webAppSentData),
                         needShippingAddress: true,
                         needPhoneNumber: true,
                         needName: true

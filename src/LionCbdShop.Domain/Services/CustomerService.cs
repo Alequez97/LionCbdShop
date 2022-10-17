@@ -14,7 +14,7 @@ public class CustomerService : ICustomerService
     private readonly IMapper _mapper;
     private readonly ILogger<CustomerService> _logger;
 
-    public CustomerService(ICustomerRepository profileRepository, AutoMapper.IMapper mapper, ILogger<CustomerService> logger)
+    public CustomerService(ICustomerRepository profileRepository, IMapper mapper, ILogger<CustomerService> logger)
     {
         _customerRepository = profileRepository;
         _mapper = mapper;
@@ -27,7 +27,7 @@ public class CustomerService : ICustomerService
 
         try
         {
-            var existingProfile = await _customerRepository.GetByUsernameAsync(request.Username);
+            var existingProfile = await _customerRepository.GetByIdInCustomerProviderSystemAsync(request.IdInCustomerProviderSystem);
             if (existingProfile != null)
             {
                 response.IsSuccess = true;

@@ -6,6 +6,8 @@ public class ProductDto
 
     public string ProductName { get; set; }
 
+    public string ProductNameDuringOrderCreation { get; set; }
+
     public double OriginalPrice { get; set; }
 
     public double PriceWithDiscount { get; set; }
