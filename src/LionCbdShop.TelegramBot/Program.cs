@@ -3,7 +3,6 @@ using LionCbdShop.Persistence;
 using LionCbdShop.TelegramBot;
 using LionCbdShop.TelegramBot.Extensions;
 using Microsoft.EntityFrameworkCore;
-using Telegram.Bot;
 
 IHost host = Host.CreateDefaultBuilder(args)
     .UseSystemd()
