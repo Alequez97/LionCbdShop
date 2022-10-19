@@ -42,8 +42,6 @@ export default function ProductForm({ product }: ProductFormProps) {
         }
 
         let priceWithDiscount = priceWithDiscountRef.current?.value;
-        console.log(priceWithDiscount)
-        console.log(originalPrice)
 
         if (priceWithDiscount !== undefined && priceWithDiscount !== '') {
             if (Number(priceWithDiscount) >= Number(originalPrice)) {
@@ -56,10 +54,16 @@ export default function ProductForm({ product }: ProductFormProps) {
         let inputImage = productImageRef?.current?.files?.[0];
         let allowedImageExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
 
-        if (!isUpdateOperation && !inputImage) {
-            errors.productImageError = "Image is required"
-        } else if (!allowedImageExtensions.exec(inputImage!.name)) {
-            errors.productImageError = "Allowed file extensions - jpeg, jpg, png, gif"
+        if (!isUpdateOperation) {
+            if (!inputImage) {
+                errors.productImageError = "Image is required"
+            } else if (!allowedImageExtensions.exec(inputImage.name)) {
+                errors.productImageError = "Allowed file extensions - jpeg, jpg, png, gif"
+            }
+        } else {
+            if (inputImage && !allowedImageExtensions.exec(inputImage.name)) {
+                errors.productImageError = "Allowed file extensions - jpeg, jpg, png, gif"
+            }
         }
 
         return errors;
