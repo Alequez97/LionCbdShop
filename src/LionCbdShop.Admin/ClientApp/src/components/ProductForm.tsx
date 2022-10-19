@@ -54,8 +54,12 @@ export default function ProductForm({ product }: ProductFormProps) {
         }
 
         let inputImage = productImageRef?.current?.files?.[0];
+        let allowedImageExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+
         if (!isUpdateOperation && !inputImage) {
             errors.productImageError = "Image is required"
+        } else if (!allowedImageExtensions.exec(inputImage!.name)) {
+            errors.productImageError = "Allowed file extensions - jpeg, jpg, png, gif"
         }
 
         return errors;
@@ -126,6 +130,10 @@ export default function ProductForm({ product }: ProductFormProps) {
         }
     }
 
+    function getInputClass(isValid: boolean) {
+        return isValid ? 'form-control' : 'form-control is-invalid'
+    }
+
     return (
         <>
             <InfoBadge text={infoBadgeText} class={infoBadgeType} show={showInfoBadge} closeButtonOnClick={() => setShowInfoBadge(false)} />
@@ -134,22 +142,22 @@ export default function ProductForm({ product }: ProductFormProps) {
                 <form>
                     <div className="mb-2">
                         <label htmlFor="productName" className="form-label">Product name</label>
-                        <input ref={productNameRef} type="text" className="form-control" name="productName" defaultValue={product?.productName} />
+                        <input ref={productNameRef} type="text" className={getInputClass(inputDataErrors.productNameError === undefined)} name="productName" defaultValue={product?.productName} />
                         <small className="text-danger">{inputDataErrors.productNameError}</small>
                     </div>
                     <div className="mb-2">
                         <label htmlFor="originalPrice" className="form-label">Original price</label>
-                        <input ref={originalPriceRef} type="number" step=".01" min="0" className="form-control" name="originalPrice" defaultValue={product?.originalPrice} />
+                        <input ref={originalPriceRef} type="number" step=".01" min="0" className={getInputClass(inputDataErrors.originalPriceError === undefined)} name="originalPrice" defaultValue={product?.originalPrice} />
                         <small className="text-danger">{inputDataErrors.originalPriceError}</small>
                     </div>
                     <div className="mb-2">
                         <label htmlFor="priceWithDiscount" className="form-label">Price with discount</label>
-                        <input ref={priceWithDiscountRef} type="number" step=".01" min="0" className="form-control" name="priceWithDiscount" defaultValue={product?.priceWithDiscount ? product?.priceWithDiscount : ''} />
+                        <input ref={priceWithDiscountRef} type="number" step=".01" min="0" className={getInputClass(inputDataErrors.priceWithDiscountError === undefined)} name="priceWithDiscount" defaultValue={product?.priceWithDiscount ? product?.priceWithDiscount : ''} />
                         <small className="text-danger">{inputDataErrors.priceWithDiscountError}</small>
                     </div>
                     <div className="mb-2">
                         <label htmlFor="image" className="form-label">Image</label>
-                        <input ref={productImageRef} className="form-control" type="file" name="productImage" />
+                        <input ref={productImageRef} className={getInputClass(inputDataErrors.productImageError === undefined)} type="file" name="productImage" />
                         <small className="text-danger">{inputDataErrors.productImageError}</small>
                     </div>
                     <div className="text-center">
