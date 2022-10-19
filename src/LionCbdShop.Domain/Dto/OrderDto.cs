@@ -24,6 +24,8 @@ public class OrderDto
 public class CartItemDto
 {
     public ProductDto Product { get; set; }
+    
+    public string ProductNameDuringOrderCreation { get; set; }
 
     public int Quantity { get; set; }
 }

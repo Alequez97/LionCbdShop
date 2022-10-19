@@ -26,7 +26,7 @@ public static class CommonResponseMessage
     public static class Delete
     {
         public static string Success(string entityName) => $"{entityName} was successfuly deleted!";
-
+        
         public static string Error(string entityName) => $"Can't perform {entityName} deletion. Try again later";
     }
 }

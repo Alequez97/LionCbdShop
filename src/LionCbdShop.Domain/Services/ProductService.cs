@@ -5,6 +5,7 @@ using LionCbdShop.Domain.Interfaces;
 using LionCbdShop.Domain.Requests.Products;
 using LionCbdShop.Persistence.Entities;
 using LionCbdShop.Persistence.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace LionCbdShop.Domain.Services;
@@ -155,9 +156,15 @@ public class ProductService : IProductService
             response.IsSuccess = true;
             response.Message = CommonResponseMessage.Delete.Success(ResponseMessageEntity.Product);
         }
+        catch (DbUpdateException dbUpdateException)
+        {
+            _logger.LogWarning(dbUpdateException, "Exception: Unable to delete product with id - {Id}", id);
+            response.IsSuccess = false;
+            response.Message = ProductResponseMessage.CantDeleteBecauseOfExistingReference();
+        }
         catch (Exception exception)
         {
-            _logger.LogError(exception, "Exception: Unable to delete product with id - {Id}", id);
+            _logger.LogError(exception, "Exception in {action} action", "delete product");
             response.IsSuccess = false;
             response.Message = CommonResponseMessage.Delete.Error(ResponseMessageEntity.Product);
         }

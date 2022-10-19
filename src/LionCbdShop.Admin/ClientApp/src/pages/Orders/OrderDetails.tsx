@@ -17,7 +17,7 @@ export default function OrderDetails() {
         }
         catch
         {
-            console.log('Cant fetch data at this moment')
+            console.error('Cant fetch data at this moment')
         }
     }
 
@@ -58,7 +58,10 @@ export default function OrderDetails() {
                 <ul className="list-group">
                     <li className="list-group-item active">Order items</li>
                     {order?.cartItems.map((cartItem: CartItem, index: number) =>
-                        <li className="list-group-item" key={index}>{cartItem.product.productName} x<span className="fw-bold">{cartItem.quantity}</span></li>
+                        <li className="list-group-item" key={index}>
+                            {cartItem.productNameDuringOrderCreation} x<span className="fw-bold">{cartItem.quantity}</span>
+                            <i>{cartItem.product.productName === cartItem.productNameDuringOrderCreation ? '' : ` (Product name after last edit - ${cartItem.product.productName})`}</i>
+                        </li>
                     )}
                 </ul>
             </div>
