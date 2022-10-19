@@ -19,6 +19,8 @@ export default function ProductForm({ product }: ProductFormProps) {
 
     const [inputData, setInputData] = useState<any>({})
     const [inputImage, setInputImage] = useState<File>()
+    const [inputDataErrors, setInputDataErrors] = useState<any>({})
+    const [isSubmit, setIsSubmit] = useState(false)
 
     useEffect(() => {
         if (product) {
@@ -34,13 +36,57 @@ export default function ProductForm({ product }: ProductFormProps) {
     const [infoBadgeText, setShowInfoBadgeText] = useState('')
     const [infoBadgeType, setInfoBadgeType] = useState('')
 
+    function validateForm() {
+        console.log('ref data:')
+        console.log(productNameRef.current?.value)
+
+        let isUpdateOperation = product !== undefined;
+        
+        let errors: any = {};
+
+        if (!inputData?.productName) {
+            errors.productNameError = "Product name is required"
+        }
+
+        if (!inputData?.originalPrice) {
+            errors.originalPriceError = "Original price is required"
+        } else if (inputData?.originalPrice <= 0) {
+            errors.originalPriceError = "Original price should be valid number and be more than 0"
+        }
+
+        if (inputData?.priceWithDiscount >= inputData?.originalPrice) {
+            errors.priceWithDiscountError = "Price with discount should be less than original price"
+        } else if (inputData?.priceWithDiscount < 0) {
+            errors.priceWithDiscountError = "Price with discount shouldn't be negative number"
+        } 
+
+        if (!isUpdateOperation && !inputImage) {
+            errors.productImageError = "Image is required"
+        }
+
+        return errors;
+    }
+
+    const handleSubmit = (event: any) => {
+        event.preventDefault();
+        const inputDataErrors = validateForm();
+        setInputDataErrors(inputDataErrors);
+        setIsSubmit(true);
+    }
+
+    useEffect(() => {
+        if (Object.keys(inputDataErrors).length === 0 && isSubmit) {
+            storeProduct();
+        }
+    }, [inputDataErrors])
+
     async function storeProduct() {
         let isUpdateOperation = product !== undefined;
 
         let formData = new FormData();
         formData.append("productName", inputData?.productName);
         formData.append("originalPrice", inputData?.originalPrice);
-        formData.append("priceWithDiscount", inputData?.priceWithDiscount);
+        formData.append("priceWithDiscount", inputData?.priceWithDiscount ? inputData.priceWithDiscount : '');
         if (inputImage) {
             formData.append("productImage", inputImage, inputImage.name);
         }
@@ -108,21 +154,25 @@ export default function ProductForm({ product }: ProductFormProps) {
                     <div className="mb-2">
                         <label htmlFor="productName" className="form-label">Product name</label>
                         <input ref={productNameRef} type="text" className="form-control" name="productName" defaultValue={inputData?.productName} onChange={changeInputHandler} />
+                        <small className="text-danger">{inputDataErrors.productNameError}</small>
                     </div>
                     <div className="mb-2">
                         <label htmlFor="originalPrice" className="form-label">Original price</label>
                         <input ref={originalPriceRef} type="number" step=".01" min="0" className="form-control" name="originalPrice" defaultValue={inputData?.originalPrice} onChange={changeInputHandler} />
+                        <small className="text-danger">{inputDataErrors.originalPriceError}</small>
                     </div>
                     <div className="mb-2">
                         <label htmlFor="priceWithDiscount" className="form-label">Price with discount</label>
                         <input ref={priceWithDiscountRef} type="number" step=".01" min="0" className="form-control" name="priceWithDiscount" defaultValue={inputData?.priceWithDiscount} onChange={changeInputHandler} />
+                        <small className="text-danger">{inputDataErrors.priceWithDiscountError}</small>
                     </div>
                     <div className="mb-2">
                         <label htmlFor="image" className="form-label">Image</label>
                         <input className="form-control" type="file" name="productImage" onChange={changeImageHandler} />
+                        <small className="text-danger">{inputDataErrors.productImageError}</small>
                     </div>
                     <div className="text-center">
-                        <input type="button" value={product ? "Update" : "Add"} className="btn btn-primary" onClick={storeProduct} />
+                        <input type="submit" value={product ? "Update" : "Add"} className="btn btn-primary" onClick={handleSubmit} />
                     </div>
                 </form>
             </div>

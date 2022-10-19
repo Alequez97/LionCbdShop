@@ -16,7 +16,7 @@ export default function ProductCard({ product, deleteOnClick }: ProductListGroup
             <div className="card">
                 <div className="card-body">
                     <div className="d-flex align-items-center">
-                        <img src={product.image} alt={product.productName} height={180} width={180} />
+                        <img src={product.image} alt={product.productName} height={150} width={150} />
                         <div className="ms-3">
                             <p className="fw-bold mb-1">{product.productName}</p>
                             {product.priceWithDiscount 

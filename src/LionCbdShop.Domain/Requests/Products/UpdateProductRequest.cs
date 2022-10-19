@@ -10,7 +10,7 @@ public class UpdateProductRequest
 
     public double OriginalPrice { get; set; }
 
-    public double PriceWithDiscount { get; set; }
+    public double? PriceWithDiscount { get; set; }
 
     public IFormFile? ProductImage { get; set; }
 }
