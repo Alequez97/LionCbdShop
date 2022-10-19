@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Product from "../models/Product"
 import Response from '../Response'
 import axios from 'axios'
@@ -75,7 +75,7 @@ export default function ProductForm({ product }: ProductFormProps) {
     useEffect(() => {
         if (Object.keys(inputDataErrors).length === 0 && isSubmit) {
             storeProduct();
-        }
+        } // eslint-disable-next-line
     }, [inputDataErrors])
 
     async function storeProduct() {
