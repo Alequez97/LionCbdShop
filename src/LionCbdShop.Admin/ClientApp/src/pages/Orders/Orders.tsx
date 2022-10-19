@@ -25,26 +25,28 @@ const Orders = () => {
 
   if (orders.length > 0) {
     return (
-      <table className="table">
-        <thead>
-          <tr>
-            <th scope="col">Order number</th>
-            <th scope="col">Creation date</th>
-            <th scope="col">Status</th>
-            <th scope="col">Details</th>
-          </tr>
-        </thead>
-        <tbody className="table-group-divider">
-          {orders.map(order =>
-            <tr key={order.id}>
-              <th scope="row">{order.orderNumber.split('-')[1]}</th>
-              <td>{(moment(order.creationDate)).format('DD-MMM-YYYY hh:mm')}</td>
-              <td>{order.status}</td>
-              <td><Link to={orderDetailsPath(order.id)}>Details</Link></td>
+      <div className='container'>
+        <table className="table">
+          <thead>
+            <tr>
+              <th scope="col">Order number</th>
+              <th scope="col">Creation date</th>
+              <th scope="col">Status</th>
+              <th scope="col">Details</th>
             </tr>
-          )}
-        </tbody>
-      </table>
+          </thead>
+          <tbody className="table-group-divider">
+            {orders.map(order =>
+              <tr key={order.id}>
+                <th scope="row">{order.orderNumber.split('-')[1]}</th>
+                <td>{(moment(order.creationDate)).format('DD-MMM-YYYY hh:mm')}</td>
+                <td>{order.status}</td>
+                <td><Link to={orderDetailsPath(order.id)}>Details</Link></td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
     )
   }
 

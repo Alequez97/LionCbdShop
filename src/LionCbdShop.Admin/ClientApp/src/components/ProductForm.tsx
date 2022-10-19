@@ -63,7 +63,6 @@ export default function ProductForm({ product }: ProductFormProps) {
             } else {
                 const updateResponse = await axios.put<Response<any>>('/products', formData);
                 response = updateResponse.data;
-                navigate('/products');
             }
 
             if (response.isSuccess) {
@@ -79,6 +78,10 @@ export default function ProductForm({ product }: ProductFormProps) {
         }
 
         setShowInfoBadge(true)
+
+        if (action === "UPDATE") {
+            navigate('/products');
+        }
     }
 
     const changeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {

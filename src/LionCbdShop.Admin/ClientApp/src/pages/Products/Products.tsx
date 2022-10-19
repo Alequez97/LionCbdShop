@@ -57,22 +57,24 @@ export default function Products() {
 
     return (
         <>
+
             <InfoBadge text={infoBadgeText} class={infoBadgeType} show={showInfoBadge} closeButtonOnClick={() => setShowInfoBadge(false)} />
+            <div className='container'>
+                {products.length === 0 &&
+                    <div className="alert alert-secondary text-center" role="alert">
+                        <h3>No products yet</h3>
+                    </div>
+                }
 
-            {products.length === 0 &&
-                <div className="alert alert-secondary text-center" role="alert">
-                    <h3>No products yet</h3>
+                <div className="text-center mb-4">
+                    <Link to="/products/add">
+                        <button type="button" className="btn btn-primary">Add new product</button>
+                    </Link>
                 </div>
-            }
 
-            <div className="text-center mb-4">
-                <Link to="/products/add">
-                    <button type="button" className="btn btn-primary">Add new product</button>
-                </Link>
-            </div>
-
-            <div className="row">
-                {products.map(product => <ProductListGroupItem key={product.id} product={product} deleteOnClick={() => deleteProductClick(product)} />)}
+                <div className="row">
+                    {products.map(product => <ProductListGroupItem key={product.id} product={product} deleteOnClick={() => deleteProductClick(product)} />)}
+                </div>
             </div>
         </>
     )
