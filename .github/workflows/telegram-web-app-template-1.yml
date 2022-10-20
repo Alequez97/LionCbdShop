@@ -42,3 +42,23 @@ jobs:
           name: ${{ env.ARTIFACT_NAME }}
           path: ${{ format('{0}/{1}/{2}', github.workspace, env.APP_LOCATION, env.APP_BUILD_LOCATION) }}
       
+  DeployToDev:
+    runs-on: ubuntu-latest
+    name: Deploy to Development
+    needs: [Build]
+    environment:
+      name: Development
+    
+    steps: 
+      - name: Download a Build Artifact
+        id: downloadbuildartifact
+        uses: actions/download-artifact@v3.0.0
+        with:
+          name: ${{ env.ARTIFACT_NAME }}
+      - name: Deploy to azure static web app
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          action: "upload"
+          app_location: steps.downloadbuildartifact.outputs.download-path
+          azure_static_web_apps_api_token: ${{ secrets.TELEGRAM_WEB_APP_TEMPLATE_1_DEPLOYMENT_SECRET }}
+          skip_app_build: true
