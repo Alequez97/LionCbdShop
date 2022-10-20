@@ -59,6 +59,7 @@ jobs:
         uses: Azure/static-web-apps-deploy@v1
         with:
           action: "upload"
-          app_location: test
+          app_location: ${{ steps.downloadbuildartifact.outputs.download-path }}
+          app_artifact_location: ${{ steps.downloadbuildartifact.outputs.download-path }}
           azure_static_web_apps_api_token: ${{ secrets.TELEGRAM_WEB_APP_TEMPLATE_1_DEPLOYMENT_SECRET }}
           skip_app_build: true
