@@ -6,7 +6,7 @@ on:
       - master
     paths:
       - src/LionCbdShop.TelegramWebApp.Template1/**
-  workflow_dispath:
+  workflow_dispatch:
 
 env:
   APP_LOCATION: "src/LionCbdShop.TelegramWebApp.Template1/"

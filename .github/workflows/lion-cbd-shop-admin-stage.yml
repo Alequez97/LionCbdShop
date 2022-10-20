@@ -7,8 +7,8 @@ on:
       - src/LionCbdShop.Admin/**
       - src/LionCbdShop.Domain/**
       - src/LionCbdShop.Persistence/**
-  workflow_dispath:
-  
+  workflow_dispatch:
+
 env:
   AZURE_WEBAPP_NAME: lion-cbd-shop-admin-stage
   AZURE_WEBAPP_PACKAGE_PATH: src\LionCbdShop.Admin\publish
