@@ -1,0 +1,75 @@
+name: Work with environments example
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+  workflow_dispatch:
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Build, Test, Deploy artifacts and so on...
+      run: echo 'Let's do IT'
+  
+  DeployToDev:
+    runs-on: ubuntu-latest
+    
+    name: Deploy to Dev
+    if: github.event_name == 'pull_request'
+    needs: [Build]
+    environment:
+      name: Development
+      url: 'https://dev.example.com'
+    
+    steps: 
+      - name: Deploy
+        run: echo 'Do dev env deployment'
+        
+  DeployToStage:
+    runs-on: ubuntu-latest
+    
+    name: Deploy to Stage
+    if: github.event.ref == 'refs/heads/master'
+    needs: [Build]
+    environment:
+      name: Staging
+      url: 'https://stage.example.com'
+    
+    steps: 
+      - name: Deploy
+        run: echo 'Do stage env deployment'
+    
+  DeployToProd:
+    runs-on: ubuntu-latest
+    
+    name: Deploy to Prod
+    needs: [DeployToStage]
+    environment:
+      name: Production
+      url: 'https://www.example.com'
+    
+    steps: 
+      - name: Deploy
+        run: echo 'Do prod env deployment'
+    
+    
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
