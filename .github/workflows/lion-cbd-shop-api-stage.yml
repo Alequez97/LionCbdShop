@@ -7,7 +7,7 @@ on:
       - src/LionCbdShop.Api/**
       - src/LionCbdShop.Domain/**
       - src/LionCbdShop.Persistence/**
-  workflow_dispath:    
+  workflow_dispatch:    
 
 env:
   AZURE_WEBAPP_NAME: lion-cbd-shop-api-stage
