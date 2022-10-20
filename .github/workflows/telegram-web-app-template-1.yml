@@ -10,24 +10,35 @@ on:
 
 env:
   APP_LOCATION: "src/LionCbdShop.TelegramWebApp.Template1/"
-  APP_ARTIFACT_LOCATION: "build"
+  APP_BUILD_LOCATION: "build"
+  ARTIFACT_NAME: "TelegramWebAppTemplate1"
 
 permissions:
   contents: read
 
 jobs:
-  build_and_deploy_job:
+  Build:
     runs-on: ubuntu-latest
-    name: Build and Deploy
+    name: Build
+    defaults:
+      run:
+        working-directory: ${{ env.APP_LOCATION }}
+      
     steps:
       - uses: actions/checkout@v3
         with:
           submodules: true
-      - name: Build And Deploy
-        id: builddeploy
-        uses: Azure/static-web-apps-deploy@v1
+      - name: Setup Node.js 16.x
+        uses: actions/setup-node@v3.5.1
         with:
-          azure_static_web_apps_api_token: ${{ secrets.TELEGRAM_WEB_APP_TEMPLATE_1_DEPLOYMENT_SECRET }}
-          action: "upload"
-          app_location: ${{ env.APP_LOCATION }}
-          app_artifact_location: ${{ env.APP_ARTIFACT_LOCATION }}
+          node-version: 16.x
+      - name: Build
+        run: | 
+          npm install
+          npm run build
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v3.1.0
+        with:
+          name: ${{ env.ARTIFACT_NAME }}
+          path: ${{ env.APP_BUILD_LOCATION }}
+      
