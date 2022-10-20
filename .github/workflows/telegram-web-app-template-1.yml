@@ -60,6 +60,4 @@ jobs:
         with:
           action: "upload"
           app_location: ${{ steps.downloadbuildartifact.outputs.download-path }}
-          output_location: ${{ steps.downloadbuildartifact.outputs.download-path }}
           azure_static_web_apps_api_token: ${{ secrets.TELEGRAM_WEB_APP_TEMPLATE_1_DEPLOYMENT_SECRET }}
-          skip_app_build: true
