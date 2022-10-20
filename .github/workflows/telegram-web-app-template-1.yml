@@ -40,5 +40,5 @@ jobs:
         uses: actions/upload-artifact@v3.1.0
         with:
           name: ${{ env.ARTIFACT_NAME }}
-          path: ${{ env.APP_BUILD_LOCATION }}
+          path: ${{ format('{0}/{1}/{2}', github.workspace, env.APP_LOCATION, env.APP_BUILD_LOCATION) }}
       
