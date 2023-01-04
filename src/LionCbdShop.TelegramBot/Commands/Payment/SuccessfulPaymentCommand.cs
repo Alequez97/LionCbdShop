@@ -62,6 +62,6 @@ public class SuccessfulPaymentCommand : ITelegramCommand
 
     private string ReturnNullIfStringNullOrEmpty(string str)
     {
-        return string.IsNullOrEmpty(str) ? null : str;
+        return string.IsNullOrWhiteSpace(str) ? null : str;
     }
 }

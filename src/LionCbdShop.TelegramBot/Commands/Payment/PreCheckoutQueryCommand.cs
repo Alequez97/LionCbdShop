@@ -23,6 +23,7 @@ public class PreCheckoutQueryCommand : ITelegramCommand
         var preCheckoutQuery = update.PreCheckoutQuery;
 
         // Here data can be validated and desicion can be made if order can processed
+        // In our case this should be done in WebAppData command since it sends invoice
 
         await _telegramBotClient.AnswerPreCheckoutQueryAsync(preCheckoutQuery.Id);
     }
