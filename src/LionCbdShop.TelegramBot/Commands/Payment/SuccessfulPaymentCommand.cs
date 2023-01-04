@@ -42,7 +42,7 @@ public class SuccessfulPaymentCommand : ITelegramCommand
                 CountryIso2Code = update.Message.SuccessfulPayment.OrderInfo.ShippingAddress.CountryCode,
                 City = update.Message.SuccessfulPayment.OrderInfo.ShippingAddress.City,
                 StreetLine1 = update.Message.SuccessfulPayment.OrderInfo.ShippingAddress.StreetLine1,
-                StreetLine2 = update.Message.SuccessfulPayment.OrderInfo.ShippingAddress.StreetLine2,
+                StreetLine2 = ReturnNullIfStringNullOrEmpty(update.Message.SuccessfulPayment.OrderInfo.ShippingAddress.StreetLine2),
                 PostCode = update.Message.SuccessfulPayment.OrderInfo.ShippingAddress.PostCode
             };
             await _orderService.UpdateShippingAddressAsync(updateShippingAddressRequest);
@@ -58,5 +58,10 @@ public class SuccessfulPaymentCommand : ITelegramCommand
     public bool IsResponsibleForUpdate(Update update)
     {
         return update.Message?.Type == MessageType.SuccessfulPayment;
+    }
+
+    private string ReturnNullIfStringNullOrEmpty(string str)
+    {
+        return string.IsNullOrEmpty(str) ? null : str;
     }
 }
