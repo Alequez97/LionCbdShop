@@ -7,7 +7,7 @@ public class CreateProductRequest
 {
     public string ProductName { get; set; }
 
-    public string ProductCategoryName { get; set; }
+    public string? ProductCategoryName { get; set; }
 
     public double OriginalPrice { get; set; }
 
