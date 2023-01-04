@@ -24,7 +24,7 @@ public class ProductService : IProductService
         _mapper = mapper;
         _logger = logger;
     }
-    
+
     public async Task<Response<IEnumerable<ProductDto>>> GetAllAsync()
     {
         var response = new Response<IEnumerable<ProductDto>>();
@@ -55,6 +55,14 @@ public class ProductService : IProductService
         try
         {
             var product = await _productRepository.GetAsync(id);
+
+            if (product == null)
+            {
+                response.IsSuccess = false;
+                response.Message = CommonResponseMessage.Get.NotFound(ResponseMessageEntity.ProductCategory, id);
+                return response;
+            }
+
             var productDto = _mapper.Map<ProductDto>(product);
 
             response.IsSuccess = true;
@@ -70,6 +78,36 @@ public class ProductService : IProductService
         return response;
     }
 
+    public async Task<Response<ProductCategoryDto>> GetProductCategoryAsync(string name)
+    {
+        var response = new Response<ProductCategoryDto>();
+
+        try
+        {
+            var productCategory = await _productRepository.GetProductCategoryAsync(name);
+
+            if (productCategory == null)
+            {
+                response.IsSuccess = false;
+                response.Message = CommonResponseMessage.Get.NotFoundByName(ResponseMessageEntity.ProductCategory, name);
+                return response;
+            }
+
+            var productCategoryDto = _mapper.Map<ProductCategoryDto>(productCategory);
+
+            response.IsSuccess = true;
+            response.ResponseObject = productCategoryDto;
+        }
+        catch (Exception exception)
+        {
+            _logger.LogError(exception, "Exception: Unable to get product category with name - {Name}", name);
+            response.IsSuccess = false;
+            response.Message = CommonResponseMessage.Get.Error(ResponseMessageEntity.Product);
+        }
+
+        return response; 
+    }
+
     public async Task<Response> CreateAsync(CreateProductRequest createProductRequest)
     {
         var response = new Response();
@@ -80,6 +118,12 @@ public class ProductService : IProductService
 
             var product = _mapper.Map<Product>(createProductRequest);
             product.ImageName = storedImageName;
+
+            var productCategory = await _productRepository.GetProductCategoryAsync(createProductRequest.ProductCategoryName);
+            if (productCategory != null)
+            {
+                product.Category = productCategory;
+            }
 
             await _productRepository.CreateAsync(product);
 
@@ -119,7 +163,7 @@ public class ProductService : IProductService
                 var newImageName = await _productImagesRepository.SaveAsync(updateProductRequest.ProductImage, CancellationToken.None);
                 existingProduct.ImageName = newImageName;
             }
-            
+
             await _productRepository.UpdateAsync(existingProduct);
 
             response.IsSuccess = true;

@@ -6,6 +6,8 @@ public static class CommonResponseMessage
     {
         public static string NotFound(string entityName, Guid id) => $"{entityName} with id {id} not found.";
 
+        public static string NotFoundByName(string entityName, string name) => $"{entityName} with name {name} not found.";
+
         public static string Error(string entityName) => $"Unable to load {entityName} data. Try again later.";
     }
 

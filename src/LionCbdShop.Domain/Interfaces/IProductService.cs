@@ -9,6 +9,8 @@ public interface IProductService
 
     Task<Response<IEnumerable<ProductDto>>> GetAllAsync();
 
+    Task<Response<ProductCategoryDto>> GetProductCategoryAsync(string name);
+
     Task<Response> CreateAsync(CreateProductRequest request);
 
     Task<Response> UpdateAsync(UpdateProductRequest request);

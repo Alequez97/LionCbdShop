@@ -16,6 +16,8 @@ public class ProductProfile : Profile
                 config => config.MapFrom(product => product.Name))
             .AfterMap<ProductDtoAction>();
 
+        CreateMap<ProductCategory, ProductCategoryDto>();
+
         CreateMap<CreateProductRequest, Product>()
             .ForMember(product =>
                 product.Name,

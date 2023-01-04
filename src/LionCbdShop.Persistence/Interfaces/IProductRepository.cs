@@ -8,6 +8,8 @@ public interface IProductRepository
 
     Task<IEnumerable<Product>> GetAllAsync();
 
+    Task<ProductCategory> GetProductCategoryAsync(string name);
+
     Task CreateAsync(Product product);
 
     Task UpdateAsync(Product product);

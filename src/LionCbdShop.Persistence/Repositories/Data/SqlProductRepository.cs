@@ -20,9 +20,12 @@ namespace LionCbdShop.Persistence.Repositories.Data
 
         public async Task<Product> GetAsync(Guid id)
         {
-            var product = await _dbContext.Products.FirstAsync(product => product.Id == id);
+            return await _dbContext.Products.FirstOrDefaultAsync(product => product.Id == id);
+        }
 
-            return product;
+        public async Task<ProductCategory> GetProductCategoryAsync(string name)
+        {
+            return await _dbContext.ProductCategories.FirstOrDefaultAsync(category => category.Name == name);
         }
 
         public async Task CreateAsync(Product product)
