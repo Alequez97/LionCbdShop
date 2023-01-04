@@ -1,5 +1,4 @@
-﻿using LionCbdShop.Persistence.Constants;
-using LionCbdShop.Persistence.Entities;
+﻿using LionCbdShop.Persistence.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace LionCbdShop.Persistence;
@@ -9,6 +8,8 @@ public class LionCbdShopDbContext : DbContext
     public DbSet<Customer> Customers { get; set; }
 
     public DbSet<Product> Products { get; set; }
+
+    public DbSet<ProductCategory> ProductCategories { get; set; }
 
     public DbSet<Order> Orders { get; set; }
 
@@ -29,6 +30,11 @@ public class LionCbdShopDbContext : DbContext
         modelBuilder
             .Entity<Product>()
             .HasIndex(product => product.Name)
+            .IsUnique();
+
+        modelBuilder
+            .Entity<ProductCategory>()
+            .HasIndex(productCategory => productCategory.Name)
             .IsUnique();
 
         modelBuilder
