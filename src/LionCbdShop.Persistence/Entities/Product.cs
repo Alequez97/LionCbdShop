@@ -1,4 +1,6 @@
-﻿namespace LionCbdShop.Persistence.Entities;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace LionCbdShop.Persistence.Entities;
 
 public class Product : EntityBase
 {
@@ -10,5 +12,6 @@ public class Product : EntityBase
 
     public double? PriceWithDiscount { get; set; }
 
+    [MaxLength(200)]
     public string ImageName { get; set; }
 }
