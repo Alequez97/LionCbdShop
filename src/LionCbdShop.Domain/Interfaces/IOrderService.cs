@@ -12,4 +12,6 @@ public interface IOrderService
     public Task<Response<OrderDto>> CreateAsync(CreateOrderRequest request);
 
     public Task<Response> UpdateOrderStatusAsync(UpdateOrderStatusRequest request);
+
+    public Task<Response> UpdateShippingAddressAsync(UpdateShippingAddressRequest request);
 }

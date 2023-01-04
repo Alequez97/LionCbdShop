@@ -32,6 +32,22 @@ public class SuccessfulPaymentCommand : ITelegramCommand
         };
         await _orderService.UpdateOrderStatusAsync(updateOrderStatusRequest);
 
+        var orderContainsShippingAddress = update.Message.SuccessfulPayment?.OrderInfo?.ShippingAddress != null ? true : false;
+
+        if (orderContainsShippingAddress)
+        {
+            var updateShippingAddressRequest = new UpdateShippingAddressRequest()
+            {
+                OrderNumber = paidOrderNumber,
+                CountryIso2Code = update.Message.SuccessfulPayment.OrderInfo.ShippingAddress.CountryCode,
+                City = update.Message.SuccessfulPayment.OrderInfo.ShippingAddress.City,
+                StreetLine1 = update.Message.SuccessfulPayment.OrderInfo.ShippingAddress.StreetLine1,
+                StreetLine2 = update.Message.SuccessfulPayment.OrderInfo.ShippingAddress.StreetLine2,
+                PostCode = update.Message.SuccessfulPayment.OrderInfo.ShippingAddress.PostCode
+            };
+            await _orderService.UpdateShippingAddressAsync(updateShippingAddressRequest);
+        }
+
         await _telegramBotClient.SendTextMessageAsync(
             chatId,
             "Thank you for purchase",

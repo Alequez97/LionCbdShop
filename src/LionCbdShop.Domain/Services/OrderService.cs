@@ -100,11 +100,6 @@ public class OrderService : IOrderService
         return response;
     }
 
-    private string GenerateOrderNumber()
-    {
-        return $"{DateTime.UtcNow.ToString("yyyyMMddHHmmss")}-{_random.Next(1000, 9999)}";
-    }
-
     public async Task<Response> UpdateOrderStatusAsync(UpdateOrderStatusRequest request)
     {
         var response = new Response();
@@ -133,12 +128,54 @@ public class OrderService : IOrderService
         }
         catch (Exception exception)
         {
-            _logger.LogError(exception, "Exception: Unable to update status of order with number{OrderNumber}",
+            _logger.LogError(exception, $"Exception: Unable to update status of order with number {request.OrderNumber}",
                 request.OrderNumber);
             response.IsSuccess = false;
             response.Message = CommonResponseMessage.Update.Error(ResponseMessageEntity.Order);
         }
 
         return response;
+    }
+
+    public async Task<Response> UpdateShippingAddressAsync(UpdateShippingAddressRequest request)
+    {
+        var response = new Response();
+
+        try
+        {
+            var order = await _orderRepository.GetByOrderNumberAsync(request.OrderNumber);
+
+            if (order == null)
+            {
+                response.IsSuccess = false;
+                response.Message = OrderResponseMessage.NotFound(request.OrderNumber);
+                return response;
+            }
+
+            order.CountryIso2Code = request.CountryIso2Code;
+            order.City = request.City;
+            order.StreetLine1 = request.StreetLine1;
+            order.StreetLine2 = request.StreetLine2;
+            order.PostCode = request.PostCode;
+
+            await _orderRepository.UpdateAsync(order);
+
+            response.IsSuccess = true;
+            response.Message = OrderResponseMessage.ShippingAddressWasUpdated(request.OrderNumber);
+        }
+        catch (Exception exception)
+        {
+            _logger.LogError(exception, $"Exception: Unable to update status of order with number {request.OrderNumber}",
+                request.OrderNumber);
+            response.IsSuccess = false;
+            response.Message = CommonResponseMessage.Update.Error(ResponseMessageEntity.Order);
+        }
+
+        return response;
+    }
+
+    private string GenerateOrderNumber()
+    {
+        return $"{DateTime.UtcNow.ToString("yyyyMMddHHmmss")}-{_random.Next(1000, 9999)}";
     }
 }
