@@ -1,6 +1,6 @@
 import Loader from '../../components/Loader/Loader';
 import Error from '../../components/Error';
-import { useProducts } from '../../hooks/products';
+import { useProducts } from '../../hooks/useProducts';
 import { Link } from 'react-router-dom';
 import axios from "axios";
 import Response from '../../Response'
@@ -9,13 +9,14 @@ import { useState } from 'react';
 import ProductListGroupItem from '../../components/ProductListGroupItem';
 import Product from '../../models/Product';
 import Button from '../../components/Button';
+import { MarkupElementState } from '../../types';
 
 export default function Products() {
     const { products, setProducts, error, loading } = useProducts();
 
     const [showInfoBadge, setShowInfoBadge] = useState(false)
     const [infoBadgeText, setShowInfoBadgeText] = useState('')
-    const [infoBadgeType, setInfoBadgeType] = useState('')
+    const [infoBadgeType, setInfoBadgeType] = useState<MarkupElementState>()
 
     if (loading) {
         return (
@@ -39,10 +40,10 @@ export default function Products() {
         try {
             const response = await axios.delete<Response<any>>(`/products/${product.id}`)
             if (response.data.isSuccess) {
-                setInfoBadgeType('success')
+                setInfoBadgeType(MarkupElementState.SUCCESS)
                 setProducts(prevState => prevState.filter(p => p.id !== product.id))
             } else {
-                setInfoBadgeType('danger')
+                setInfoBadgeType(MarkupElementState.DANGER)
             }
 
             setShowInfoBadgeText(response.data.message)
@@ -50,7 +51,7 @@ export default function Products() {
         } catch (e) {
             console.log(e);
             setShowInfoBadge(true)
-            setInfoBadgeType('danger')
+            setInfoBadgeType(MarkupElementState.DANGER)
             setShowInfoBadgeText('Error occured. Check internet connection or try again later')
         }
     }
@@ -68,7 +69,7 @@ export default function Products() {
 
                 <div className="text-center mb-4">
                     <Link to="/products/add">
-                        <Button text='Add new product' type='primary' />
+                        <Button text='Add new product' type={MarkupElementState.PRIMARY} />
                     </Link>
                 </div>
 

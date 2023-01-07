@@ -5,6 +5,7 @@ import axios from 'axios'
 import InfoBadge from "./InfoBadge"
 import { useNavigate } from "react-router-dom"
 import InputField from "./InputField"
+import { MarkupElementState } from "../types"
 
 interface ProductFormProps {
     product?: Product
@@ -23,7 +24,7 @@ export default function ProductForm({ product }: ProductFormProps) {
 
     const [showInfoBadge, setShowInfoBadge] = useState(false)
     const [infoBadgeText, setShowInfoBadgeText] = useState('')
-    const [infoBadgeType, setInfoBadgeType] = useState('')
+    const [infoBadgeType, setInfoBadgeType] = useState<MarkupElementState>()
 
     function validateForm() {
         let isUpdateOperation = product !== undefined;
@@ -117,14 +118,14 @@ export default function ProductForm({ product }: ProductFormProps) {
             }
 
             if (response.isSuccess) {
-                setInfoBadgeType('success')
+                setInfoBadgeType(MarkupElementState.SUCCESS)
             } else {
-                setInfoBadgeType('danger')
+                setInfoBadgeType(MarkupElementState.DANGER)
             }
 
             setShowInfoBadgeText(response.message)
         } catch {
-            setInfoBadgeType('danger')
+            setInfoBadgeType(MarkupElementState.DANGER)
             setShowInfoBadgeText('Error. Check your network connection or try again later')
         }
 

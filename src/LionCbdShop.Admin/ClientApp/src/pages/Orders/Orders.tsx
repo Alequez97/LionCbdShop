@@ -1,7 +1,7 @@
 import moment from 'moment';
 import Loader from '../../components/Loader/Loader';
 import Error from '../../components/Error';
-import { useOrders } from '../../hooks/orders';
+import { useOrders } from '../../hooks/useOrders';
 import { Link } from 'react-router-dom';
 
 const Orders = () => {

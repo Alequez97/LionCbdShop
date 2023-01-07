@@ -1,8 +1,9 @@
 import classNames from 'classnames';
+import { MarkupElementState } from '../types';
 
 interface ButtonProps {
     text: string
-    type: "primary" | "warning" | "danger"
+    type: MarkupElementState
     cssClasses?: string[]
     onClick?: () => void
 }
