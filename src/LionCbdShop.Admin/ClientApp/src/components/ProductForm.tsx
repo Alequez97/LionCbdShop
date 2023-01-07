@@ -4,6 +4,7 @@ import Response from '../Response'
 import axios from 'axios'
 import InfoBadge from "./InfoBadge"
 import { useNavigate } from "react-router-dom"
+import InputField from "./InputField"
 
 interface ProductFormProps {
     product?: Product
@@ -144,21 +145,30 @@ export default function ProductForm({ product }: ProductFormProps) {
             <h2 className="text-center">{product ? "Edit product" : "Add new product"}</h2>
             <div className="container pb-5">
                 <form>
-                    <div className="mb-2">
-                        <label htmlFor="productName" className="form-label">Product name</label>
-                        <input ref={productNameRef} type="text" className={getInputClass(inputDataErrors.productNameError === undefined)} name="productName" defaultValue={product?.productName} />
-                        <small className="text-danger">{inputDataErrors.productNameError}</small>
-                    </div>
-                    <div className="mb-2">
-                        <label htmlFor="originalPrice" className="form-label">Original price</label>
-                        <input ref={originalPriceRef} type="number" step=".01" min="0" className={getInputClass(inputDataErrors.originalPriceError === undefined)} name="originalPrice" defaultValue={product?.originalPrice} />
-                        <small className="text-danger">{inputDataErrors.originalPriceError}</small>
-                    </div>
-                    <div className="mb-2">
-                        <label htmlFor="priceWithDiscount" className="form-label">Price with discount</label>
-                        <input ref={priceWithDiscountRef} type="number" step=".01" min="0" className={getInputClass(inputDataErrors.priceWithDiscountError === undefined)} name="priceWithDiscount" defaultValue={product?.priceWithDiscount ? product?.priceWithDiscount : ''} />
-                        <small className="text-danger">{inputDataErrors.priceWithDiscountError}</small>
-                    </div>
+                    <InputField
+                        label={'Product name'}
+                        inputType={"text"}
+                        inputRef={productNameRef}
+                        inputStateIsValid={inputDataErrors.productNameError === undefined}
+                        errorMessage={inputDataErrors.productNameError}
+                        defaultValue={product?.productName}
+                    />
+                    <InputField
+                        label={'Original price'}
+                        inputType={"number"}
+                        inputRef={originalPriceRef}
+                        inputStateIsValid={inputDataErrors.originalPriceError === undefined}
+                        errorMessage={inputDataErrors.originalPriceError}
+                        defaultValue={product?.originalPrice.toString()}
+                    />
+                    <InputField
+                        label={'Price with discount'}
+                        inputType={"number"}
+                        inputRef={priceWithDiscountRef}
+                        inputStateIsValid={inputDataErrors.priceWithDiscountError === undefined}
+                        errorMessage={inputDataErrors.priceWithDiscountError}
+                        defaultValue={product?.priceWithDiscount?.toString()}
+                    />
                     <div className="mb-2">
                         <label htmlFor="image" className="form-label">Image</label>
                         <input ref={productImageRef} className={getInputClass(inputDataErrors.productImageError === undefined)} type="file" name="productImage" />
