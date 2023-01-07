@@ -77,14 +77,37 @@ public class ProductService : IProductService
 
         return response;
     }
+    
+    public async Task<Response<IEnumerable<ProductCategoryDto>>> GetAllCategoriesAsync()
+    {
+        var response = new Response<IEnumerable<ProductCategoryDto>>();
 
-    public async Task<Response<ProductCategoryDto>> GetProductCategoryAsync(string name)
+        try
+        {
+            var productCategories = await _productRepository.GetAllCategoriesAsync();
+
+            var productCategoriesDto = _mapper.Map<List<ProductCategoryDto>>(productCategories);
+
+            response.IsSuccess = true;
+            response.ResponseObject = productCategoriesDto;
+        }
+        catch (Exception exception)
+        {
+            _logger.LogError(exception, "Exception: Unable to get product categories");
+            response.IsSuccess = false;
+            response.Message = CommonResponseMessage.Get.Error(ResponseMessageEntity.Product);
+        }
+
+        return response; 
+    }
+
+    public async Task<Response<ProductCategoryDto>> GetCategoryAsync(string name)
     {
         var response = new Response<ProductCategoryDto>();
 
         try
         {
-            var productCategory = await _productRepository.GetProductCategoryAsync(name);
+            var productCategory = await _productRepository.GetCategoryAsync(name);
 
             if (productCategory == null)
             {
@@ -119,7 +142,7 @@ public class ProductService : IProductService
             var product = _mapper.Map<Product>(createProductRequest);
             product.ImageName = storedImageName;
 
-            var productCategory = await _productRepository.GetProductCategoryAsync(createProductRequest.ProductCategoryName);
+            var productCategory = await _productRepository.GetCategoryAsync(createProductRequest.ProductCategoryName);
             if (productCategory != null)
             {
                 product.Category = productCategory;
@@ -137,6 +160,29 @@ public class ProductService : IProductService
             response.Message = CommonResponseMessage.Create.Error(ResponseMessageEntity.Product);
         }
 
+        return response;
+    }
+
+    public async Task<Response> CreateCategoryAsync(CreateProductCategoryRequest request)
+    {
+        var response = new Response();
+
+        try
+        {
+            var productCategory = _mapper.Map<ProductCategory>(request);
+            
+            await _productRepository.CreateCategoryAsync(productCategory);
+            
+            response.IsSuccess = true;
+            response.Message = CommonResponseMessage.Create.Success(ResponseMessageEntity.ProductCategory);
+        }
+        catch (Exception exception)
+        {
+            _logger.LogError(exception, "Exception: Unable to create product category");
+            response.IsSuccess = false;
+            response.Message = CommonResponseMessage.Create.Error(ResponseMessageEntity.ProductCategory);
+        }
+        
         return response;
     }
 
@@ -203,6 +249,42 @@ public class ProductService : IProductService
         catch (DbUpdateException dbUpdateException)
         {
             _logger.LogWarning(dbUpdateException, "Exception: Unable to delete product with id - {Id}", id);
+            response.IsSuccess = false;
+            response.Message = ProductResponseMessage.CantDeleteBecauseOfExistingReference();
+        }
+        catch (Exception exception)
+        {
+            _logger.LogError(exception, "Exception in {action} action", "delete product");
+            response.IsSuccess = false;
+            response.Message = CommonResponseMessage.Delete.Error(ResponseMessageEntity.Product);
+        }
+
+        return response;
+    }
+
+    public async Task<Response> DeleteCategoryAsync(string name)
+    {
+        var response = new Response();
+
+        try
+        {
+            var existingCategory = await _productRepository.GetCategoryAsync(name);
+
+            if (existingCategory == null)
+            {
+                response.IsSuccess = false;
+                response.Message = $"Product category with name {name} not found";
+                return response;
+            }
+
+            await _productRepository.DeleteCategoryAsync(name);
+
+            response.IsSuccess = true;
+            response.Message = CommonResponseMessage.Delete.Success(ResponseMessageEntity.ProductCategory);
+        }
+        catch (DbUpdateException dbUpdateException)
+        {
+            _logger.LogWarning(dbUpdateException, "Exception: Unable to delete product category with name - {Name}", name);
             response.IsSuccess = false;
             response.Message = ProductResponseMessage.CantDeleteBecauseOfExistingReference();
         }

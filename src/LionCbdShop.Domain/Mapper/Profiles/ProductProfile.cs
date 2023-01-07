@@ -23,6 +23,8 @@ public class ProductProfile : Profile
                 product.Name,
                 config => config.MapFrom(request => request.ProductName));
 
+        CreateMap<CreateProductCategoryRequest, ProductCategory>();
+
         CreateMap<UpdateProductRequest, Product>()
             .ForMember(product =>
                 product.Name,

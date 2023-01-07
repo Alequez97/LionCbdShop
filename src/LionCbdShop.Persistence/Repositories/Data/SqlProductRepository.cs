@@ -23,9 +23,14 @@ namespace LionCbdShop.Persistence.Repositories.Data
             return await _dbContext.Products.FirstOrDefaultAsync(product => product.Id == id);
         }
 
-        public async Task<ProductCategory> GetProductCategoryAsync(string name)
+        public async Task<ProductCategory> GetCategoryAsync(string name)
         {
             return await _dbContext.ProductCategories.FirstOrDefaultAsync(category => category.Name == name);
+        }
+
+        public async Task<IEnumerable<ProductCategory>> GetAllCategoriesAsync()
+        {
+            return await _dbContext.ProductCategories.ToListAsync();
         }
 
         public async Task CreateAsync(Product product)
@@ -33,6 +38,13 @@ namespace LionCbdShop.Persistence.Repositories.Data
             await _dbContext.Products.AddAsync(product);
             await _dbContext.SaveChangesAsync();
         }
+        
+        public async Task CreateCategoryAsync(ProductCategory productCategory)
+        {
+            await _dbContext.ProductCategories.AddAsync(productCategory);
+            await _dbContext.SaveChangesAsync();
+        }
+        
         public async Task UpdateAsync(Product product)
         {
             _dbContext.Products.Update(product);
@@ -44,6 +56,14 @@ namespace LionCbdShop.Persistence.Repositories.Data
             var product = await _dbContext.Products.FirstAsync(product => product.Id == id);
 
             _dbContext.Products.Remove(product);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task DeleteCategoryAsync(string name)
+        {
+            var productCategory = await _dbContext.ProductCategories.FirstAsync(category => category.Name == name);
+
+            _dbContext.ProductCategories.Remove(productCategory);
             await _dbContext.SaveChangesAsync();
         }
     }
