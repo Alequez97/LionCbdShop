@@ -14,6 +14,9 @@ public class ProductProfile : Profile
             .ForMember(productDto =>
                 productDto.ProductName,
                 config => config.MapFrom(product => product.Name))
+            .ForMember(productDto =>
+                    productDto.ProductCategoryName,
+                config => config.MapFrom(product => product.Category.Name))
             .AfterMap<ProductDtoAction>();
 
         CreateMap<ProductCategory, ProductCategoryDto>();

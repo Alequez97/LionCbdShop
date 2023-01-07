@@ -15,7 +15,7 @@ namespace LionCbdShop.Persistence.Repositories.Data
 
         public async Task<IEnumerable<Product>> GetAllAsync()
         {
-            return await _dbContext.Products.ToListAsync();
+            return await _dbContext.Products.Include(product => product.Category).ToListAsync();
         }
 
         public async Task<Product> GetAsync(Guid id)
