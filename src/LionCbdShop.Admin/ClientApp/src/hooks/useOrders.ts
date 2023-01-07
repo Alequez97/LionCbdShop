@@ -1,6 +1,6 @@
 import axios, { AxiosError } from "axios";
 import { useEffect, useState } from "react";
-import Order from "../models/Order";
+import Order from "../types/Order";
 import Response from '../Response'
 
 export function useOrders() {

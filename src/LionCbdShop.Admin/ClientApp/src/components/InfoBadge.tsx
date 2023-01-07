@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import { MarkupElementState } from '../types'
+import { MarkupElementState } from '../types/MarkupElementState'
 import Button from './InputControls/Button'
 
 interface InfoBadgeProps {

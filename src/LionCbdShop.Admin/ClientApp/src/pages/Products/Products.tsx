@@ -7,9 +7,9 @@ import Response from '../../Response'
 import InfoBadge from '../../components/InfoBadge';
 import { useState } from 'react';
 import ProductListGroupItem from '../../components/ProductListGroupItem';
-import Product from '../../models/Product';
+import Product from '../../types/Product';
 import Button from '../../components/InputControls/Button';
-import { MarkupElementState } from '../../types';
+import { MarkupElementState } from '../../types/MarkupElementState';
 
 export default function Products() {
     const { products, setProducts, error, loading } = useProducts();
@@ -58,7 +58,6 @@ export default function Products() {
 
     return (
         <>
-
             <InfoBadge text={infoBadgeText} type={infoBadgeType} show={showInfoBadge} closeButtonOnClick={() => setShowInfoBadge(false)} />
             <div className='container'>
                 {products.length === 0 &&

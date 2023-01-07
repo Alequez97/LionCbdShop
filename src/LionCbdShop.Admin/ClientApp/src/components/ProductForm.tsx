@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from "react"
-import Product from "../models/Product"
+import Product from "../types/Product"
 import Response from '../Response'
 import axios from 'axios'
 import InfoBadge from "./InfoBadge"
 import { useNavigate } from "react-router-dom"
 import InputField from "./InputControls/InputField"
-import { MarkupElementState } from "../types"
+import { MarkupElementState } from "../types/MarkupElementState"
 import Select from "./InputControls/Select"
+import { useProductCategories } from "../hooks/useProductCategories"
 
 interface ProductFormProps {
     product?: Product
@@ -14,6 +15,7 @@ interface ProductFormProps {
 
 export default function ProductForm({ product }: ProductFormProps) {
     const productNameRef = useRef<HTMLInputElement | null>(null);
+    const [category, setCategory] = useState<string | undefined>();
     const originalPriceRef = useRef<HTMLInputElement | null>(null);
     const priceWithDiscountRef = useRef<HTMLInputElement | null>(null);
     const productImageRef = useRef<HTMLInputElement | null>(null);
@@ -26,6 +28,8 @@ export default function ProductForm({ product }: ProductFormProps) {
     const [showInfoBadge, setShowInfoBadge] = useState(false)
     const [infoBadgeText, setShowInfoBadgeText] = useState('')
     const [infoBadgeType, setInfoBadgeType] = useState<MarkupElementState>()
+
+    const { productCategories } = useProductCategories();
 
     function validateForm() {
         let isUpdateOperation = product !== undefined;
@@ -90,6 +94,7 @@ export default function ProductForm({ product }: ProductFormProps) {
 
         let formData = new FormData();
         formData.append("productName", productNameRef.current!.value);
+        formData.append("productCategoryName", category ?? '');
         formData.append("originalPrice", originalPriceRef.current!.value);
         formData.append("priceWithDiscount", priceWithDiscountRef.current?.value ? priceWithDiscountRef.current!.value : '');
 
@@ -141,10 +146,6 @@ export default function ProductForm({ product }: ProductFormProps) {
         return isValid ? 'form-control' : 'form-control is-invalid'
     }
 
-    function onOptionSelectHandler(option: string) {
-        console.log(option)
-    }
-
     return (
         <>
             <InfoBadge text={infoBadgeText} type={infoBadgeType} show={showInfoBadge} closeButtonOnClick={() => setShowInfoBadge(false)} />
@@ -160,9 +161,10 @@ export default function ProductForm({ product }: ProductFormProps) {
                         defaultValue={product?.productName}
                     />
                     <Select
-                        label={'Product category'}
-                        options={['C1', 'C2', 'C3']}
-                        onOptionSelect={onOptionSelectHandler}
+                        label={'Product category name'}
+                        options={productCategories?.map(productCategory => productCategory.name) ?? []}
+                        selectedOption={product?.category}
+                        onOptionSelect={setCategory}
                     />
                     <InputField
                         label={'Original price'}

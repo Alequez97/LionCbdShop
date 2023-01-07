@@ -16,6 +16,9 @@ export default function Navigation() {
                                 <Link to="/products" className="nav-link text-dark">Products</Link>
                             </li>
                             <li className="nav-item">
+                                <Link to="/product-categories" className="nav-link text-dark">Categories</Link>
+                            </li>
+                            <li className="nav-item">
                                 <Link to="/orders" className="nav-link text-dark">Orders</Link>
                             </li>
                         </ul>

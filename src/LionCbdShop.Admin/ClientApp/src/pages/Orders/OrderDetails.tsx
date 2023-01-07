@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useParams } from 'react-router-dom'
-import Order from '../../models/Order'
+import Order from '../../types/Order'
 import Response from '../../Response'
-import CartItem from '../../models/CartItem'
+import CartItem from '../../types/CartItem'
 import moment from 'moment'
 
 export default function OrderDetails() {

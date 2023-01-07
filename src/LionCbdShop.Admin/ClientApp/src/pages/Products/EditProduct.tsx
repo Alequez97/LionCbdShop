@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
-import Product from '../../models/Product';
+import Product from '../../types/Product';
 import Response from '../../Response'
 import axios from 'axios'
 import ProductForm from '../../components/ProductForm';
@@ -23,7 +23,6 @@ export default function EditProduct() {
   useEffect(() => {
     fetchProduct(); // eslint-disable-next-line
   }, []);
-
 
   return (
     <>

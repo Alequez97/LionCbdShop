@@ -1,7 +1,7 @@
 import CartItem from "./CartItem";
 
 interface Order {
-     id: string 
+     id: string
      orderNumber:string
      customerUsername: string
      status: string
