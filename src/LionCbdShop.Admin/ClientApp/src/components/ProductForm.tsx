@@ -141,7 +141,7 @@ export default function ProductForm({ product }: ProductFormProps) {
 
     return (
         <>
-            <InfoBadge text={infoBadgeText} class={infoBadgeType} show={showInfoBadge} closeButtonOnClick={() => setShowInfoBadge(false)} />
+            <InfoBadge text={infoBadgeText} type={infoBadgeType} show={showInfoBadge} closeButtonOnClick={() => setShowInfoBadge(false)} />
             <h2 className="text-center">{product ? "Edit product" : "Add new product"}</h2>
             <div className="container pb-5">
                 <form>

@@ -8,6 +8,7 @@ import InfoBadge from '../../components/InfoBadge';
 import { useState } from 'react';
 import ProductListGroupItem from '../../components/ProductListGroupItem';
 import Product from '../../models/Product';
+import Button from '../../components/Button';
 
 export default function Products() {
     const { products, setProducts, error, loading } = useProducts();
@@ -57,7 +58,7 @@ export default function Products() {
     return (
         <>
 
-            <InfoBadge text={infoBadgeText} class={infoBadgeType} show={showInfoBadge} closeButtonOnClick={() => setShowInfoBadge(false)} />
+            <InfoBadge text={infoBadgeText} type={infoBadgeType} show={showInfoBadge} closeButtonOnClick={() => setShowInfoBadge(false)} />
             <div className='container'>
                 {products.length === 0 &&
                     <div className="alert alert-secondary text-center" role="alert">
@@ -67,7 +68,7 @@ export default function Products() {
 
                 <div className="text-center mb-4">
                     <Link to="/products/add">
-                        <button type="button" className="btn btn-primary">Add new product</button>
+                        <Button text='Add new product' type='primary' />
                     </Link>
                 </div>
 

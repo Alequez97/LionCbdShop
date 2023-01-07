@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom"
 import IProduct from "../models/Product"
+import Button from "./Button"
 
 interface ProductListGroupItemProps {
     product: IProduct
@@ -33,7 +34,7 @@ export default function ProductCard({ product, deleteOnClick }: ProductListGroup
                 </div>
                 <div className="card-footer border-0 bg-light p-2 d-flex justify-content-around">
                     <Link to={editProductPath(product.id)} className={'btn btn-warning ml-1'}>Edit</Link>
-                    <button className="btn btn-danger ml-1" onClick={deleteOnClick}>Delete</button>
+                    <Button text='Delete' type='danger' cssClasses={['ml-1']} onClick={deleteOnClick} />
                 </div>
             </div>
         </div>
