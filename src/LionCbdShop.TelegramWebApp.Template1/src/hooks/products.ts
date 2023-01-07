@@ -1,6 +1,6 @@
 import axios, { AxiosError } from "axios";
 import { useEffect, useState } from "react";
-import IProduct from "../models/Product";
+import IProduct from "../types/Product";
 import Response from '../Response'
 
 export function useProducts() {

@@ -1,7 +1,7 @@
 import { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 import { getProducts } from "../data/products";
-import IProduct from "../models/Product";
+import IProduct from "../types/Product";
 
 export function useProductsMock() {
   const [products, setProducts] = useState<IProduct[]>([]);

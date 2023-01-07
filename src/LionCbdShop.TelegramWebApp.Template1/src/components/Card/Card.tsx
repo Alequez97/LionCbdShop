@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Card.scss";
 import Button from "../Button/Button";
-import IProduct from "../../models/Product";
+import IProduct from "../../types/Product";
 
 interface CardProps {
     product: IProduct

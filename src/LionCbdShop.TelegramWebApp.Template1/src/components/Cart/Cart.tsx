@@ -1,7 +1,7 @@
 import React, { MouseEventHandler } from "react";
 import "./Cart.scss";
 import Button from "../Button/Button";
-import ICartItem from "../../models/CartItem";
+import ICartItem from "../../types/CartItem";
 
 interface CartProps {
     cartItems: ICartItem[]

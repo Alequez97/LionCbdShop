@@ -1,4 +1,4 @@
-import IProduct from "../models/Product";
+import IProduct from "../types/Product";
 
 export function getProducts(): IProduct[] {
   return [

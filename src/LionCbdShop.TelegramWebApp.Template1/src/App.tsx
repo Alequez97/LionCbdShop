@@ -7,7 +7,7 @@ import { getCartItemsAsJsonString } from './helpers'
 import { addProduct, removeProduct } from './store/cartItems';
 import { useAppDispatch } from './store/store';
 import { useCartItems } from './hooks/cartItems';
-import IProduct from './models/Product';
+import IProduct from './types/Product';
 import { useTelegramWebApp } from './hooks/telegram';
 import { useProducts } from './hooks/products';
 
