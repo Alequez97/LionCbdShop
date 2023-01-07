@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { MarkupElementState } from '../types';
+import { MarkupElementState } from '../../types';
 
 interface ButtonProps {
     text: string

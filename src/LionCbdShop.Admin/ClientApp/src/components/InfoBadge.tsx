@@ -1,6 +1,6 @@
 import classNames from 'classnames'
 import { MarkupElementState } from '../types'
-import Button from './Button'
+import Button from './InputControls/Button'
 
 interface InfoBadgeProps {
     text: string

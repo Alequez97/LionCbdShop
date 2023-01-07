@@ -8,7 +8,7 @@ import InfoBadge from '../../components/InfoBadge';
 import { useState } from 'react';
 import ProductListGroupItem from '../../components/ProductListGroupItem';
 import Product from '../../models/Product';
-import Button from '../../components/Button';
+import Button from '../../components/InputControls/Button';
 import { MarkupElementState } from '../../types';
 
 export default function Products() {

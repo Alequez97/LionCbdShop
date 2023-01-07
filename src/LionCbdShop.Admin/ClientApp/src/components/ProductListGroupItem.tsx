@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import IProduct from "../models/Product"
 import { MarkupElementState } from "../types"
-import Button from "./Button"
+import Button from "./InputControls/Button"
 
 interface ProductListGroupItemProps {
     product: IProduct

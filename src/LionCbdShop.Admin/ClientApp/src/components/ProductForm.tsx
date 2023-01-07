@@ -4,7 +4,7 @@ import Response from '../Response'
 import axios from 'axios'
 import InfoBadge from "./InfoBadge"
 import { useNavigate } from "react-router-dom"
-import InputField from "./InputField"
+import InputField from "./InputControls/InputField"
 import { MarkupElementState } from "../types"
 
 interface ProductFormProps {
