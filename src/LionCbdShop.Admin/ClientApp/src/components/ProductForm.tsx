@@ -6,6 +6,7 @@ import InfoBadge from "./InfoBadge"
 import { useNavigate } from "react-router-dom"
 import InputField from "./InputControls/InputField"
 import { MarkupElementState } from "../types"
+import Select from "./InputControls/Select"
 
 interface ProductFormProps {
     product?: Product
@@ -140,6 +141,10 @@ export default function ProductForm({ product }: ProductFormProps) {
         return isValid ? 'form-control' : 'form-control is-invalid'
     }
 
+    function onOptionSelectHandler(option: string) {
+        console.log(option)
+    }
+
     return (
         <>
             <InfoBadge text={infoBadgeText} type={infoBadgeType} show={showInfoBadge} closeButtonOnClick={() => setShowInfoBadge(false)} />
@@ -153,6 +158,11 @@ export default function ProductForm({ product }: ProductFormProps) {
                         inputStateIsValid={inputDataErrors.productNameError === undefined}
                         errorMessage={inputDataErrors.productNameError}
                         defaultValue={product?.productName}
+                    />
+                    <Select
+                        label={'Product category'}
+                        options={['C1', 'C2', 'C3']}
+                        onOptionSelect={onOptionSelectHandler}
                     />
                     <InputField
                         label={'Original price'}
