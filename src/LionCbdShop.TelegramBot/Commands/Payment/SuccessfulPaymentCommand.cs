@@ -32,7 +32,7 @@ public class SuccessfulPaymentCommand : ITelegramCommand
         };
         await _orderService.UpdateOrderStatusAsync(updateOrderStatusRequest);
 
-        var orderContainsShippingAddress = update.Message.SuccessfulPayment?.OrderInfo?.ShippingAddress != null ? true : false;
+        var orderContainsShippingAddress = update.Message.SuccessfulPayment?.OrderInfo?.ShippingAddress != null;
 
         if (orderContainsShippingAddress)
         {
