@@ -7,37 +7,56 @@ on:
       - src/LionCbdShop.Api/**
       - src/LionCbdShop.Domain/**
       - src/LionCbdShop.Persistence/**
-  workflow_dispatch:    
+  workflow_dispatch:
 
 env:
-  AZURE_WEBAPP_NAME: lion-cbd-shop-api-stage
   AZURE_WEBAPP_PACKAGE_PATH: src\LionCbdShop.Api\publish
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 6.0.x
   WORKING_DIRECTORY: src\LionCbdShop.Api
+  ARTIFACT_NAME: lion-cbd-shop-api
 jobs:
-  build:
+  Build:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
+    
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
+    
     - name: Restore
       run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
+    
     - name: Build
       run: dotnet build "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
+    
     - name: Publish
       run: dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
-    - name: Deploy to Azure WebApp
-      uses: azure/webapps-deploy@v2
-      with:
-        app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        publish-profile: ${{ secrets.lion_cbd_shop_api_stage_FFFF }}
-        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+    
     - name: Publish Artifacts
       uses: actions/upload-artifact@v1.0.0
       with:
-        name: webapp
+        name: ${{ env.ARTIFACT_NAME }}
         path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+
+  DeployToDev:
+    runs-on: windows-latest
+    name: Deploy to Development
+    needs: [Build]
+    environment:
+      name: Development
+    steps: 
+      - name: Download a Build Artifact
+        id: downloadbuildartifact
+        uses: actions/download-artifact@v3.0.0
+        with:
+          name: ${{ env.ARTIFACT_NAME }}
+      
+      - name: Deploy to Azure WebApp
+        uses: azure/webapps-deploy@v2
+        with:
+          publish-profile: ${{ secrets.LION_CBD_SHOP_API_PUBLISH_PROFILE }}
+          package: ${{ steps.downloadbuildartifact.outputs.download-path }}
+    
