@@ -77,7 +77,7 @@ export default function ProductCategories() {
                 <ul className="list-group">
                     {productCategories.map((productCategory, index) => (
                         <li className="list-group-item" key={index} >{productCategory.name}
-                            <Button text='Delete' type={MarkupElementState.DANGER} cssClasses={['ml-1']} onClick={() => deleteOnClick(productCategory)} />
+                            <Button text='Delete' type={MarkupElementState.DANGER} cssClasses={['ml-1', 'float-end']} onClick={() => deleteOnClick(productCategory)} />
                         </li>
                     ))}
                 </ul>
