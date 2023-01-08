@@ -22,7 +22,7 @@ function App() {
   const dispatch = useAppDispatch();
   const { cartItems } = useCartItems();
   const { products, productCategories, error, loading } = useProducts();
-  const [filteredProducts, setFilteredProducts] = useState<IProduct[] | undefined>(undefined);
+  const [ filteredProducts, setFilteredProducts ] = useState<IProduct[] | undefined>(undefined);
 
   useEffect(() => {
     if (cartItems.length === 0) {

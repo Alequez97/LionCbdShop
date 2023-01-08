@@ -37,7 +37,7 @@ body {
 }
 
 #product-categories-select:focus {
-  border-color: red;
+  border-color: var(--primary-color);
 }
 
 .cards__container {
