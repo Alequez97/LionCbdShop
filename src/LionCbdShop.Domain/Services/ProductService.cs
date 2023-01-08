@@ -286,7 +286,7 @@ public class ProductService : IProductService
         {
             _logger.LogWarning(dbUpdateException, "Exception: Unable to delete product category with name - {Name}", name);
             response.IsSuccess = false;
-            response.Message = ProductResponseMessage.CantDeleteBecauseOfExistingReference();
+            response.Message = ProductCategoryResponseMessage.CantDeleteBecauseOfExistingReference();
         }
         catch (Exception exception)
         {
