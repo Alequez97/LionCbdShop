@@ -54,10 +54,10 @@ jobs:
         uses: actions/download-artifact@v3.0.0
         with:
           name: ${{ env.ARTIFACT_NAME }}
+      - name: Build
+        run: set-env APP_LOCATION ${{ steps.downloadbuildartifact.outputs.download-path }} 
       - name: Deploy to azure static web app
         uses: Azure/static-web-apps-deploy@v1
         with:
           action: "upload"
-          app_location: build
-          app_artifact_location: build
           azure_static_web_apps_api_token: ${{ secrets.TELEGRAM_WEB_APP_TEMPLATE_1_DEPLOYMENT_SECRET }}
