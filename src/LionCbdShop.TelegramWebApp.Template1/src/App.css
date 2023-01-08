@@ -27,10 +27,17 @@ body {
 
 #product-categories-select {
   background-color: var(--background-color);
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+  border-radius: 10px;
   font-size: 16px;
   text-align: center;
   width: 250px;
   height: 30px;
+}
+
+#product-categories-select:focus {
+  border-color: red;
 }
 
 .cards__container {
