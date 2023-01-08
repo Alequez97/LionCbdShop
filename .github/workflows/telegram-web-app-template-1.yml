@@ -9,7 +9,8 @@ on:
   workflow_dispatch:
 
 env:
-  APP_LOCATION: "src/LionCbdShop.TelegramWebApp.Template1/"
+  APP_SOURCES_DIRECTORY: "src/LionCbdShop.TelegramWebApp.Template1/"
+  APP_LOCATION: "build"
   APP_BUILD_LOCATION: "build"
   ARTIFACT_NAME: "TelegramWebAppTemplate1"
 
@@ -31,14 +32,14 @@ jobs:
           node-version: 16.x
       - name: Build
         run: |
-          cd ${{ env.APP_LOCATION }}
+          cd ${{ env.APP_SOURCES_DIRECTORY }}
           npm install
           npm run build
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3.1.0
         with:
           name: ${{ env.ARTIFACT_NAME }}
-          path: ${{ format('{0}/{1}/{2}', github.workspace, env.APP_LOCATION, env.APP_BUILD_LOCATION) }}
+          path: ${{ format('{0}/{1}/{2}', github.workspace, env.APP_SOURCES_DIRECTORY, env.APP_BUILD_LOCATION) }}
       
   DeployToDev:
     runs-on: ubuntu-latest
