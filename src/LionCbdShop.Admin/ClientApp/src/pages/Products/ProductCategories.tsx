@@ -30,7 +30,7 @@ export default function ProductCategories() {
     }
 
     async function deleteOnClick(category: ProductCategory) {
-        let performDelete = window.confirm(`Are you sure you want delete product with name "${category.name}"?`)
+        let performDelete = window.confirm(`Are you sure you want delete category "${category.name}"?`)
 
         if (!performDelete) {
             return;
