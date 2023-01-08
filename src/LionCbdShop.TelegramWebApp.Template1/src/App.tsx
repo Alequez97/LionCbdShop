@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react'
+import { ChangeEvent, useCallback, useEffect, useState } from 'react'
 import './App.css'
 import Card from './components/Card/Card'
 import Loader from './components/Loader/Loader';
@@ -21,7 +21,8 @@ function App() {
 
   const dispatch = useAppDispatch();
   const { cartItems } = useCartItems();
-  const { products, error, loading } = useProducts();
+  const { products, productCategories, error, loading } = useProducts();
+  const [filteredProducts, setFilteredProducts] = useState<IProduct[] | undefined>(undefined);
 
   useEffect(() => {
     if (cartItems.length === 0) {
@@ -66,14 +67,36 @@ function App() {
     )
   }
 
+  const DEFAULT_SELECTOR_VALUE = 'All categories';
+
+  const selectOnChangeHandler = (event: ChangeEvent<HTMLSelectElement>) => {
+    const selectedOption = event.target.value;
+    if (selectedOption === DEFAULT_SELECTOR_VALUE) {
+      setFilteredProducts(undefined)
+      return
+    }
+
+    setFilteredProducts(products.filter(product => product.productCategoryName === selectedOption));
+  }
+
   return (
     <>
       <h2 className="heading">Royal MMXXI</h2>
 
       {products.length === 0 && <span>No available products at this moment</span>}
 
+      {products.length !== 0 &&
+        <div id="product-categories-wrapper">
+          <select name="product-categories" id="product-categories-select" defaultValue={DEFAULT_SELECTOR_VALUE} onChange={selectOnChangeHandler}>
+            <option value={DEFAULT_SELECTOR_VALUE}>{DEFAULT_SELECTOR_VALUE}</option>
+            {productCategories?.map(category => (<option value={category}>{category}</option>))}
+          </select>
+        </div>
+      }
+
       <div className="cards__container">
-        {products.map(product => <Card product={product} key={product.id} onAdd={onAdd} onRemove={onRemove} />)}
+        {filteredProducts === undefined && products.map(product => <Card product={product} key={product.id} onAdd={onAdd} onRemove={onRemove} />)}
+        {filteredProducts !== undefined && filteredProducts.map(product => <Card product={product} key={product.id} onAdd={onAdd} onRemove={onRemove} />)}
       </div>
     </>
   );

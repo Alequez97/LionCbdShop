@@ -20,6 +20,19 @@ body {
   color: var(--primary-color);
 }
 
+#product-categories-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+#product-categories-select {
+  background-color: var(--background-color);
+  font-size: 16px;
+  text-align: center;
+  width: 250px;
+  height: 30px;
+}
+
 .cards__container {
   display: flex;
   flex-wrap: wrap;

@@ -5,6 +5,7 @@ import Response from '../Response'
 
 export function useProducts() {
   const [products, setProducts] = useState<IProduct[]>([]);
+  const [productCategories, setProductCategories] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -25,5 +26,9 @@ export function useProducts() {
     fetchProducts();
   }, []);
 
-  return { products, error, loading };
+  useEffect(() => {
+    setProductCategories(products.map(product => product.productCategoryName).filter(categoryName => categoryName !== undefined && categoryName !== null && categoryName !== ''))
+  }, [products]);
+
+  return { products, productCategories, error, loading };
 }
