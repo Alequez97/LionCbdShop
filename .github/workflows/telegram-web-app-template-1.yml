@@ -11,7 +11,7 @@ on:
 env:
   APP_LOCATION: "src/LionCbdShop.TelegramWebApp.Template1/"
   APP_BUILD_LOCATION: "build"
-  ARTIFACT_NAME: "TelegramWebAppTemplate1"
+  ARTIFACTS_NAME: "TelegramWebAppTemplate1"
 
 permissions:
   contents: read
@@ -20,9 +20,6 @@ jobs:
   Build:
     runs-on: ubuntu-latest
     name: Build
-    defaults:
-      run:
-        working-directory: ${{ env.APP_LOCATION }}
       
     steps:
       - uses: actions/checkout@v3
@@ -32,15 +29,19 @@ jobs:
         uses: actions/setup-node@v3.5.1
         with:
           node-version: 16.x
-      - name: Build
-        run: | 
-          npm install
-          npm run build
+      - name: Install npm dependencies
+        run: npm install
+      - name: Build project
+        run: npm run build --prefix src/LionCbdShop.TelegramWebApp.Template1
+      - name: Archive build artifacts
+        run: tar -zcvf build-artifacts.tar.gz build
+        env:
+          ARTIFACTS_NAME: build-artifacts.tar.gz
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3.1.0
         with:
-          name: ${{ env.ARTIFACT_NAME }}
-          path: ${{ format('{0}/{1}/{2}', github.workspace, env.APP_LOCATION, env.APP_BUILD_LOCATION) }}
+          name: ${{ env.ARTIFACTS_NAME }}
+          path: build-artifacts.tar.gz
       
   DeployToDev:
     runs-on: ubuntu-latest
@@ -54,7 +55,7 @@ jobs:
         id: downloadbuildartifact
         uses: actions/download-artifact@v3.0.0
         with:
-          name: ${{ env.ARTIFACT_NAME }}
+          name: ${{ env.ARTIFACTS_NAME }}
       - name: Deploy to azure static web app
         uses: Azure/static-web-apps-deploy@v1
         with:
